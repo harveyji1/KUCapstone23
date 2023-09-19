@@ -12,3 +12,4 @@ https://docs.expo.dev/
 4. run `npm i -g expo`
 5. run `expo login` and login to your expo account
    To start the project run npx expo start
+   Test
