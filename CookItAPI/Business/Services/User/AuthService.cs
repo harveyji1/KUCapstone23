@@ -1,12 +1,9 @@
-﻿using Azure.Core.GeoJson;
-using Microsoft.AspNet.Identity;
+﻿
+
+
+using Microsoft.AspNetCore.Identity;
 using Persistence.Models;
 using Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Services.User
 {
@@ -21,20 +18,21 @@ namespace Business.Services.User
     {
         
             private readonly IUserRepository _userRepository;
-            private readonly IPasswordHasher _passwordHasher;
+           
 
-            public AuthService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+            public AuthService(IUserRepository userRepository)
             {
                 _userRepository = userRepository;
-                _passwordHasher = passwordHasher;
+                
             }
 
             public async Task<bool> RegisterUserAsync(string username, string password, string email, string handle)
             {
                 var existingUser = await _userRepository.GetUserByUsernameAsync(username);
                 if (existingUser != null) return false;
+                var passwordHasher = new PasswordHasher<UserModel>();
 
-                var hashedPassword = _passwordHasher.HashPassword(password);
+                var hashedPassword = passwordHasher.HashPassword(null, password);
                 var user = new UserModel { Username = username, HashedPassword = hashedPassword, Email = email, IsActive = true, Creationdate = DateTime.UtcNow, Profile = new ProfileModel { Handle = handle } };
 
                 await _userRepository.AddUserAsync(user);
@@ -46,8 +44,11 @@ namespace Business.Services.User
                 var user = await _userRepository.GetUserByUsernameAsync(username);
                 if (user == null) return false;
 
-                var verificationResult = _passwordHasher.VerifyHashedPassword(user.HashedPassword, password);
-                return verificationResult == PasswordVerificationResult.Success;
+                var passwordHasher = new PasswordHasher<UserModel>();
+
+                var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, password);
+
+                return result == PasswordVerificationResult.Success;
             }
         }
 }

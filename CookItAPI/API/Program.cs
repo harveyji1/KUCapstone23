@@ -1,6 +1,6 @@
 
 using Business.Services.User;
-using Microsoft.AspNet.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Repositories;
@@ -26,7 +26,7 @@ namespace API
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+            
 
 
 
