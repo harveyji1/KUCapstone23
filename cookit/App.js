@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DetailsScreen } from './src/screens/Profile';
+import { LoginPage } from './src/screens/Login'
 
 function HomeScreen({navigation}){
   return (
@@ -43,7 +44,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>{
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen
+        name="Login"
+        component={LoginPage}
+        />
         <Stack.Screen
           name="Home"
           component={HomeScreen}
