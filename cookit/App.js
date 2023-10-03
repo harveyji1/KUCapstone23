@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DetailsScreen } from './src/screens/Profile';
-import { LoginPage } from './src/screens/Login'
+import { LoginPage } from './src/screens/Login/Login'
 
 function HomeScreen({navigation}){
   return (
