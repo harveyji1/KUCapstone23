@@ -11,7 +11,7 @@ import {
 
 export function LoginPage() {
   const [loaded] = useFonts({
-    'YoungSerif-Regular': require('../../assets/fonts/YoungSerif-Regular.ttf')
+    'YoungSerif-Regular': require('../../../assets/fonts/YoungSerif-Regular.ttf')
   });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
