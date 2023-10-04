@@ -9,6 +9,11 @@ import {
   Alert,
 } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+//  https://react-native-async-storage.github.io/async-storage/docs/usage
+
+const LOCAL_HOST_NUBMER = '5018';
+const COMPUTER_IP_ADDRESS = '192.168.1.80';
 
 export function LoginPage() {
   
@@ -18,15 +23,34 @@ export function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Here, you can add your authentication logic.
-    // For simplicity, let's just check if the fields are not empty.
-    if (username === '' || password === '') {
-      Alert.alert('Login Error', 'Please fill in all fields.');
-    } else {
-      // You can perform the actual authentication here.
-      // For this example, we'll just show a success message.
-      Alert.alert('Login Successful', 'Welcome, ' + username + '!');
+  const handleLogin = async () => {
+    console.log('This works');
+    console.log(username);
+    console.log(password);
+
+    try{
+      if (username === '' || password === '') {
+        Alert.alert('Login Error', 'Please fill in all fields.');
+        throw(console.error('Empty Login Field'));
+      }
+
+      const response = await axios.post(`https://${COMPUTER_IP_ADDRESS}:${LOCAL_HOST_NUBMER}/api/v1.0/login`,{
+        username: username,
+        password: password
+      });
+      console.log('Not here');
+      console.log(response.status);
+      if (response.status === 200){
+        await AsyncStorage.setItem('token', response.data.token);
+        Alert.alert('Login Successful, Welcome '+ username + '!');
+      } else{
+        Alert.alert('Login request failed at Database');
+        throw(console.error('Login request failed at Database'));
+      }
+    }
+    catch (error){
+      console.error('Error: ', error);
+      Alert.alert('Login failed, error occurred, catch initiated');
     }
   };
 
