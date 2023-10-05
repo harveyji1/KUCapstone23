@@ -20,16 +20,16 @@ namespace API.Controllers
         public async Task<IActionResult> Login(string username, string password)
         {
             var result = await _authService.LoginUserAsync(username, password);
-            if (!result) return Unauthorized("Invalid username or password.");
-            return Ok("Login successful.");
+            if (result == "Error") return Unauthorized("Invalid username or password.");
+            return Ok(result);
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(string username, string password, string email, string handle)
         {
             var result = await _authService.RegisterUserAsync(username, password, email, handle);
-            if (!result) return BadRequest("Username already exists or invalid data.");
-            return Ok("Registration successful.");
+            if (result == "Error") return BadRequest("Username already exists");
+            return Ok(result);
         }
     }
 }
