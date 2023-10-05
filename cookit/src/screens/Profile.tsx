@@ -1,8 +1,14 @@
 import * as React from 'react'
 import {Text, View, Button } from 'react-native';
 
-export function DetailsScreen({route, navigation}) {
-    const { itemID, otherParam } = route.params;
+type ProfileScreenRouteParams = {
+    itemID: string;
+    otherParam: string;
+  };
+  
+
+export function ProfileScreen({route, navigation}) {
+    const { itemID, otherParam } = route.params as ProfileScreenRouteParams;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>

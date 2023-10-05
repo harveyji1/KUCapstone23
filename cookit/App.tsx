@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DetailsScreen } from './src/screens/Profile';
+import {  ProfileScreen } from './src/screens/Profile';
 import { LoginPage } from './src/screens/Login';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -92,8 +92,8 @@ export default function App() {
         component={HomeScreen}
         options={{ title: 'Overview' }} />
       <Stack.Screen
-        name="Details"
-        component={DetailsScreen}
+        name="Profile"
+        component={ProfileScreen}
         initialParams={{ itemID: 0, otherParam: 'nothing' }} />
     </Stack.Navigator>}</NavigationContainer>
     </>
