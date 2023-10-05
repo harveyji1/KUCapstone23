@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Login() {
+export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Cookit Test</Text>
+      <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -13,12 +13,8 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEBD3',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
-  text: {
-    color: '#437c90'
-  }
 });
