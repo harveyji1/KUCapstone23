@@ -85,6 +85,7 @@ export default function App() {
   <NavigationContainer>{<Stack.Navigator initialRouteName='Login'>
       <Stack.Screen
         name="Login"
+        options={{headerShown: false}}
         component={LoginPage} />
       <Stack.Screen
         name="Home"
@@ -94,7 +95,8 @@ export default function App() {
         name="Details"
         component={DetailsScreen}
         initialParams={{ itemID: 0, otherParam: 'nothing' }} />
-    </Stack.Navigator>}</NavigationContainer></>
+    </Stack.Navigator>}</NavigationContainer>
+    </>
     
   );
 }
@@ -120,13 +122,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEBD3',
+    // backgroundColor: '#EEEBD3',
     alignItems: 'center',
     justifyContent: 'center',
     
   },
   text: {
-    color: '#437c90'
+    // color: '#437c90'
   },
   font: {
     // fontFamily: 'SweetSansProRegular',
