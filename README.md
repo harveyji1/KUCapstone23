@@ -25,3 +25,4 @@ https://docs.expo.dev/
 - Make sure you have the Connection strings pasted into appsettings.json
   `"ConnectionStrings": { "SqlServerConnection": "Check google drive for what should go here"}`
   > DO NOT PUSH THIS TO THE REPO
+- Add port number API is running on in this line of the `Login.tsx` file `const LOCAL_HOST_NUBMER = 'YOUR # HERE';`
