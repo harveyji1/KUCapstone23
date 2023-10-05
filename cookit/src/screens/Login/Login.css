@@ -1,3 +1,65 @@
+.container {
+    flex: 1;
+    justify-content: 'center';
+    align-items: 'center';
+    color: '#E5E3DB';
+}
+.appTitle {
+    font-size: 2.5rem;
+    color: var(--color-dark-green);
+    margin-bottom: 50;
+    font-weight: 700;
+}
+.input {
+    width: 80%;
+    height: 50px;
+
+
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 66%;
+    /* or 9px */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: capitalize;
+
+    color: var(--color-forest-green);
+
+    border-radius: 50px;
+    border: var(--color-green-gradient);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.loginButton {
+    font-family: 'Trispace';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 66%;
+    /* or 13px */
+    text-transform: capitalize;
+    color: var(--color-green-gradient);
+}
+
+.buttonText {
+    color: var(--color-light-tan);
+    font-family: 'Trispace';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 66%;
+    /* or 13px */
+    text-transform: capitalize;
+    
+    color: #FFFFFF;}
+
+
+/* =================================================================================================================================================================== */
 /* Login */
 
 position: relative;
