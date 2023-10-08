@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {Text, View, Button } from 'react-native';
 
+
 type ProfileScreenRouteParams = {
     itemID: string;
     otherParam: string;
@@ -16,7 +17,7 @@ export function ProfileScreen({route, navigation}) {
         <Text>Name: {otherParam}</Text>
         <Button
           title="Go to Details... again"
-          onPress={() => navigation.push('Details')}
+          onPress={() => navigation.push('Profile')}
         />
         <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
         <Button title="Go back" onPress={() => navigation.goBack()} />

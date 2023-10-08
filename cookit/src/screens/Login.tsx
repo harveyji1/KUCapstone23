@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 
 // import axios from 'axios';
 
-export function LoginPage() {
+export function LoginScreen() {
   
   // const [loaded] = useFonts({
   //   'YoungSerif-Regular': require('../../assets/fonts/YoungSerif-Regular.ttf')

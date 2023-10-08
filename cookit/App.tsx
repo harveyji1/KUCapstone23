@@ -1,31 +1,16 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import {  ProfileScreen } from './src/screens/Profile';
-import { LoginPage } from './src/screens/Login';
+import { HomeScreen } from './src/screens/Home';
+import { LoginScreen } from './src/screens/Login';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
 SplashScreen.preventAutoHideAsync();
-
-function HomeScreen({navigation}){
-  return (
-    <View style={styles.container} >
-      <Text style={styles.text}>Cookit Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details', {
-          itemID: 4,
-          otherParam: "Tony Czajka"
-        })}
-      />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
 // function DetailsScreen({route, navigation}) {
 //   const { itemID, otherParam } = route.params;
@@ -45,7 +30,10 @@ function HomeScreen({navigation}){
 // }
 
 const Stack = createNativeStackNavigator();
-
+const getIsSignedIn = () => {
+  // custom logic
+  return false;
+};
 export default function App() {
   const [isLoaded] = useFonts({
     'YoungSerif-Regular': require('./assets/fonts/YoungSerif-Regular.ttf'),
@@ -80,26 +68,44 @@ export default function App() {
     return null;
   }
 
+  const isSignedIn = getIsSignedIn(); //will maybe be used later
+
   return (
-  <><View style={styles.font} onLayout={handleOnLayout}></View>
-  <NavigationContainer>{<Stack.Navigator initialRouteName='Login'>
-      <Stack.Screen
-        name="Login"
-        options={{headerShown: false}}
-        component={LoginPage} />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'Overview' }} />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        initialParams={{ itemID: 0, otherParam: 'nothing' }} />
-    </Stack.Navigator>}</NavigationContainer>
-    </>
-    
+    <><View style={styles.font} onLayout={handleOnLayout}></View>
+    <NavigationContainer>{<Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen
+          name="Login"
+          options={{headerShown: false}}
+          component={LoginScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Overview' }} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          initialParams={{ itemID: 0, otherParam: 'nothing' }} />
+      </Stack.Navigator>}</NavigationContainer>
+      </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: '#EEEBD3',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+  text: {
+    // color: '#437c90'
+  },
+  font: {
+    // fontFamily: 'SweetSansProRegular',
+  }
+});
+
 {/* <NavigationContainer>{
   <Stack.Navigator initialRouteName='Login'>
     <Stack.Screen
@@ -119,21 +125,7 @@ export default function App() {
   </Stack.Navigator>
   
 }</NavigationContainer> */}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#EEEBD3',
-    alignItems: 'center',
-    justifyContent: 'center',
-    
-  },
-  text: {
-    // color: '#437c90'
-  },
-  font: {
-    // fontFamily: 'SweetSansProRegular',
-  }
-});
+
 
 
 // import * as React from 'react';
