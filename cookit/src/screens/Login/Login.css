@@ -1,0 +1,508 @@
+/* Login */
+
+position: relative;
+width: 393px;
+height: 852px;
+
+/* grad */
+background: linear-gradient(194.23deg, #F4EAD7 -8.61%, #F4F6F1 97.4%);
+border-radius: 40px;
+
+
+/* Frame 62 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 20px;
+
+position: absolute;
+width: 200px;
+height: 120px;
+left: 98px;
+top: 635px;
+
+
+
+/* Button */
+
+width: 200px;
+height: 50px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Rectangle 93 */
+
+position: absolute;
+width: 200px;
+height: 50px;
+left: calc(50% - 200px/2);
+top: calc(50% - 50px/2);
+
+/* dark */
+background: conic-gradient(from 180deg at 50% 50%, #3D5147 0deg, #46996F 78.75deg, #3D5147 360deg);
+border-radius: 50px;
+
+
+/* Login */
+
+position: absolute;
+width: 60px;
+height: 13px;
+left: 72px;
+top: 18px;
+
+font-family: 'Trispace';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 66%;
+/* or 13px */
+text-transform: capitalize;
+
+color: #FFFFFF;
+
+
+
+/* Signup btns */
+
+width: 200px;
+height: 50px;
+
+border-radius: 50px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Rectangle 94 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 200px;
+height: 50px;
+left: 0px;
+top: 0px;
+
+border-radius: 50px;
+
+
+/* Signup */
+
+position: absolute;
+width: 76px;
+height: 13px;
+left: 64px;
+top: 18px;
+
+font-family: 'Trispace';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 66%;
+/* or 13px */
+text-transform: capitalize;
+
+background: linear-gradient(0deg, #46996F 0%, #828C73 100%), #FFFFFF;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+
+/* Fields */
+
+position: absolute;
+width: 330px;
+height: 128px;
+left: 32px;
+top: 447px;
+
+
+
+/* Username */
+
+position: absolute;
+width: 330px;
+height: 50px;
+left: 0px;
+top: 78px;
+
+
+
+/* Frame 63 */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 21px 101px 21px 100px;
+gap: 10px;
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 50px;
+
+
+/* username */
+
+width: 74px;
+height: 9px;
+
+font-family: 'Playfair Display';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 66%;
+/* or 9px */
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: capitalize;
+
+color: #3D5147;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Password */
+
+position: absolute;
+width: 330px;
+height: 50px;
+left: 0px;
+top: 18px;
+
+
+
+/* Frame 64 */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 21px 90px;
+gap: 10px;
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 50px;
+
+
+/* Password */
+
+width: 71px;
+height: 9px;
+
+font-family: 'Playfair Display';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 66%;
+/* or 9px */
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: capitalize;
+
+color: #3D5147;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Forgot Password? */
+
+position: absolute;
+width: 146px;
+height: 16px;
+left: 124px;
+top: 592px;
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 66%;
+/* or 8px */
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: capitalize;
+
+color: #345C50;
+
+
+
+
+
+/* Logo */
+
+position: absolute;
+width: 336.58px;
+height: 336.58px;
+left: 25px;
+top: 50px;
+
+
+
+/* squares */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Rectangle 107 */
+
+position: absolute;
+left: 0%;
+right: 29.29%;
+top: 50%;
+bottom: -20.71%;
+
+background: linear-gradient(225deg, rgba(163, 184, 153, 0.3) 20.56%, rgba(163, 184, 153, 0.3) 80.69%);
+background-blend-mode: soft-light;
+mix-blend-mode: normal;
+border-radius: 35px;
+transform: rotate(-45deg);
+
+
+/* Rectangle 108 */
+
+position: absolute;
+left: 14.64%;
+right: 14.64%;
+top: 85.36%;
+bottom: -56.07%;
+
+background: linear-gradient(225deg, rgba(163, 184, 153, 0.3) 20.56%, rgba(163, 184, 153, 0.3) 80.69%);
+background-blend-mode: soft-light;
+mix-blend-mode: normal;
+border-radius: 35px;
+transform: rotate(-90deg);
+
+
+/* logo */
+
+position: absolute;
+left: 35.36%;
+right: 35.47%;
+top: 18.42%;
+bottom: 46.22%;
+
+
+
+/* Rectangle 102 */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 38.82%;
+right: 38.93%;
+top: 34%;
+bottom: 46.22%;
+
+border: 2px solid #345C50;
+border-radius: 1px 1px 10px 10px;
+
+
+/* Rectangle 103 */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 35.36%;
+right: 60.69%;
+top: 36.96%;
+bottom: 59.33%;
+
+border: 2px solid #345C50;
+
+
+/* Rectangle 104 */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 64.53%;
+right: 31.51%;
+top: 40.67%;
+bottom: 55.62%;
+
+border: 2px solid #345C50;
+transform: rotate(-180deg);
+
+
+/* Vector 9 */
+
+position: absolute;
+left: 41.3%;
+right: 56.23%;
+top: 41.59%;
+bottom: 48.52%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+
+
+/* Vector 10 */
+
+position: absolute;
+left: 57.36%;
+right: 42.64%;
+top: 34.24%;
+bottom: 56.11%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+
+
+/* Group 61 */
+
+position: absolute;
+left: 36.1%;
+right: 41.65%;
+top: 27.82%;
+bottom: 66%;
+
+transform: rotate(-25deg);
+
+
+/* Rectangle 105 */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 37.14%;
+right: 40.61%;
+top: 30.06%;
+bottom: 66.23%;
+
+border: 2px solid #345C50;
+border-radius: 10px 10px 1px 1px;
+transform: rotate(-25deg);
+
+
+/* Rectangle 106 */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 43.7%;
+right: 51.11%;
+top: 24.28%;
+bottom: 72.75%;
+
+border: 2px solid #345C50;
+border-radius: 6px 6px 0px 0px;
+transform: rotate(-25deg);
+
+
+/* Vector 11 */
+
+position: absolute;
+left: 56.37%;
+right: 42.64%;
+top: 27.57%;
+bottom: 66.99%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+
+
+/* Vector 13 */
+
+position: absolute;
+left: 54.15%;
+right: 45.11%;
+top: 28.31%;
+bottom: 66.99%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+
+
+/* Vector 12 */
+
+position: absolute;
+left: 58.6%;
+right: 40.17%;
+top: 26.08%;
+bottom: 66.99%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+
+
+/* Vector 14 */
+
+position: absolute;
+left: 43.88%;
+right: 54.79%;
+top: 28.31%;
+bottom: 66.36%;
+
+border: 2px solid #345C50;
+border-radius: 2px;
+transform: rotate(64.63deg);
+
+
+/* CookIt */
+
+position: absolute;
+left: 23.77%;
+right: 24.24%;
+top: 57.94%;
+bottom: 27.8%;
+
+font-family: 'Quando';
+font-style: normal;
+font-weight: 400;
+font-size: 50px;
+line-height: 66%;
+/* or 33px */
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: capitalize;
+
+color: #345C50;
+
