@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DetailsScreen } from './src/screens/Profile';
 import { LoginPage } from './src/screens/Login';
@@ -45,7 +43,10 @@ function HomeScreen({navigation}){
 // }
 
 const Stack = createNativeStackNavigator();
-
+const getIsSignedIn = () => {
+  // custom logic
+  return false;
+};
 export default function App() {
   const [isLoaded] = useFonts({
     'YoungSerif-Regular': require('./assets/fonts/YoungSerif-Regular.ttf'),
@@ -134,6 +135,27 @@ const styles = StyleSheet.create({
     // fontFamily: 'SweetSansProRegular',
   }
 });
+
+{/* <NavigationContainer>{
+  <Stack.Navigator initialRouteName='Login'>
+    <Stack.Screen
+    name="Login"
+    component={LoginPage}
+    />
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{ title: 'Overview' }}
+    />
+    <Stack.Screen 
+      name="Details" 
+      component={DetailsScreen}
+      initialParams={{itemID: 0, otherParam: 'nothing'}}
+      />
+  </Stack.Navigator>
+  
+}</NavigationContainer> */}
+
 
 
 // import * as React from 'react';
