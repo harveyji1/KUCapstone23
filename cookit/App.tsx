@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DetailsScreen } from './src/screens/Profile';
+import { ProfileScreen } from './src/screens/Profile';
 import { LoginPage } from './src/screens/Login';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
+import { StyleSheet, View, StatusBar } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,7 +26,7 @@ function HomeScreen({navigation}){
   );
 }
 
-// function DetailsScreen({route, navigation}) {
+// function ProfileScreen({route, navigation}) {
 //   const { itemID, otherParam } = route.params;
 //   return (
 //     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -94,7 +95,7 @@ export default function App() {
         options={{ title: 'Overview' }} />
       <Stack.Screen
         name="Details"
-        component={DetailsScreen}
+        component={ProfileScreen}
         initialParams={{ itemID: 0, otherParam: 'nothing' }} />
     </Stack.Navigator>}</NavigationContainer>
     </>
@@ -114,7 +115,7 @@ export default function App() {
     />
     <Stack.Screen 
       name="Details" 
-      component={DetailsScreen}
+      component={ProfileScreen}
       initialParams={{itemID: 0, otherParam: 'nothing'}}
       />
   </Stack.Navigator>
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     />
     <Stack.Screen 
       name="Details" 
-      component={DetailsScreen}
+      component={ProfileScreen}
       initialParams={{itemID: 0, otherParam: 'nothing'}}
       />
   </Stack.Navigator>
