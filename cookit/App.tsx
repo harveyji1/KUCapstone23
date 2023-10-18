@@ -1,37 +1,36 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { ProfileScreen } from './src/screens/Profile';
 import { LoginPage } from './src/screens/Login';
+import { HomeScreen } from './src/screens/Home';
+import { RegisterScreen } from './src/screens/Register';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { StyleSheet, View, StatusBar, Button, Text } from 'react-native';
-
+import { SearchScreen } from './src/screens/Search';
+import { CreatePostScreen } from './src/screens/CreatePost';
+import { SavedRecipiesScreen } from './src/screens/SavedRecipies';
 
 SplashScreen.preventAutoHideAsync();
 
-function HomeScreen({navigation}){
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function BottomTabs() {
   return (
-    <View style={styles.container} >
-      <Text style={styles.text}>Cookit Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details', {
-          itemID: 4,
-          otherParam: "Tony Czajka"
-        })}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name = "Home" component={HomeScreen} options={{headerShown: false}}/>
+      <Tab.Screen name = "Search" component={SearchScreen} options={{headerShown: false}}/>
+      <Tab.Screen name = "CreatePost" component={CreatePostScreen} options={{headerShown: false}}/>
+      <Tab.Screen name = "SavedRecipies" component={SavedRecipiesScreen} options={{headerShown: false}}/>
+      <Tab.Screen name = "Profile" component={ProfileScreen} options={{headerShown: false}}/>
+    </Tab.Navigator>
   );
 }
 
-const Stack = createNativeStackNavigator();
-const getIsSignedIn = () => {
-  // custom logic
-  return false;
-};
 export default function App() {
   const [isLoaded] = useFonts({
     'YoungSerif-Regular': require('./assets/fonts/YoungSerif-Regular.ttf'),
@@ -67,23 +66,16 @@ export default function App() {
   }
 
   return (
-  <><View style={styles.font} onLayout={handleOnLayout}></View>
-  <NavigationContainer>{<Stack.Navigator initialRouteName='Login'>
-      <Stack.Screen
-        name="Login"
-        options={{headerShown: false}}
-        component={LoginPage} />
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'Overview' }} />
-      <Stack.Screen
-        name="Details"
-        component={ProfileScreen}
-        initialParams={{ itemID: 0, otherParam: 'nothing' }} />
-    </Stack.Navigator>}</NavigationContainer>
+    <>
+    <View style={styles.font} onLayout={handleOnLayout}></View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name = "Login" component={LoginPage} options={{headerShown: false}}/>
+        <Stack.Screen name = "Register" component={RegisterScreen} options={{headerShown: false}}/>
+        <Stack.Screen name = "Home" component={BottomTabs} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
     </>
-    
   );
 }
 const styles = StyleSheet.create({
