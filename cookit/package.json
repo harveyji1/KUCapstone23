@@ -15,6 +15,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@mui/material": "^5.14.11",
     "@mui/styled-engine-sc": "^5.14.11",
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -38,6 +39,7 @@
     "react-native-gesture-handler": "~2.12.0",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
+    "react-password-checklist": "^1.5.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {

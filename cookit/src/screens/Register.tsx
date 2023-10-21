@@ -15,6 +15,7 @@ import { useTheme } from '@mui/material/styles';
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const LOCAL_HOST_NUBMER = '5018';
 
@@ -22,7 +23,9 @@ export function RegisterScreen({navigation}) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // for the eye icon
   const [checkPassword, setCheckPassword] = useState('');
+  const [showCheckPassword, setShowCheckPassword] = useState(false); // for the eye icon
   const [email, setEmail] = useState('');
   const [handle, setHandle] = useState('');
 
@@ -33,6 +36,14 @@ export function RegisterScreen({navigation}) {
     return emailPattern.test(email);
   }
 
+  // toggle show password
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+  const toggleShowCheckPassword = () => {
+    setShowCheckPassword(!showCheckPassword);
+  }
+  // Password Logic
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   function isPasswordValid(password: string): boolean {
@@ -43,7 +54,7 @@ export function RegisterScreen({navigation}) {
     try{
       // Protection logic against empty fields
       if (username === '' || password === '' || checkPassword === '' || email === '' || handle === '') {
-        Alert.alert('Register Error: Please fill in all fields.');
+        Alert.alert('Sign Up Error: Please fill in all fields.');
         throw(console.error('Empty Field'));
       }
       else if (password != checkPassword){ // protection logic against passwords not being the same
@@ -68,7 +79,7 @@ export function RegisterScreen({navigation}) {
       console.log(response.status);
       if (response.status === 200){
         // await AsyncStorage.setItem('token', response.data.token);
-        Alert.alert('Register Successful, Welcome '+ username + '!');
+        Alert.alert('Sign Up Successful, Welcome '+ username + '!');
         navigation.navigate('Home');
       }
     }
@@ -100,19 +111,15 @@ export function RegisterScreen({navigation}) {
         style={styles.background}
       />
     <View style={styles.container}>
+      {/* IMAGE */}
+      <Image
+        style={styles.logo}
+        source={require('../img/Logo.png')}
+      /> 
+
       {/* <Text style={styles.appTitle}>Cookit</Text> */}
-      {/* EMAIL */}
-      <Text>Email</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={'#3D5147'}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        autoCapitalize='none'
-      />
+
       {/* USERNAME */}
-      <Text>Username</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -121,29 +128,69 @@ export function RegisterScreen({navigation}) {
         value={username}
         autoCapitalize='none'
       />
+      {/* EMAIL */}
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor={'#3D5147'}
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+        autoCapitalize='none'
+      />
+      
       {/* PASSWORD */}
-      <Text>Password: one lowercase, one uppercase, one digit, one special character, min length of 8 characters</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor={'#3D5147'}
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        autoCapitalize='none'
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <Text style={styles.passwordRequirement}>
+              Password must be 8 or more characters and contain at least 1 uppercase letter, 1 number, & 1 special character
+        </Text>
+          <View style={styles.passwordInputContainer}>
+            <View style={styles.passwordInputField}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Password"
+                placeholderTextColor={'#3D5147'}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                autoCapitalize='none'
+                secureTextEntry={!showPassword}
+              />
+            </View>
+            {/* Eye Icon */}
+            <MaterialCommunityIcons
+              name={showPassword ? 'eye' : 'eye-off'}
+              size={24}
+              onPress={toggleShowPassword}
+              style={styles.icon}
+            />
+          </View>
+      </View>
+
       {/* Re-Enter Password */}
-      <Text>Re-Enter Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Re-Enter Password"
-        placeholderTextColor={'#3D5147'}
-        onChangeText={(text) => setCheckPassword(text)}
-        value={checkPassword}
-        autoCapitalize='none'
-        secureTextEntry
-      />
-        {/* Handle */}
+      <View style={styles.passwordContainer}>
+          <View style={styles.passwordInputContainer}>
+            <View style={styles.passwordInputField}>
+              {/* PASSWORD */}
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Re-Enter Password"
+                placeholderTextColor={'#3D5147'}
+                onChangeText={(text) => setCheckPassword(text)}
+                value={checkPassword}
+                autoCapitalize='none'
+                secureTextEntry={!showCheckPassword}
+              />
+            </View>
+            {/* Eye Icon */}
+            <MaterialCommunityIcons
+              name={showCheckPassword ? 'eye' : 'eye-off'}
+              size={24}
+              onPress={toggleShowCheckPassword}
+              style={styles.icon}
+            />
+          </View>
+      </View>
+
+        {/* Handle
         <Text>Handle</Text>
         <TextInput
             style={styles.input}
@@ -152,7 +199,7 @@ export function RegisterScreen({navigation}) {
             onChangeText={(text) => setHandle(text)}
             value={handle}
             autoCapitalize='none'
-        />
+        /> */}
       {/* Register Button */}
       <TouchableOpacity // Use TouchableOpacity for the custom button
         style={styles.loginButton}
@@ -162,7 +209,7 @@ export function RegisterScreen({navigation}) {
         colors={["#46996F", "#3D5147"]}
         style={styles.loginButton}
       >
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </LinearGradient>
       </TouchableOpacity>
     </View>
@@ -233,10 +280,10 @@ const styles = StyleSheet.create({
 
   },
   logo: {
-    width: 336,
-    height: 336,
+    width: 250,
+    height: 250,
     position: 'relative',
-    marginBottom: 50,
+    marginBottom: 40,
   },
   background: {
     position: 'absolute',
@@ -245,4 +292,44 @@ const styles = StyleSheet.create({
     top: 0,
     height: 1000,
   },
+
+  // Password Styles
+  passwordContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  passwordInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 330,
+    height: 50,
+    borderColor: '#667B68', // --color-forest-green
+    borderWidth: 4,
+    marginBottom: 10,
+    borderRadius: 50,
+    },
+  passwordInputField: {
+    flex: 1,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingLeft: 50, // Adjusted to fix eye icon offset 
+    color: '#3D5147', // --color-forest-green
+    fontFamily: 'PlayfairDisplay-Medium',
+    textAlign: 'center',
+  },
+  icon: {
+    padding: 10,
+    color: '#3D5147', // --color-forest-green
+  },
+  passwordRequirement: {
+    color: '#3D5147', // --color-forest-green
+    fontFamily: 'SweetSansProRegular',
+    textAlign: 'center',
+    fontSize: 13,
+    marginBottom: 15,
+    width: 330,
+    marginTop: 5,
+  }
 });

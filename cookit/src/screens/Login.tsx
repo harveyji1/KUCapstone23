@@ -118,7 +118,7 @@ export function LoginPage({navigation}) {
         style={styles.signupButton}
         onPress={HandleRegister}
       >
-        <Text style={styles.buttonTextSU}>Signup</Text>
+        <Text style={styles.buttonTextSU}>Sign Up</Text>
       </TouchableOpacity>
     </View>
     </KeyboardAvoidingView>
