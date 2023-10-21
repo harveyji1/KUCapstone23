@@ -15,7 +15,7 @@ namespace Persistence.Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string HashedPassword { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public DateTime Creationdate { get; set; }
 

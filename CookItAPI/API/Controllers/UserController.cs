@@ -25,9 +25,9 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string username, string password, string email, string handle)
+        public async Task<IActionResult> Register(string username, string password, string email)
         {
-            var result = await _authService.RegisterUserAsync(username, password, email, handle);
+            var result = await _authService.RegisterUserAsync(username, password, email);
             if (result == "Error") return BadRequest("Username already exists");
             return Ok(result);
         }

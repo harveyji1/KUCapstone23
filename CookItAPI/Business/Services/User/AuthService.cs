@@ -13,7 +13,7 @@ namespace Business.Services.User
 {
     public interface IAuthService
     {
-        Task<string> RegisterUserAsync(string username, string password, string email, string handle);
+        Task<string> RegisterUserAsync(string username, string password, string email);
         Task<string> LoginUserAsync(string username, string password);
     }
 
@@ -31,14 +31,14 @@ namespace Business.Services.User
 
         }
 
-        public async Task<string> RegisterUserAsync(string username, string password, string email, string handle)
+        public async Task<string> RegisterUserAsync(string username, string password, string email)
         {
             var existingUser = await _userRepository.GetUserByUsernameAsync(username);
             if (existingUser != null) return "Error";
             var passwordHasher = new PasswordHasher<UserModel>();
 
             var hashedPassword = passwordHasher.HashPassword(null, password);
-            var user = new UserModel { Username = username, HashedPassword = hashedPassword, Email = email, IsActive = true, Creationdate = DateTime.UtcNow, Profile = new ProfileModel { Handle = handle } };
+            var user = new UserModel { Username = username, HashedPassword = hashedPassword, Email = email, IsActive = true, Creationdate = DateTime.UtcNow, Profile = new ProfileModel() };
 
             await _userRepository.AddUserAsync(user);
 
