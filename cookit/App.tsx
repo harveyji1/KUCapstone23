@@ -13,21 +13,75 @@ import { StyleSheet, View, StatusBar, Button, Text } from 'react-native';
 import { SearchScreen } from './src/screens/Search';
 import { CreatePostScreen } from './src/screens/CreatePost';
 import { SavedRecipiesScreen } from './src/screens/SavedRecipies';
+import { Octicons } from '@expo/vector-icons';
 
 SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
 function BottomTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name = "Home" component={HomeScreen} options={{headerShown: false}}/>
-      <Tab.Screen name = "Search" component={SearchScreen} options={{headerShown: false}}/>
-      <Tab.Screen name = "CreatePost" component={CreatePostScreen} options={{headerShown: false}}/>
-      <Tab.Screen name = "SavedRecipies" component={SavedRecipiesScreen} options={{headerShown: false}}/>
-      <Tab.Screen name = "Profile" component={ProfileScreen} options={{headerShown: false}}/>
-    </Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#345C50',
+          tabBarInactiveTintColor: '#667B68',
+          tabBarStyle: {
+            backgroundColor: '#E5D3B3',
+          }
+        }}>
+        <Tab.Screen 
+          name = "Home" 
+          component={HomeScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="home" size={size} color={color} style={styles.centeredIcon}/>
+            ),
+            tabBarShowLabel: false,
+          }}/>
+        <Tab.Screen 
+          name = "Search" 
+          component={SearchScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="search" size={size} color={color} style={styles.centeredIcon}/>
+            ),
+            tabBarShowLabel: false,
+          }}/>
+        <Tab.Screen 
+          name = "CreatePost" 
+          component={CreatePostScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="plus-circle" size={size} color={color} style={styles.centeredIcon}/>
+            ),
+            tabBarShowLabel: false,
+          }}/>
+        <Tab.Screen 
+          name = "SavedRecipies" 
+          component={SavedRecipiesScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="bookmark" size={size} color={color} style={styles.centeredIcon}/>
+            ),
+            tabBarShowLabel: false,
+          }}/>
+        <Tab.Screen 
+          name = "Profile" 
+          component={ProfileScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="person" size={size} color={color} style={styles.centeredIcon}/>
+            ),
+            tabBarShowLabel: false,
+          }}/>
+      </Tab.Navigator>
   );
 }
 
@@ -69,7 +123,7 @@ export default function App() {
     <>
     <View style={styles.font} onLayout={handleOnLayout}></View>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name = "Login" component={LoginPage} options={{headerShown: false}}/>
         <Stack.Screen name = "Register" component={RegisterScreen} options={{headerShown: false}}/>
         <Stack.Screen name = "Home" component={BottomTabs} options={{headerShown: false}}/>
@@ -91,5 +145,11 @@ const styles = StyleSheet.create({
   },
   font: {
     // fontFamily: 'SweetSansProRegular',
+  },
+  centeredIcon: {
+    flex: 1,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });

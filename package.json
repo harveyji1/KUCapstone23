@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@mui/icons-material": "^5.14.14",
+    "@react-navigation/bottom-tabs": "^6.5.10",
+    "@react-navigation/native": "^6.1.9",
+    "react-native-svg": "^13.14.0",
+    "react-native-vector-icons": "^10.0.0"
+  }
+}
