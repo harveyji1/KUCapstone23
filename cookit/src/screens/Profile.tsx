@@ -32,7 +32,7 @@ export function ProfileScreen() {
     return (
       <View style={styles.container}>
         <View style = {styles.infoContainer}>
-          <Image style={styles.profilePic} source = {require('../img/defaultpfp.png')}></Image>
+          <Image style={styles.profilePic} source = {require('../img/defaultpfp.jpeg')}></Image>
           <View>
             <Text style = {styles.numberOfPosts}>
               {/* in the future this will be like props.numberOfPosts*/}
