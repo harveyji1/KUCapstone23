@@ -27,7 +27,6 @@ export function RegisterScreen({navigation}) {
   const [checkPassword, setCheckPassword] = useState('');
   const [showCheckPassword, setShowCheckPassword] = useState(false); // for the eye icon
   const [email, setEmail] = useState('');
-  const [handle, setHandle] = useState('');
 
   // Protection Logic for 
   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -70,11 +69,10 @@ export function RegisterScreen({navigation}) {
         throw(console.error('password invalid format'));
       }
 
-      const response = await axios.post(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/register?username=${username}&password=${password}&email=${email}&handle=${handle}`,{
+      const response = await axios.post(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/register?username=${username}&password=${password}&email=${email}`,{
         username: username,
         password: password,
         email: email,
-        handle: handle
       });
       console.log(response.status);
       if (response.status === 200){
@@ -190,16 +188,6 @@ export function RegisterScreen({navigation}) {
           </View>
       </View>
 
-        {/* Handle
-        <Text>Handle</Text>
-        <TextInput
-            style={styles.input}
-            placeholder="Handle"
-            placeholderTextColor={'#3D5147'}
-            onChangeText={(text) => setHandle(text)}
-            value={handle}
-            autoCapitalize='none'
-        /> */}
       {/* Register Button */}
       <TouchableOpacity // Use TouchableOpacity for the custom button
         style={styles.loginButton}

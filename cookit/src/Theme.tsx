@@ -58,22 +58,6 @@ const theme = responsiveFontSizes(createTheme({
         light: '#F4EAD7',
         dark: '#D2B48C',
 		},
-		// error: {
-		// 	main: '#D72A2A',//red
-		// },
-		// warning: {
-		// 	main: '#FC7B09',//orange
-		// },
-		// info: {
-		// 	main: '#6B7D6A',//gray
-		// },
-		// success: {
-		// 	main: '#09FE00',//green
-		// },
-		// text: {
-		// 	primary: '#000000',//black
-		// 	secondary: '#FFFFFF',//white
-		// },
 	},
 
 }));
