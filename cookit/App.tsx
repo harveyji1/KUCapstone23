@@ -123,7 +123,7 @@ export default function App() {
     <>
     <View style={styles.font} onLayout={handleOnLayout}></View>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "Login" component={LoginPage} options={{headerShown: false}}/>
         <Stack.Screen name = "Register" component={RegisterScreen} options={{headerShown: false}}/>
         <Stack.Screen name = "Home" component={BottomTabs} options={{headerShown: false}}/>
