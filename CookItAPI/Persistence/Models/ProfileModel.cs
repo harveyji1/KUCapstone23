@@ -16,8 +16,13 @@ namespace Persistence.Models
         [ForeignKey("User")]
         public int UserId { get; set; }
         public virtual UserModel User { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ProfilePicture { get; set; }
+        public string? FullName { get; set; }
+        public string? Bio { get; set; }
+        public int FollowerCount { get; set; }
+        public int FollowingCount { get; set; }
+        public int PostCount { get; set; }
+        public bool PrivateAccount { get; set; }
+        public bool VerifiedAccount { get; set; }
+        public string? ProfilePicture { get; set; }
     }
 }
