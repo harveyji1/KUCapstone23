@@ -1,4 +1,6 @@
 
+using Azure.Storage.Blobs;
+using Business.Services.Azure;
 using Business.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +49,8 @@ namespace API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IProfileService, ProfileService>();
             builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+            builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlob")));
+            builder.Services.AddSingleton<IBlobService, BlobService>();
 
             builder.Services.AddCors(options =>
             {
