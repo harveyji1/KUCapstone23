@@ -20,7 +20,6 @@ SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-
 function BottomTabs() {
   return (
       <Tab.Navigator
@@ -107,6 +106,8 @@ export default function App() {
     'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
     'PlayfairDisplay-Regular': require('./assets/fonts/PlayfairDisplay-Regular.ttf'),
     'PlayfairDisplay-SemiBold': require('./assets/fonts/PlayfairDisplay-SemiBold.ttf'),
+
+    'Quando-Regular': require('./assets/fonts/Quando-Regular.ttf'),
   });
 
   const handleOnLayout = useCallback(async () => {
@@ -126,7 +127,18 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "Login" component={LoginPage} options={{headerShown: false}}/>
         <Stack.Screen name = "Register" component={RegisterScreen} options={{headerShown: false}}/>
-        <Stack.Screen name = "Home" component={BottomTabs} options={{headerShown: false}}/>
+        <Stack.Screen name = "Home" component={BottomTabs} options={{
+          title: 'CookIt',
+          headerStyle:{
+            backgroundColor: '#E5D3B3',
+
+          },
+          headerTintColor: '#345C50',
+          headerTitleStyle: {
+            fontFamily: 'Quando-Regular',
+            fontSize: 20,
+          },
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
     </>
