@@ -82,7 +82,7 @@ export function ProfileScreen() {
 
   const styles = StyleSheet.create({
     container:{
-      backgroundColor: 'white',
+      backgroundColor: '#F4EAD7',
       height: "100%"
     },
     infoContainer:{
