@@ -52,7 +52,7 @@ export function RegisterScreen({navigation}) {
   const handleRegister = async () => {
     try{
       // Protection logic against empty fields
-      if (username === '' || password === '' || checkPassword === '' || email === '' || handle === '') {
+      if (username === '' || password === '' || checkPassword === '' || email === '') {
         Alert.alert('Sign Up Error: Please fill in all fields.');
         throw(console.error('Empty Field'));
       }
