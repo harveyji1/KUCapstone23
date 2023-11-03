@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Models;
+using Shared.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Persistence.Repositories
 {
     public interface IProfileRepository
     {
-        Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<ProfileDTO> GetProfileModelAsync(int userID);
     }
 
     public class ProfileRepository : IProfileRepository
@@ -27,9 +28,20 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task<ProfileModel> GetProfileModelAsync(int profileID)
+        public async Task<ProfileDTO> GetProfileModelAsync(int userID)
         {
-            return await _context.Profiles.SingleOrDefaultAsync(profile => profile.Id == profileID);
+            ProfileModel profile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
+            return new ProfileDTO
+            {
+                FullName = profile.FullName,
+                Bio = profile.Bio,
+                FollowerCount = profile.FollowerCount,
+                FollowingCount = profile.FollowingCount,
+                PostCount = profile.PostCount,
+                PrivateAccount = profile.PrivateAccount,
+                VerifiedAccount = profile.VerifiedAccount,
+                ProfilePicture = profile.ProfilePicture
+            };
         }
     }
 }

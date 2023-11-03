@@ -1,5 +1,6 @@
 ﻿using Persistence.Models;
 using Persistence.Repositories;
+using Shared.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Business.Services.User
 {
     public interface IProfileService
     {
-        Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<ProfileDTO> GetProfileModelAsync(int profileID);
     }
 
     public class ProfileService : IProfileService
@@ -24,9 +25,9 @@ namespace Business.Services.User
 
 
 
-        public async Task<ProfileModel> GetProfileModelAsync(int profileID)
+        public async Task<ProfileDTO> GetProfileModelAsync(int userID)
         {
-            return await _profileRepo.GetProfileModelAsync(profileID);
+            return await _profileRepo.GetProfileModelAsync(userID);
         }
     }
 }

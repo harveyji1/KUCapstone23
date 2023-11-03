@@ -1,8 +1,10 @@
 ﻿using Business.Services.Azure;
 using Business.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -21,10 +23,15 @@ namespace API.Controllers
             _blobService = blobService;
         }
 
+        [Authorize]
         [HttpGet("profile")]
-        public async Task<IActionResult> GetUserProfile(int profileID)
+        public async Task<IActionResult> GetUserProfile()
         {
-            return Ok(await _profileService.GetProfileModelAsync(profileID));
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
+            int.TryParse(userID, out var userId);
+
+            return Ok(await _profileService.GetProfileModelAsync(userId));
         }
 
         [HttpPost("testProfileImageUpload")]
