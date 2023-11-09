@@ -16,6 +16,7 @@ namespace Persistence.Context
         }
         public DbSet<UserModel> Users{ get; set; }
         public DbSet<ProfileModel> Profiles{ get; set; }
+        public DbSet<PostModel> Posts { get; set; }
 
 
     }

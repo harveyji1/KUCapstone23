@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
+using Shared.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Business.Services.Azure
 {
     public interface IBlobService
     {
-        Task<string> UploadBlob(IFormFile image, string fileName);
+        Task<string> UploadBlob(PostRequest post);
     }
 
     public class BlobService : IBlobService
@@ -23,13 +24,15 @@ namespace Business.Services.Azure
         }
 
 
-        public async Task<string> UploadBlob(IFormFile image, string fileName)
+        public async Task<string> UploadBlob(PostRequest post)
         {
-            var container = _blobServiceClient.GetBlobContainerClient("profileimagescontainer");
+            string timestamp = DateTime.Now.ToString();
+            string fileName = $"{post.UserID}_{timestamp}.jpg";
+            var container = _blobServiceClient.GetBlobContainerClient("userposts");
             var blobClient = container.GetBlobClient(fileName);
 
-            await blobClient.UploadAsync(image.OpenReadStream());
-
+            
+            await blobClient.UploadAsync(post.PostImage.OpenReadStream());
             return blobClient.Uri.ToString();
         }
     }

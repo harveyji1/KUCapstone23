@@ -27,11 +27,11 @@ namespace API.Controllers
             return Ok(await _profileService.GetProfileModelAsync(profileID));
         }
 
-        [HttpPost("testProfileImageUpload")]
-        public async Task<IActionResult> UploadProfileImage([FromForm] IFormFile image,  [FromForm]string fileName)
-        {
-            return Ok(await _blobService.UploadBlob(image, fileName));
-        }
+        //[HttpPost("testProfileImageUpload")]
+        //public async Task<IActionResult> UploadProfileImage([FromForm] IFormFile image,  [FromForm]string fileName)
+        //{
+        //    return Ok(await _blobService.UploadBlob(image, fileName));
+        //}
 
         
     }
