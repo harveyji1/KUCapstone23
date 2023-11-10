@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, PostText, RecipeText, IngredientsText, PostImg, InteractionWrapper, Interaction, InteractionText} from '../styles/FeedStyles';
+import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, DescriptionText, RecipeText, IngredientsText, PostImg, InteractionWrapper, Interaction, InteractionText, DishNameText, IngredientsWrapper, IngredientsWord, InstructionsWrapper, InstructionsWord, InstructionsText} from '../styles/FeedStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface PostItemType {
@@ -7,11 +7,16 @@ interface PostItemType {
     userName: string;
     userImg: string; 
     postTime: string;
-    postText: string;
+    description: string;
     postImg: string; 
     liked: boolean;
     likes: number; 
     comments: number;
+    prepTime: number;
+    estimatedCost: number;
+    ingredients: string[];
+    instructions: string[];
+    dishName: string;
   }
 
   const PostCard: React.FC<{ item: PostItemType }> = ({ item }) => {
@@ -37,6 +42,8 @@ interface PostItemType {
 
     return(
         <Card>
+          <PostImg source = {item.postImg}/>
+          <DishNameText> {item.dishName} </DishNameText>
           <UserInfo>
             <UserImg source = {item.userImg}/>
             <UserInfoText>
@@ -44,8 +51,7 @@ interface PostItemType {
             <PostTime> {item.postTime}</PostTime>
             </UserInfoText>
           </UserInfo>
-          <PostText>{item.postText}</PostText>
-          <PostImg source = {item.postImg}/>
+          <DescriptionText>Description: {item.description}</DescriptionText>
           <InteractionWrapper>
             <Interaction active = {item.liked}>
               <Ionicons name = {likeIcon} size = {25} color = {likeIconColor}></Ionicons>
@@ -56,6 +62,18 @@ interface PostItemType {
               <InteractionText>{commentText}</InteractionText>
             </Interaction>
           </InteractionWrapper>
+          <IngredientsWrapper>
+          <IngredientsWord>Ingredients:</IngredientsWord>
+      {item.ingredients.map((ingredient, index) => (
+        <IngredientsText key={index}>- {ingredient}</IngredientsText>
+      ))}
+          </IngredientsWrapper>
+        <InstructionsWrapper>
+        <InstructionsWord>Instructions:</InstructionsWord>
+      {item.instructions.map((instruction, index) => (
+        <InstructionsText key={index}>Step {index + 1}: {instruction}</InstructionsText>
+      ))}
+        </InstructionsWrapper>
         </Card>
     );
 }

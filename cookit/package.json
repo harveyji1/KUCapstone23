@@ -41,7 +41,8 @@
     "react-native-screens": "~3.22.0",
     "react-password-checklist": "^1.5.0",
     "styled-components": "^5.3.11",
-    "expo-image-picker": "~14.3.2"
+    "expo-image-picker": "~14.3.2",
+    "expo-font": "~11.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

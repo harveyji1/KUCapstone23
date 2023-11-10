@@ -13,55 +13,80 @@ const Posts = [
     userName: 'Nick Anaya',
     userImg: require('../img/defaultpfp.jpeg'),
     postTime: '4 minutes ago',
-    postText: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
+    description: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
     postImg: require('../img/defaultpostimg.jpeg'),
     liked: false,
     likes: 14,
-    comments: 5
+    comments: 5,
+    dishName: 'Stir-Fry Chicken',
+    prepTime: 10,
+    estimatedCost: 10,
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
   },
   {
     id: '2',
     userName: 'Harvey Ji',
     userImg: require('../img/defaultpfp.jpeg'),
     postTime: '10 minutes ago',
-    postText: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
+    description: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
     postImg: require('../img/defaultpostimg.jpeg'),
     liked: true,
     likes: 14,
-    comments: 5
+    comments: 5,
+    dishName: 'Stir-Fry Chicken',
+    prepTime: 10,
+    estimatedCost: 10,
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
   },
   {
     id: '3',
     userName: 'Audrey Pino',
     userImg: require('../img/defaultpfp.jpeg'),
     postTime: '1 hour ago',
-    postText: 'I am a big doo doo head',
+    description: 'I am a big doo doo head',
     postImg: require('../img/defaultpostimg.jpeg'),
     liked: false,
     likes: 0,
-    comments: 0
+    comments: 0,
+    dishName: 'Stir-Fry Chicken',
+    prepTime: 10,
+    estimatedCost: 10,
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
   },
   {
     id: '4',
     userName: 'Aiden Frevert',
     userImg: require('../img/defaultpfp.jpeg'),
     postTime: '1 day ago',
-    postText: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
+    description: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
     postImg: require('../img/defaultpostimg.jpeg'),
     liked: true,
     likes: 1,
-    comments: 1
+    comments: 1,
+    dishName: 'Stir-Fry Chicken',
+    prepTime: 10,
+    estimatedCost: 10,
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
   },
   {
     id: '5',
     userName: 'Tony Czajka',
     userImg: require('../img/defaultpfp.jpeg'),
     postTime: 'November 3rd',
-    postText: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
+    description: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
     postImg: require('../img/defaultpostimg.jpeg'),
     liked: true,
     likes: 14,
-    comments: 5
+    comments: 5,
+    dishName: 'Stir-Fry Chicken',
+    prepTime: 10,
+    estimatedCost: 10,
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
   }
 ]
 
