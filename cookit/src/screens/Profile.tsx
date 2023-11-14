@@ -1,7 +1,22 @@
+/*
+  Purpose: This is the Profile Screen of the App that contains the each persons profile
+  Author:Harvey Ji
+  Editors:Tony Czajka
+*/
+
+//all the imports
 import * as React from 'react'
 import {StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Dimensions, ScrollView, TouchableHighlight, Button } from 'react-native';
 import { useState, useEffect } from 'react'; // <-- Import useState and useEffect
 import axios from 'axios';
+
+interface UserProfile {
+  profilePicture: string;
+  postCount: number;
+  followerCount: number;
+  followingCount: number;
+  user: string;
+}
 
 const LOCAL_HOST_NUBMER = '5018';
 type ProfileScreenRouteParams = {
@@ -33,7 +48,7 @@ export function ProfileScreen() {
 
   ]
 // 1. Create state variables for profile data
-const [profile, setProfile] = useState(null);
+const [profile, setProfile] = useState<UserProfile | null>(null);
 
 // 2. Use the useEffect hook to fetch profile data when the component mounts
 useEffect(() => {

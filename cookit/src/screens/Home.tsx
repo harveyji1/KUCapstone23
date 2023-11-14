@@ -1,3 +1,10 @@
+/*
+  Purpose: This is the Home Screen of the App that contains the home feed
+  Author:Harvey Ji
+  Editors:
+*/
+
+//all the imports
 import * as React from 'react'
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -6,7 +13,7 @@ import PostCard from '../components/PostCard'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //This will be replaced by actual data from backend
-
+//For now this is passing in the posts
 const Posts = [
   {
     id: '1',
@@ -90,6 +97,8 @@ const Posts = [
   }
 ]
 
+
+//The actual function of the HomeScreen
 export function HomeScreen({}){
     return (
       <Container>
@@ -101,6 +110,8 @@ export function HomeScreen({}){
             otherParam: "Tony Czajka"
           })}
         /> */}
+
+        {/*Maps out each card to the item passed in*/}
         <StatusBar style="auto" />
         <FlatList
           data = {Posts}

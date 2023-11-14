@@ -1,7 +1,16 @@
+/*
+Purpose: This file is the post component
+Author: Harvey Ji
+Editors: 
+*/
+
+//imports
 import React from 'react';
 import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, DescriptionText, RecipeText, IngredientsText, PostImg, InteractionWrapper, Interaction, InteractionText, DishNameText, IngredientsWrapper, IngredientsWord, InstructionsWrapper, InstructionsWord, InstructionsText} from '../styles/FeedStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
+//interface for the PostItemType that is passed in to each Post component
 interface PostItemType {
     id: string;
     userName: string;
@@ -19,11 +28,14 @@ interface PostItemType {
     dishName: string;
   }
 
+
+ 
   const PostCard: React.FC<{ item: PostItemType }> = ({ item }) => {
 
    var likeIcon = item.liked ? 'heart' : 'heart-outline';
    var likeIconColor = item.liked ? 'red' : '#333'
 
+//some minor logic to determine the appearance of each card
     if(item.likes==1){
         var likeText = '1 like';
     } else if (item.likes > 1) {
@@ -40,6 +52,7 @@ interface PostItemType {
         var commentText = 'Comment'
     }
 
+    //returns the actual card
     return(
         <Card>
           <PostImg source = {item.postImg}/>
@@ -77,5 +90,7 @@ interface PostItemType {
         </Card>
     );
 }
+
+//default export stmt
 
 export default PostCard;

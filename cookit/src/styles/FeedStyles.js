@@ -1,3 +1,8 @@
+/*
+  Purpose: This is the Styles page for PostCard aka the feed
+  Author:Harvey Ji
+  Editors:
+*/
 import styled from 'styled-components'
 
 export const Container = styled.View`
