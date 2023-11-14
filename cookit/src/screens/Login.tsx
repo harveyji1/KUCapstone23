@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {useFonts} from 'expo-font';
 import {
   View,
@@ -15,9 +15,13 @@ import { useTheme } from '@mui/material/styles';
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { LoginContext } from '../../LoginProvider';
 
 const LOCAL_HOST_NUBMER = '5018';
 const COMPUTER_IP_ADDRESS = '';
+
+//Import function to update global login context state
+const { state, setState } = useContext(LoginContext);
 
 export function LoginPage({navigation}) {
 
@@ -37,7 +41,8 @@ export function LoginPage({navigation}) {
       });
       console.log(response.status);
       if (response.status === 200){
-        // await AsyncStorage.setItem('token', response.data.token);
+        // if response is okay, set global token to response token
+        setState(response.data.token);
         Alert.alert('Login Successful, Welcome '+ username + '!');
         navigation.navigate('Home');
       }
