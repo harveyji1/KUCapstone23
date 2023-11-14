@@ -10,7 +10,7 @@ import {StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Dimensions, S
 import { useState, useEffect } from 'react'; // <-- Import useState and useEffect
 import axios from 'axios';
 
-interface UserProfile {
+type UserProfile = {
   profilePicture: string;
   postCount: number;
   followerCount: number;
