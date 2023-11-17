@@ -11,12 +11,13 @@ namespace Business.Services.Azure
 {
     public interface IBlobService
     {
-        Task<string> UploadBlob(PostRequest post);
+        Task<string> UploadBlob(string containerName, int userID, IFormFile image);
     }
 
     public class BlobService : IBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
+
 
         public BlobService(BlobServiceClient blobServiceClient)
         {
@@ -24,15 +25,15 @@ namespace Business.Services.Azure
         }
 
 
-        public async Task<string> UploadBlob(PostRequest post)
+        public async Task<string> UploadBlob(string containerName, int userID, IFormFile image)
         {
             string timestamp = DateTime.Now.ToString();
-            string fileName = $"{post.UserID}_{timestamp}.jpg";
-            var container = _blobServiceClient.GetBlobContainerClient("userposts");
+            string fileName = $"{userID}_{timestamp}.jpg";
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = container.GetBlobClient(fileName);
 
             
-            await blobClient.UploadAsync(post.PostImage.OpenReadStream());
+            await blobClient.UploadAsync(image.OpenReadStream());
             return blobClient.Uri.ToString();
         }
     }

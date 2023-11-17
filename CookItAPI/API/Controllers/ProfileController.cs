@@ -2,6 +2,7 @@
 using Business.Services.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Request;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers
@@ -27,12 +28,17 @@ namespace API.Controllers
             return Ok(await _profileService.GetProfileModelAsync(profileID));
         }
 
-        //[HttpPost("testProfileImageUpload")]
-        //public async Task<IActionResult> UploadProfileImage([FromForm] IFormFile image,  [FromForm]string fileName)
-        //{
-        //    return Ok(await _blobService.UploadBlob(image, fileName));
-        //}
+        [HttpPost("profile")]
+        public async Task<IActionResult> CreateProfileAsync([FromForm] ProfileRequest profile)
+        {
+            if (await _profileService.CreateProfileAsync(profile))
+            {
+                return Ok();
+            }
+            return BadRequest();
 
-        
+        }
+
+
     }
 }

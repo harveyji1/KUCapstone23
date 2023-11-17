@@ -28,9 +28,8 @@ namespace Business.Services.User
 
         public async Task<bool> CreatePostAsync(PostRequest newPost)
         {
-            string imageURL = await _blob.UploadBlob(newPost);
+            string imageURL = await _blob.UploadBlob("userposts", newPost.UserID, newPost.PostImage);
             return await _repository.CreatePostAsync(newPost, imageURL);
-
         }
     }
 }

@@ -25,7 +25,7 @@ namespace API.Controllers
 
        
         [HttpPost("posts")]
-        public async Task<IActionResult> UploadProfileImage([FromForm] PostRequest post)
+        public async Task<IActionResult> CreatePostAsync([FromForm] PostRequest post)
         {
             if (await _postService.CreatePostAsync(post))
             {
