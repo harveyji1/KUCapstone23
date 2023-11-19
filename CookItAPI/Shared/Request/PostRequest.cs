@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shared.Request
 {
+    /// <summary>
+    /// post request object available to all layers
+    /// </summary>
     public class PostRequest
     {
         public int UserID { get; set; }

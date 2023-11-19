@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Shared.Request
 {
+    /// <summary>
+    /// request object available to all layers
+    /// </summary>
     public class ProfileRequest
     {
         public int UserId { get; set; }

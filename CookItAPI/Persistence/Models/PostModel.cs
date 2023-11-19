@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Models
 {
+    //Post object. Mimics our sql table
     public class PostModel
     {
         public int ID { get; set; }

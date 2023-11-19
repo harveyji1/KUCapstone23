@@ -8,6 +8,14 @@ using Shared.Request;
 
 namespace API.Controllers
 {
+
+    /// <summary>
+    /// Posts controller
+    /// </summary>
+    /// <remarks>
+    /// Will handle all crud related ops for post objects
+    /// </remarks>
+
     [Route("api/v1.0")]
     [ApiController]
     public class PostsController : Controller
@@ -18,12 +26,18 @@ namespace API.Controllers
 
         public PostsController(IPostService postService, IBlobService blobService)
         {
-
             _postService = postService;
             _blobService = blobService;
         }
 
-       
+
+        /// <summary>
+        /// Passes to service layer for processing
+        /// </summary>
+        /// <param name="post">Post object</param>
+        /// <returns>Http status code</returns>
+        
+
         [HttpPost("posts")]
         public async Task<IActionResult> CreatePostAsync([FromForm] PostRequest post)
         {

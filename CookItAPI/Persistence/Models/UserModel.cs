@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Models
 {
+    //User object. Mimics our sql table
     public class UserModel
     {
         [Key]

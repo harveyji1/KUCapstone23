@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
+    //postrepo interface
     public interface IPostRepository
     {
         Task<bool> CreatePostAsync(PostRequest newPost, string imageURL);
     }
 
+    //post repo class. creates post for now. will handle edit delete etc
     public class PostRepository : IPostRepository
     {
         private readonly SqlServerContext _context;
@@ -22,7 +24,12 @@ namespace Persistence.Repositories
         {
             _context = context;
         }
-
+        /// <summary>
+        /// adds post in db.
+        /// </summary>
+        /// <param name="newPost"></param>
+        /// <param name="imageURL"></param>
+        /// <returns>boolean on success</returns>
         public async Task<bool> CreatePostAsync(PostRequest newPost, string imageURL)
         {
             PostModel post = new PostModel

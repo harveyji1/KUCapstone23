@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Business.Services.User
 {
+    //post interface
     public interface IPostService
     {
         Task<bool> CreatePostAsync(PostRequest newPost);
     }
-
+    //post class. will handle uploading of post images and pass to repo layer
     public class PostService : IPostService
     {
         private readonly IPostRepository _repository;
@@ -25,7 +26,7 @@ namespace Business.Services.User
             _blob = blob;
         }
 
-
+        //calls our blob service. Uploads image and takes the string url which will be passed to repo layer
         public async Task<bool> CreatePostAsync(PostRequest newPost)
         {
             string imageURL = await _blob.UploadBlob("userposts", newPost.UserID, newPost.PostImage);
