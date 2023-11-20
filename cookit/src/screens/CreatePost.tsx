@@ -132,7 +132,7 @@ export function CreatePostScreen({ navigation }) {
           autoCapitalize="none"
         />
         <Button
-          title="NextScreen"
+          title="Enter Ingredients"
           onPress={() => navigation.navigate("Ingredients")}
         />
       </View>
