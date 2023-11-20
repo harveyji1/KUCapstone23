@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
+    //entity framework config. Mapping our modeles to our DB tables
     public class SqlServerContext : DbContext
     {
         public SqlServerContext(DbContextOptions<SqlServerContext> options) : base(options)
@@ -16,6 +17,7 @@ namespace Persistence.Context
         }
         public DbSet<UserModel> Users{ get; set; }
         public DbSet<ProfileModel> Profiles{ get; set; }
+        public DbSet<PostModel> Posts { get; set; }
 
 
     }
