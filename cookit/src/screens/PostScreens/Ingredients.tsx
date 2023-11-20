@@ -1,3 +1,8 @@
+/*
+  Purpose: Screen component in create a post flow where users list the ingredients required to make the food item.
+  Author: Tony Czajka
+  Editors: 
+*/
 import * as React from "react";
 import { Text, View, Button } from "react-native";
 

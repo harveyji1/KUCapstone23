@@ -1,3 +1,10 @@
+/*
+  Purpose: Main application file for a React Native app with navigation and splash screen handling.
+  Author: Tony Czajka
+  Editors: 
+*/
+
+// import components, navigation, and custom screens
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,13 +25,18 @@ import { InstructionsScreen } from "./src/screens/PostScreens/Instructions";
 import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
 
+// Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
 
+// Creating stack navigators for different navigation layers
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Stack2 = createNativeStackNavigator();
 
+// BottomTabs component: Renders the bottom tab navigation
+
 function BottomTabs() {
+  // Setup for the bottom tab navigator with custom styles and icons
   return (
     <Tab.Navigator
       screenOptions={{
@@ -119,7 +131,9 @@ function BottomTabs() {
   );
 }
 
+// CreatePostStack component: Navigates through the post creation process
 function CreatePostStack() {
+  // Setup for the stack navigator used in the CreatePost process
   return (
     <Stack.Navigator>
       <Stack2.Screen name="CreatePost" component={CreatePostScreen} />
@@ -130,7 +144,9 @@ function CreatePostStack() {
   );
 }
 
+// Main App component
 export default function App() {
+  // Load custom fonts and handle font loading status
   const [isLoaded] = useFonts({
     "YoungSerif-Regular": require("./assets/fonts/YoungSerif-Regular.ttf"),
 
@@ -156,16 +172,19 @@ export default function App() {
     "Quando-Regular": require("./assets/fonts/Quando-Regular.ttf"),
   });
 
+  // Hide the splash screen once fonts are loaded
   const handleOnLayout = useCallback(async () => {
     if (isLoaded) {
       await SplashScreen.hideAsync(); //hide the splashscreen
     }
   }, [isLoaded]);
 
+  // Show nothing while fonts are loading
   if (!isLoaded) {
     return null;
   }
 
+  // Main app layout with navigation and initial route setup
   return (
     <>
       <View style={styles.font} onLayout={handleOnLayout}></View>
@@ -201,6 +220,7 @@ export default function App() {
     </>
   );
 }
+// StyleSheet for styling components
 const styles = StyleSheet.create({
   container: {
     flex: 1,
