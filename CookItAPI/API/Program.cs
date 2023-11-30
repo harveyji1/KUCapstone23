@@ -51,6 +51,8 @@ namespace API
             builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
             builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlob")));
             builder.Services.AddSingleton<IBlobService, BlobService>();
+            builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
 
             builder.Services.AddCors(options =>
             {

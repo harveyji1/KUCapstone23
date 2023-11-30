@@ -10,8 +10,8 @@ import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, De
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-//interface for the PostItemType that is passed in to each Post component
-interface PostItemType {
+//type for the PostItemType that is passed in to each Post component
+type PostItemType = {
     id: string;
     userName: string;
     userImg: string; 

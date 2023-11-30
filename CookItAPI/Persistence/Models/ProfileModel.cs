@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Models
 {
+    //Profile object. Mimics our sql table
     public class ProfileModel
     {
         [Key]
