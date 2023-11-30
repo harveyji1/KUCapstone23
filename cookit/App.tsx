@@ -24,6 +24,7 @@ import { Octicons } from "@expo/vector-icons";
 import { InstructionsScreen } from "./src/screens/PostScreens/Instructions";
 import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
+import { LoginProvider } from "./LoginProvider"
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -187,6 +188,7 @@ export default function App() {
   // Main app layout with navigation and initial route setup
   return (
     <>
+    <LoginProvider>
       <View style={styles.font} onLayout={handleOnLayout}></View>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
@@ -217,6 +219,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </LoginProvider>
     </>
   );
 }
