@@ -120,7 +120,8 @@ export function CreatePostScreen({ navigation }) {
           autoCapitalize="none"
         />
         <Button
-          title="NextScreen"
+          color={"#46996F"}
+          title="Next Screen"
           onPress={() => navigation.navigate("Ingredients")}
         />
       </View>
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     marginTop: 20,
+    marginBottom: 20,
     borderColor: "#667B68", // --color-forest-green
     borderWidth: 2,
   },
@@ -201,4 +203,5 @@ const styles = StyleSheet.create({
     alignItems: "center", // Center children vertically within the container
     // Add additional styling as needed
   },
+
 });

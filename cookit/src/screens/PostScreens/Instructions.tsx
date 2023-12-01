@@ -6,6 +6,7 @@ export function InstructionsScreen({ navigation }) {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Instructions Screen</Text>
       <Button
+        color={"#46996F"}
         title="NextScreen"
         onPress={() => navigation.navigate("Review")}
       />

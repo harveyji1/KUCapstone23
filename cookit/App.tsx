@@ -122,10 +122,10 @@ function BottomTabs() {
 function CreatePostStack() {
   return (
     <Stack.Navigator>
-      <Stack2.Screen name="CreatePost" component={CreatePostScreen} />
-      <Stack2.Screen name="Ingredients" component={IngredientsScreen} />
-      <Stack2.Screen name="Instructions" component={InstructionsScreen} />
-      <Stack2.Screen name="Review" component={ReviewPostScreen} />
+      <Stack2.Screen name="CreatePost" component={CreatePostScreen} options={{headerShown: false}} />
+      <Stack2.Screen name="Ingredients" component={IngredientsScreen} options={{headerShown: false}} />
+      <Stack2.Screen name="Instructions" component={InstructionsScreen} options={{headerShown: false}} />
+      <Stack2.Screen name="Review" component={ReviewPostScreen} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 }
