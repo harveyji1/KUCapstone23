@@ -19,19 +19,19 @@ import {
 } from "react-native";
 import { useTheme } from "@mui/material/styles";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
-import { LoginContext } from '../../LoginProvider';
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { LoginContext } from "../../LoginProvider";
 
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
 const COMPUTER_IP_ADDRESS = "";
 
-//Import function to update global login context state
-const { state, setState } = useContext(LoginContext);
-
 export function LoginPage({ navigation }) {
   // State hooks for managing username and password
+
+  //Import function to update global login context state
+  const { state, setState } = useContext(LoginContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -54,12 +54,12 @@ export function LoginPage({ navigation }) {
       );
       console.log(response.status);
       // Handling successful login
-      if (response.status === 200){
+      if (response.status === 200) {
         // if response is okay, set global token to response token
         setState(response.data.token);
         // await AsyncStorage.setItem('token', response.data.token);
-        Alert.alert('Login Successful, Welcome '+ username + '!');
-        navigation.navigate('Home');
+        Alert.alert("Login Successful, Welcome " + username + "!");
+        navigation.navigate("Home");
       }
     } catch (error) {
       // Error handlign for failed login
