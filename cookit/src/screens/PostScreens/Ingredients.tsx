@@ -1,3 +1,10 @@
+/*
+  Purpose: This is the Ingredeients Screen of the Create Post Screens that allows the user to enter in the ingredients of their recipe
+  Author: Audrey Pino & Harvey Ji
+  Editors:
+*/
+
+
 import * as React from 'react';
 import { Text, View, Button, TextInput, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -19,7 +26,7 @@ export function IngredientsScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.ingredientPageContainer}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={styles.headerText}>Add Your Ingredients</Text>
       <TextInput
         style={styles.inputBox}
@@ -36,7 +43,7 @@ export function IngredientsScreen({ navigation }) {
             <View style={styles.ingredientItemContainer}>
               <Text style={styles.ingredientItem}>{item}</Text>
               <TouchableOpacity onPress={() => removeIngredient(index)}>
-                <Text style={styles.removeIcon}><Feather name="x" size={15} /></Text>
+                <Text style={{ color: 'red' }}><Feather name="x" size={15} color="red" /></Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -85,32 +92,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     alignItems: 'center', 
     borderRadius: 8,
-    backgroundColor: '#DDE6D5',
+    backgroundColor: '#F4EAD7',
   },
   inputBox: {
-    height: 60, 
-    borderColor: "#667B68", // --color-forest-green
-    borderWidth: 4, 
+    height: 40, 
+    borderColor: '#345C50', 
+    borderWidth: 2, 
     borderRadius: 15,
     padding: 10,
     width: '80%', 
     marginBottom: 10,
-    fontFamily: "PlayfairDisplay-Medium",
-    fontSize: 16,
-    color: "#3D5147", // --color-forest-green
-  },
-  ingredientPageContainer: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center',
-    backgroundColor: '#F4EAD7',
-  },
-  removeIcon: {
-    color: '#345C50',
-    marginLeft: 5,
-    marginBottom: 5,
-    marginTop: 5,
-    marginRight: 5,
-  
+    fontFamily: 'SweetSansProRegular',
   },
 });

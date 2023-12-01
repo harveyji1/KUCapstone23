@@ -11,13 +11,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Business.Services.User
 {
+    //auth interface
     public interface IAuthService
     {
         Task<string> RegisterUserAsync(string username, string password, string email);
         Task<string> LoginUserAsync(string username, string password);
     }
 
-
+    //auth class that handles registering and login for users. 
     public class AuthService : IAuthService
     {
 
@@ -31,6 +32,13 @@ namespace Business.Services.User
 
         }
 
+        /// <summary>
+        /// Method for registering users. pulls from our appsettings and hashes password
+        /// </summary>
+        /// <param name="username">username</param>
+        /// <param name="password">password</param>
+        /// <param name="email">email</param>
+        /// <returns>token</returns>
         public async Task<string> RegisterUserAsync(string username, string password, string email)
         {
             var existingUser = await _userRepository.GetUserByUsernameAsync(username);
@@ -44,6 +52,13 @@ namespace Business.Services.User
 
             return GenerateToken(user.Id, user.Username, _configuration["JwtSettings:Key"], _configuration["JwtSettings:Issuer"], _configuration["JwtSettings:Audience"]); ;
         }
+
+        /// <summary>
+        /// Method for login users. pulls from our appsettings and verifies password
+        /// </summary>
+        /// <param name="username">username</param>
+        /// <param name="password">password</param>
+        /// <returns>token</returns>
 
         public async Task<string> LoginUserAsync(string username, string password)
         {
@@ -62,7 +77,15 @@ namespace Business.Services.User
             return "Error";
         }
 
-
+        /// <summary>
+        /// Generates token as per the method name
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="username">username</param>
+        /// <param name="key">key</param>
+        /// <param name="issuer">issuer</param>
+        /// <param name="audience">audience</param>
+        /// <returns>Token</returns>
         private string GenerateToken(int id, string username, string key, string issuer, string audience)
         {
             var claims = new[]

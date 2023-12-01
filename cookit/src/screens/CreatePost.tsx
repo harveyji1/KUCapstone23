@@ -1,3 +1,9 @@
+/*
+  Purpose: Screen component for creating a new post
+  Features: Image picking, text input fields for post details, and navigation.
+  Created By: Tony Czajka and Audrey Pino
+  Date: 9/10/2023
+*/
 import React, { useState } from "react";
 import {
   View,
@@ -15,13 +21,16 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+// CreatePostScreen component
 export function CreatePostScreen({ navigation }) {
+  // Setup state hooks for managing the post details
   const [recipeName, setRecipeName] = useState("");
   const [description, setDescription] = useState("");
   const [cookingTime, setCookingTime] = useState("");
   const [cost, setCost] = useState("");
   const [image, setImage] = useState(null);
 
+  // Function that handles image picking
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -31,11 +40,13 @@ export function CreatePostScreen({ navigation }) {
       quality: 1,
     });
 
+    // sets the picked image to state
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
 
+  // Function to handle post creation
   const handleCreatePost = () => {
     // You would include your logic to validate the inputs and make a post request to your server
     console.log("Creating post with:", {
@@ -50,6 +61,7 @@ export function CreatePostScreen({ navigation }) {
     navigation.goBack(); // or navigate to another screen
   };
 
+  // Main return statement rendering the UI elements
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -121,7 +133,7 @@ export function CreatePostScreen({ navigation }) {
         />
         <Button
           color={"#46996F"}
-          title="Next Screen"
+          title="Enter Ingredients"
           onPress={() => navigation.navigate("Ingredients")}
         />
       </View>
@@ -129,7 +141,7 @@ export function CreatePostScreen({ navigation }) {
   );
 }
 
-// Add your styles here
+// StyleSheet object for styling the components
 const styles = StyleSheet.create({
   container: {
     flex: 1,
