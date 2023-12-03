@@ -13,9 +13,10 @@ namespace Business.Services.User
     //profile interface
     public interface IProfileService
     {
-        Task<bool> CreateProfileAsync(ProfileRequest profile);
-        Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<bool> CreateProfileAsync(ProfileRequest profile, int userID);
+        Task<ProfileModel> GetProfileModelAsync(int userID);
     }
+
     //profile class. handles crud related functionality for profile
     public class ProfileService : IProfileService
     {
@@ -30,15 +31,16 @@ namespace Business.Services.User
 
 
         //retrieves profile. This will take userid in the future
-        public async Task<ProfileModel> GetProfileModelAsync(int profileID)
+        public async Task<ProfileModel> GetProfileModelAsync(int userID)
         {
-            return await _profileRepo.GetProfileModelAsync(profileID);
+            return await _profileRepo.GetProfileModelAsync(userID);
         }
         //creates profile. Param is the profile object to post. Calls our blob service for uploading of profile image. passes to repo layer
-        public async Task<bool> CreateProfileAsync(ProfileRequest profile)
+        public async Task<bool> CreateProfileAsync(ProfileRequest profile, int userID)
         {
-            string imageURL = await _blob.UploadBlob("profileimagescontainer", profile.UserId, profile.ProfilePicture);
-            return await _profileRepo.CreateProfileAsync(profile, imageURL);
+            string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, profile.ProfilePicture);
+            return await _profileRepo.CreateProfileAsync(profile, imageURL, userID);
         }
+
     }
 }

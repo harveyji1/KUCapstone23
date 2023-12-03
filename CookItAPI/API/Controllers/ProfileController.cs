@@ -1,9 +1,11 @@
 ﻿using Business.Services.Azure;
 using Business.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Request;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -34,11 +36,14 @@ namespace API.Controllers
         /// </summary>
         /// <param name="profileID">ID of profile for now. will take token later as this will contain the userid</param>
         /// <returns>Http status code</returns>
-        
+        [Authorize]
         [HttpGet("profile")]
-        public async Task<IActionResult> GetUserProfile(int profileID)
+        public async Task<IActionResult> GetUserProfile()
         {
-            return Ok(await _profileService.GetProfileModelAsync(profileID));
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+            return Ok(await _profileService.GetProfileModelAsync(userId));
         }
 
         /// <summary>
@@ -46,11 +51,15 @@ namespace API.Controllers
         /// </summary>
         /// <param name="profile">Profile object</param>
         /// <returns>Http status code</returns>
-
+        [Authorize]
         [HttpPost("profile")]
         public async Task<IActionResult> CreateProfileAsync([FromForm] ProfileRequest profile)
         {
-            if (await _profileService.CreateProfileAsync(profile))
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _profileService.CreateProfileAsync(profile, userId))
             {
                 return Ok();
             }

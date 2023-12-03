@@ -14,7 +14,6 @@ namespace Shared.Request
     /// </summary>
     public class ProfileRequest
     {
-        public int UserId { get; set; }
         public string? FullName { get; set; }
         public string? Bio { get; set; }
         public IFormFile? ProfilePicture { get; set; }

@@ -17,9 +17,10 @@ namespace Persistence.Repositories
     //profile repo interface
     public interface IProfileRepository
     {
-        Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL);
+        Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID);
         Task<ProfileModel> GetProfileModelAsync(int profileID);
     }
+
     //profile repo class. gets profile, edit profile, etc. (Crud func)
     public class ProfileRepository : IProfileRepository
     {
@@ -46,14 +47,14 @@ namespace Persistence.Repositories
         /// <param name="profile"></param>
         /// <param name="imageURL"></param>
         /// <returns></returns>
-        public async Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL)
+        public async Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID)
         {
             ProfileModel profileModel = new ProfileModel
             {
                 ProfilePicture = imageURL,
                 Bio = profile.Bio,
                 FullName = profile.FullName,
-                UserId = profile.UserId
+                UserId = userID
             };
             _context.Profiles.Add(profileModel);
             await _context.SaveChangesAsync();

@@ -13,7 +13,6 @@ namespace Shared.Request
     /// </summary>
     public class PostRequest
     {
-        public int UserID { get; set; }
         public string Title { get; set; }
         public string? Ingredients { get; set; }
         public string? Instructions { get; set; }

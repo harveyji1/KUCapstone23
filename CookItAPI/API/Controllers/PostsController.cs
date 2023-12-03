@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Shared.Request;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -36,12 +37,16 @@ namespace API.Controllers
         /// </summary>
         /// <param name="post">Post object</param>
         /// <returns>Http status code</returns>
-        
 
+        [Authorize]
         [HttpPost("posts")]
         public async Task<IActionResult> CreatePostAsync([FromForm] PostRequest post)
         {
-            if (await _postService.CreatePostAsync(post))
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _postService.CreatePostAsync(post, userId))
             {
                 return Ok();
             }
