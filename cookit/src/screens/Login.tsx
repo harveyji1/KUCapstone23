@@ -22,10 +22,32 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
+import jwt from "react-native-pure-jwt";
+import { decode as atob } from "base-64";
 
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
 const COMPUTER_IP_ADDRESS = "";
+
+function decodeJWT(token) {
+  try {
+    const base64Url = token.split(".")[1]; // Get the payload part
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error("Invalid token", e);
+    return null;
+  }
+}
 
 export function LoginPage({ navigation }) {
   // State hooks for managing username and password
@@ -52,11 +74,16 @@ export function LoginPage({ navigation }) {
           password: password,
         }
       );
-      console.log(response.status);
+      const token = response.data;
       // Handling successful login
       if (response.status === 200) {
+        const decodedToken = decodeJWT(token);
+        console.log("DECODED TOKEN: ", decodedToken);
+        console.log("Type of token: ", typeof decodedToken);
+        console.log("ID: ", decodedToken.sub);
+        console.log(response.status);
         // if response is okay, set global token to response token
-        setState(response.data.token);
+        setState(decodedToken);
         // await AsyncStorage.setItem('token', response.data.token);
         Alert.alert("Login Successful, Welcome " + username + "!");
         navigation.navigate("Home");
