@@ -92,6 +92,7 @@ export const InstructionsWord = styled.Text`
     color: #345c50;
     padding-bottom: 5px;
     font-weight: bold;
+    margin-left: 10px;
 `;
 
 export const InstructionsText = styled.Text`

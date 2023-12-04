@@ -28,8 +28,8 @@ const Posts = [
     dishName: 'Stir-Fry Chicken',
     prepTime: 10,
     estimatedCost: 10,
-    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
   },
   {
     id: '2',
@@ -44,8 +44,8 @@ const Posts = [
     dishName: 'Stir-Fry Chicken',
     prepTime: 10,
     estimatedCost: 10,
-    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
   },
   {
     id: '3',
@@ -60,8 +60,8 @@ const Posts = [
     dishName: 'Stir-Fry Chicken',
     prepTime: 10,
     estimatedCost: 10,
-    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
   },
   {
     id: '4',
@@ -76,8 +76,8 @@ const Posts = [
     dishName: 'Stir-Fry Chicken',
     prepTime: 10,
     estimatedCost: 10,
-    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
   },
   {
     id: '5',
@@ -92,8 +92,8 @@ const Posts = [
     dishName: 'Stir-Fry Chicken',
     prepTime: 10,
     estimatedCost: 10,
-    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'done']
+    ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
   }
 ]
 
