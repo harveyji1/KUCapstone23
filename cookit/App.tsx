@@ -191,7 +191,7 @@ export default function App() {
     <LoginProvider>
       <View style={styles.font} onLayout={handleOnLayout}></View>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Login"
             component={LoginPage}
