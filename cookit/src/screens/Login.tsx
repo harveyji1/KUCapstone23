@@ -16,6 +16,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Animated
 } from "react-native";
 import { useTheme } from "@mui/material/styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,6 +25,8 @@ import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import jwt from "react-native-pure-jwt";
 import { decode as atob } from "base-64";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
@@ -57,6 +60,20 @@ export function LoginPage({ navigation }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // for the eye icon
+  const [showCheckPassword, setShowCheckPassword] = useState(false); // for the eye icon
+  const [isRememberMe, setIsRememberMe] = useState(false); // for remember me
+
+  // toggle show password
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // toggle show check password
+  const toggleRememberMe = () => {
+    setIsRememberMe(!isRememberMe);
+  }
+
 
   // Function to handle user login
   const HandleLogin = async () => {
@@ -110,9 +127,9 @@ export function LoginPage({ navigation }) {
   };
 
   // Function to navigate to Register screen
-  const HandleRegister = () => {
-    navigation.navigate("Register");
-  };
+    const HandleRegister = () => {
+      navigation.navigate("Register");
+    };
 
   // Returns the visuals for the Login Page
   return (
@@ -120,52 +137,86 @@ export function LoginPage({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <LinearGradient
-        // Background Linear Gradient
-        colors={["#F4EAD7", "#F4EAD7", "#FFF6E7"]}
-        style={styles.background}
-      />
       <View style={styles.container}>
-        {/* IMAGE */}
-        <Image style={styles.logo} source={require("../img/Logo.png")} />
-        {/* <Text style={styles.appTitle}>Cookit</Text> */}
+        {/* Toggle between Sign In and Register */}
+        <View style={styles.signInRegisterToggle}>
+          <View style={[styles.toggleHalf, styles.active]}>
+            <Text style={styles.activeText}>Sign in</Text>
+          </View>
+          <TouchableOpacity
+            style={[styles.toggleHalf, styles.inactive]}
+            onPress={HandleRegister}
+          >
+            <Text style={styles.inactiveText}>Register</Text>
+          </TouchableOpacity>
+        </View>
+        
+        {/* SIGN IN */}
+        <View style={styles.signInHeadingContainer}>
+        <Text style={styles.signInHeading}>Sign In</Text>
+        <Text style={styles.signInSubHeading}>Sign In to get started</Text>
+        </View>
+
         {/* USERNAME */}
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor={"#3D5147"}
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          autoCapitalize="none"
-        />
+        <View style={styles.UsernameInputWrapper}>
+          <MaterialCommunityIcons name="email-outline" size={20} style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor={"#9ca3af"}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            autoCapitalize="none"
+          />
+        </View>
         {/* PASSWORD */}
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor={"#3D5147"}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          autoCapitalize="none"
-          secureTextEntry
-        />
+        <View style={styles.PasswordInputWrapper}>
+          <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+          {/* PASSWORD */}
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor={"#9ca3af"}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            autoCapitalize="none"
+            secureTextEntry={!showPassword}
+          />
+          {/* Eye Icon */}
+          <MaterialCommunityIcons
+            name={showPassword ? "eye-outline" : "eye-off-outline"}
+            size={17}
+            onPress={toggleShowPassword}
+            style={styles.icon}
+          />
+        </View>
+
+      {/* Remember Me and Forgot Password */}
+      <View style={styles.rememberMeContainer}>
+      <View style={styles.rememberMeSection}>
+        <TouchableOpacity style={styles.rememberMe} onPress={toggleRememberMe}>
+          <MaterialCommunityIcons
+            name={isRememberMe ? "checkbox-marked-outline" : "checkbox-blank-outline"}
+            size={18}
+            style={styles.iconRememberMe}
+          />
+          <Text style={styles.rememberMeText}>Keep me logged in</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.forgotPasswordSection}>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+
         {/* LOGIN BUTTON */}
-        <TouchableOpacity // Use TouchableOpacity for the custom button
+        <TouchableOpacity 
           style={styles.loginButton}
           onPress={HandleLogin}
         >
-          <LinearGradient
-            colors={["#46996F", "#3D5147"]}
-            style={styles.loginButton}
-          >
             <Text style={styles.buttonText}>Login</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        {/* SIGNUP BUTTON */}
-        <TouchableOpacity // Use TouchableOpacity for the custom button
-          style={styles.signupButton}
-          onPress={HandleRegister}
-        >
-          <Text style={styles.buttonTextSU}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -178,43 +229,115 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    color: "#E5E3DB",
+    color: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Background color of the button
   },
-  appTitle: {
-    fontSize: 40,
-    color: "#345C50", // --color-dark-green
-    marginBottom: 50,
-    fontWeight: "bold",
-    fontFamily: "SweetSansProRegular",
+  signInRegisterToggle: {
+    position: 'absolute',
+    top: 80, // Adjust this value based on your layout
+    flexDirection: 'row',
+    borderRadius: 50,
+    width: 178,
+    height: 30,
+    backgroundColor: "#f3f4f6",
+
   },
-  input: {
-    position: "relative",
-    width: 330,
-    height: 50,
-    borderColor: "#667B68", // --color-forest-green
-    borderWidth: 4,
-    marginBottom: 20,
-    padding: 10,
-    color: "#3D5147", // --color-forest-green
+  toggleHalf: {
+    flex: 1, // Use flex to make both options take equal space
     borderRadius: 50,
     alignItems: "center",
-    textAlign: "center",
     justifyContent: "center",
-    fontFamily: "PlayfairDisplay-Medium",
+  },
+  active: {
+    backgroundColor: "#345C50",
+  },
+  inactive: {
+    backgroundColor: "#f3f4f6",
+  },
+  activeText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontFamily: 'SF-Pro-Text-Regular',
+  },
+  inactiveText: {
+    fontSize: 12,
+    color: '#345c50',
+    fontFamily: 'SF-Pro-Text-Regular',
+  },
+  
+  signInHeadingContainer: {
+    marginBottom: 20,
+    width: 343,
+  },
+  signInHeading: {
+    fontSize: 20,
+    color: "#345C50", // --color-dark-green
+    marginBottom: 5,
+    fontFamily: "SweetSansProMedium",
+    // fontFamily: "SF-Pro-Text-Semibold",
+    textAlign: "left"
+
+  },
+  signInSubHeading: {
+    fontSize: 14,
+    color: "#6b7280", // --color-dark-green
+    marginBottom: 5,
+    fontFamily: 'SF-Pro-Text-Regular',
+    textAlign: "left"
+  },
+  UsernameInputWrapper: {
+    position: "relative",
+    flexDirection: 'row',
+    alignItems: "center",
+    width: 343,
+    height: 50,
+    borderColor: "#e5e7eb",
+    borderWidth: 2,
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  PasswordInputWrapper: {
+    position: "relative",
+    flexDirection: 'row',
+    alignItems: "center",
+    width: 343,
+    height: 50,
+    borderColor: "#e5e7eb",
+    borderWidth: 2,
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  icon: {
+    marginRight: 10,
+    color: "#9ca3af",
+  },
+  input: {
+    flex: 1,
+    color: "#9ca3af",
+    fontFamily: "SF-Pro-Text-Medium",
+    fontSize: 12,
+    borderWidth: 0, // Remove the border
+    textAlign: "left", // Align text to the left
+    height: '100%', // Make the input fill the height of the wrapper
   },
   loginButton: {
     borderRadius: 50,
-    width: 200,
-    height: 50,
+    width: 343,
+    height: 55,
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
+    color: "#345C50", // Text color of the button
+    backgroundColor: "#345C50", // Background color of the button
+    marginTop: 20,
   },
   buttonText: {
     color: "#FFFFFF", // Text color of the button
-    fontSize: 18,
+    fontSize: 14,
     textAlign: "center",
-    fontFamily: "Trispace-ExtraBold",
+    fontFamily: "SF-Pro-Text-Semibold",
   },
   signupButton: {
     borderRadius: 50,
@@ -246,5 +369,37 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     height: 1000,
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // Ensure that the container takes full width if not already
+    width: 343, 
+  },
+  rememberMeSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rememberMe: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rememberMeText: {
+    fontSize: 14,
+    color: '#111827',
+    fontFamily: 'SF-Pro-Text-Regular',
+  },
+  iconRememberMe: {
+    marginRight: 5,
+    color: '#345C50',
+  },
+  forgotPasswordSection: {
+    // If additional styling is needed for the forgot password section
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    color: '#345C50',
+    fontFamily: 'SF-Pro-Text-Regular',
   },
 });

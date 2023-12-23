@@ -17,6 +17,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from "react-native";
 import { useTheme } from "@mui/material/styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -120,89 +121,108 @@ export function RegisterScreen({ navigation }) {
       }
     }
   };
+
+    // Function to navigate to Login screen
+    const HandleLogin = () => {
+      navigation.navigate("Login");
+    };
+
   // Render method for the RegisterScreen
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <LinearGradient
-        // Background Linear Gradient
-        colors={["#F4EAD7", "#F4EAD7", "#FFF6E7"]}
-        style={styles.background}
-      />
       <View style={styles.container}>
-        {/* IMAGE */}
-        <Image style={styles.logo} source={require("../img/Logo.png")} />
+      <View style={styles.signInRegisterToggle}>
+          <TouchableOpacity
+            style={[styles.toggleHalf, styles.inactive]}
+            onPress={HandleLogin}
+          >
+            <Text style={styles.inactiveText}>Sign in</Text>
+          </TouchableOpacity>
+          <View style={[styles.toggleHalf, styles.active]}>
+            <Text style={styles.activeText}>Register</Text>
+          </View>
+        </View>
 
-        {/* <Text style={styles.appTitle}>Cookit</Text> */}
+        {/* Register */}
+        <View style={styles.registerHeadingContainer}>
+        <Text style={styles.registerHeading}>Register</Text>
+        <Text style={styles.registerSubHeading}>Let's get started</Text>
+        </View>
 
         {/* USERNAME */}
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor={"#3D5147"}
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          autoCapitalize="none"
-        />
+        <View style={styles.UsernameInputWrapper}>
+          <MaterialCommunityIcons name="account-outline" size={20} style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setUsername(text)}
+              value={username}
+              autoCapitalize="none"
+            />
+        </View>
+
         {/* EMAIL */}
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={"#3D5147"}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          autoCapitalize="none"
-        />
+        <View style={styles.UsernameInputWrapper}>
+          <MaterialCommunityIcons name="email-outline" size={20} style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+              autoCapitalize="none"
+            />
+        </View>
 
         {/* PASSWORD */}
         <View style={styles.passwordContainer}>
           <Text style={styles.passwordRequirement}>
-            Password must be 8 or more characters and contain at least 1
-            uppercase letter, 1 number, & 1 special character
+              Password must be 8 or more characters and contain at least 1
+              uppercase letter, 1 number, & 1 special character
           </Text>
-          <View style={styles.passwordInputContainer}>
-            <View style={styles.passwordInputField}>
-              <TextInput
-                style={styles.passwordInput}
-                placeholder="Password"
-                placeholderTextColor={"#3D5147"}
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                autoCapitalize="none"
-                secureTextEntry={!showPassword}
-              />
-            </View>
+          <View style={styles.PasswordInputWrapper}>
+            <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+            {/* PASSWORD */}
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+            />
             {/* Eye Icon */}
             <MaterialCommunityIcons
-              name={showPassword ? "eye" : "eye-off"}
-              size={24}
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              size={17}
               onPress={toggleShowPassword}
               style={styles.icon}
             />
           </View>
         </View>
 
-        {/* Re-Enter Password */}
-        <View style={styles.passwordContainer}>
-          <View style={styles.passwordInputContainer}>
-            <View style={styles.passwordInputField}>
-              {/* PASSWORD */}
-              <TextInput
-                style={styles.passwordInput}
-                placeholder="Re-Enter Password"
-                placeholderTextColor={"#3D5147"}
-                onChangeText={(text) => setCheckPassword(text)}
-                value={checkPassword}
-                autoCapitalize="none"
-                secureTextEntry={!showCheckPassword}
-              />
-            </View>
+       {/* Re-Enter Password */}
+       <View style={styles.passwordContainer}>
+          <View style={styles.PasswordInputWrapper}>
+            <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Re-Enter Password"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setPassword(text)}
+              value={checkPassword}
+              autoCapitalize="none"
+              secureTextEntry={!showCheckPassword}
+            />
             {/* Eye Icon */}
             <MaterialCommunityIcons
-              name={showCheckPassword ? "eye" : "eye-off"}
-              size={24}
+              name={showCheckPassword ? "eye-outline" : "eye-off-outline"}
+              size={17}
               onPress={toggleShowCheckPassword}
               style={styles.icon}
             />
@@ -211,15 +231,10 @@ export function RegisterScreen({ navigation }) {
 
         {/* Register Button */}
         <TouchableOpacity // Use TouchableOpacity for the custom button
-          style={styles.loginButton}
+          style={styles.registerButton}
           onPress={handleRegister}
         >
-          <LinearGradient
-            colors={["#46996F", "#3D5147"]}
-            style={styles.loginButton}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </LinearGradient>
+          <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -231,43 +246,79 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    color: "#E5E3DB",
+    color: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Background color of the button
   },
-  appTitle: {
-    fontSize: 40,
-    color: "#345C50", // --color-dark-green
-    marginBottom: 50,
-    fontWeight: "bold",
-    fontFamily: "SweetSansProRegular",
+
+  signInRegisterToggle: {
+    position: 'absolute',
+    top: 80, // Adjust this value based on your layout
+    flexDirection: 'row',
+    borderRadius: 50,
+    width: 178,
+    height: 30,
+    backgroundColor: "#f3f4f6",
+
   },
-  input: {
-    position: "relative",
-    width: 330,
-    height: 50,
-    borderColor: "#667B68", // --color-forest-green
-    borderWidth: 4,
+  toggleHalf: {
+    flex: 1, // Use flex to make both options take equal space
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  active: {
+    backgroundColor: "#345C50",
+  },
+  inactive: {
+    backgroundColor: "#f3f4f6",
+  },
+  activeText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontFamily: 'SF-Pro-Text-Regular',
+  },
+  inactiveText: {
+    fontSize: 12,
+    color: '#345c50',
+    fontFamily: 'SF-Pro-Text-Regular',
+  },
+
+  registerHeadingContainer: {
     marginBottom: 20,
-    padding: 10,
-    color: "#3D5147", // --color-forest-green
-    borderRadius: 50,
-    alignItems: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    fontFamily: "PlayfairDisplay-Medium",
+    width: 343,
   },
-  loginButton: {
+  registerHeading: {
+    fontSize: 20,
+    color: "#345C50", // --color-dark-green
+    marginBottom: 5,
+    fontFamily: "SweetSansProMedium",
+    // fontFamily: "SF-Pro-Text-Semibold",
+    textAlign: "left"
+
+  },
+  registerSubHeading: {
+    fontSize: 14,
+    color: "#6b7280", // --color-dark-green
+    marginBottom: 5,
+    fontFamily: 'SF-Pro-Text-Regular',
+    textAlign: "left"
+  },
+  registerButton: {
     borderRadius: 50,
-    width: 200,
-    height: 50,
+    width: 343,
+    height: 55,
     alignItems: "center",
     textAlign: "center",
     justifyContent: "center",
+    color: "#345C50", // Text color of the button
+    backgroundColor: "#345C50", // Background color of the button
+    marginTop: 20,
   },
   buttonText: {
     color: "#FFFFFF", // Text color of the button
-    fontSize: 18,
+    fontSize: 14,
     textAlign: "center",
-    fontFamily: "Trispace-ExtraBold",
+    fontFamily: "SF-Pro-Text-Semibold",
   },
   signupButton: {
     borderRadius: 50,
@@ -287,12 +338,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontFamily: "Trispace-ExtraBold",
   },
-  logo: {
-    width: 250,
-    height: 250,
-    position: "relative",
-    marginBottom: 40,
-  },
+
   background: {
     position: "absolute",
     left: 0,
@@ -305,17 +351,6 @@ const styles = StyleSheet.create({
   passwordContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 10,
-  },
-  passwordInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: 330,
-    height: 50,
-    borderColor: "#667B68", // --color-forest-green
-    borderWidth: 4,
-    marginBottom: 10,
-    borderRadius: 50,
   },
   passwordInputField: {
     flex: 1,
@@ -333,11 +368,45 @@ const styles = StyleSheet.create({
   },
   passwordRequirement: {
     color: "#3D5147", // --color-forest-green
-    fontFamily: "SweetSansProRegular",
+    fontFamily: "SF-Pro-Text-Regular",
     textAlign: "center",
-    fontSize: 13,
-    marginBottom: 15,
+    fontSize: 12,
+    marginBottom: 12,
     width: 330,
     marginTop: 5,
+  },
+
+  UsernameInputWrapper: {
+    position: "relative",
+    flexDirection: 'row',
+    alignItems: "center",
+    width: 343,
+    height: 50,
+    borderColor: "#e5e7eb",
+    borderWidth: 2,
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  PasswordInputWrapper: {
+    position: "relative",
+    flexDirection: 'row',
+    alignItems: "center",
+    width: 343,
+    height: 50,
+    borderColor: "#e5e7eb",
+    borderWidth: 2,
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+  },
+  input: {
+    flex: 1,
+    color: "#9ca3af",
+    fontFamily: "SF-Pro-Text-Medium",
+    fontSize: 12,
+    borderWidth: 0, // Remove the border
+    textAlign: "left", // Align text to the left
+    height: '100%', // Make the input fill the height of the wrapper
   },
 });
