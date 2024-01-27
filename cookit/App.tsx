@@ -24,6 +24,7 @@ import { Octicons } from "@expo/vector-icons";
 import { InstructionsScreen } from "./src/screens/PostScreens/Instructions";
 import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
+import { GetStartedPage } from "./src/screens/GetStarted";
 import { LoginProvider } from "./LoginProvider"
 import RecipeScreen from "./src/screens/RecipeScreen";
 
@@ -172,6 +173,55 @@ export default function App() {
     "PlayfairDisplay-SemiBold": require("./assets/fonts/PlayfairDisplay-SemiBold.ttf"),
 
     "Quando-Regular": require("./assets/fonts/Quando-Regular.ttf"),
+
+    "SF-Pro-Display-Black": require("./assets/fonts/SF-Pro-Display-Black.otf"),
+    "SF-Pro-Display-BlackItalic": require("./assets/fonts/SF-Pro-Display-BlackItalic.otf"),
+    "SF-Pro-Display-Bold": require("./assets/fonts/SF-Pro-Display-Bold.otf"),
+    "SF-Pro-Display-BoldItalic": require("./assets/fonts/SF-Pro-Display-BoldItalic.otf"),
+    "SF-Pro-Display-Heavy": require("./assets/fonts/SF-Pro-Display-Heavy.otf"),
+    "SF-Pro-Display-HeavyItalic": require("./assets/fonts/SF-Pro-Display-HeavyItalic.otf"),
+    "SF-Pro-Display-Light": require("./assets/fonts/SF-Pro-Display-Light.otf"),
+    "SF-Pro-Display-LightItalic": require("./assets/fonts/SF-Pro-Display-LightItalic.otf"),
+    "SF-Pro-Display-Medium": require("./assets/fonts/SF-Pro-Display-Medium.otf"),
+    "SF-Pro-Display-MediumItalic": require("./assets/fonts/SF-Pro-Display-MediumItalic.otf"),
+    "SF-Pro-Display-Regular": require("./assets/fonts/SF-Pro-Display-Regular.otf"),
+    "SF-Pro-Display-RegularItalic": require("./assets/fonts/SF-Pro-Display-RegularItalic.otf"),
+    "SF-Pro-Display-Semibold": require("./assets/fonts/SF-Pro-Display-Semibold.otf"),
+    "SF-Pro-Display-SemiboldItalic": require("./assets/fonts/SF-Pro-Display-SemiboldItalic.otf"),
+    "SF-Pro-Display-Thin": require("./assets/fonts/SF-Pro-Display-Thin.otf"),
+    "SF-Pro-Display-ThinItalic": require("./assets/fonts/SF-Pro-Display-ThinItalic.otf"),
+    "SF-Pro-Display-Ultralight": require("./assets/fonts/SF-Pro-Display-Ultralight.otf"),
+    "SF-Pro-Display-UltralightItalic": require("./assets/fonts/SF-Pro-Display-UltralightItalic.otf"),
+    "SF-Pro-Italic": require("./assets/fonts/SF-Pro-Italic.ttf"),
+    "SF-Pro-Rounded-Black": require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
+    "SF-Pro-Rounded-Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
+    "SF-Pro-Rounded-Heavy": require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
+    "SF-Pro-Rounded-Light": require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
+    "SF-Pro-Rounded-Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
+    "SF-Pro-Rounded-Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
+    "SF-Pro-Rounded-Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
+    "SF-Pro-Rounded-Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
+    "SF-Pro-Rounded-Ultralight": require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
+    "SF-Pro-Text-Black": require("./assets/fonts/SF-Pro-Text-Black.otf"),
+    "SF-Pro-Text-BlackItalic": require("./assets/fonts/SF-Pro-Text-BlackItalic.otf"),
+    "SF-Pro-Text-Bold": require("./assets/fonts/SF-Pro-Text-Bold.otf"),
+    "SF-Pro-Text-BoldItalic": require("./assets/fonts/SF-Pro-Text-BoldItalic.otf"),
+    "SF-Pro-Text-Heavy": require("./assets/fonts/SF-Pro-Text-Heavy.otf"),
+    "SF-Pro-Text-HeavyItalic": require("./assets/fonts/SF-Pro-Text-HeavyItalic.otf"),
+    "SF-Pro-Text-Light": require("./assets/fonts/SF-Pro-Text-Light.otf"),
+    "SF-Pro-Text-LightItalic": require("./assets/fonts/SF-Pro-Text-LightItalic.otf"),
+    "SF-Pro-Text-Medium": require("./assets/fonts/SF-Pro-Text-Medium.otf"),
+    "SF-Pro-Text-MediumItalic": require("./assets/fonts/SF-Pro-Text-MediumItalic.otf"),
+    "SF-Pro-Text-Regular": require("./assets/fonts/SF-Pro-Text-Regular.otf"),
+    "SF-Pro-Text-RegularItalic": require("./assets/fonts/SF-Pro-Text-RegularItalic.otf"),
+    "SF-Pro-Text-Semibold": require("./assets/fonts/SF-Pro-Text-Semibold.otf"),
+    "SF-Pro-Text-SemiboldItalic": require("./assets/fonts/SF-Pro-Text-SemiboldItalic.otf"),
+    "SF-Pro-Text-Thin": require("./assets/fonts/SF-Pro-Text-Thin.otf"),
+    "SF-Pro-Text-ThinItalic": require("./assets/fonts/SF-Pro-Text-ThinItalic.otf"),
+    "SF-Pro-Text-Ultralight": require("./assets/fonts/SF-Pro-Text-Ultralight.otf"),
+    "SF-Pro-Text-UltralightItalic": require("./assets/fonts/SF-Pro-Text-UltralightItalic.otf"),
+    "SF-Pro.ttf": require("./assets/fonts/SF-Pro.ttf"),
+
   });
 
   // Hide the splash screen once fonts are loaded
@@ -192,7 +242,12 @@ export default function App() {
     <LoginProvider>
       <View style={styles.font} onLayout={handleOnLayout}></View>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="GetStarted">
+        <Stack.Screen
+            name="GetStarted"
+            component={GetStartedPage}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Login"
             component={LoginPage}
