@@ -25,6 +25,7 @@ import { InstructionsScreen } from "./src/screens/PostScreens/Instructions";
 import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
 import { LoginProvider } from "./LoginProvider"
+import RecipeScreen from "./src/screens/RecipeScreen";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -217,6 +218,10 @@ export default function App() {
               },
             }}
           />
+          <Stack.Screen
+            name = "RecipeExpanded"
+            component = {RecipeScreen}
+            />
         </Stack.Navigator>
       </NavigationContainer>
       </LoginProvider>

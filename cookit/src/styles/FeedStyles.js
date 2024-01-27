@@ -22,7 +22,7 @@ export const Card = styled.View`
 
 export const UserInfo = styled.TouchableOpacity`
     flex-direction: row;
-    padding: 5px;
+    padding: 5px 10px;
 `;
 
 export const UserImg = styled.Image`
@@ -42,7 +42,7 @@ export const UserName = styled.Text`
     font-weight: bold;
     font-family: 'SweetSansProRegular'
     text-align: center;
-    padding: 8px 0;
+    padding: 8px 3px;
 `;
 
 export const PostTime = styled.Text`
@@ -56,7 +56,7 @@ export const DescriptionText = styled.Text`
     font-size: 18px;
     font-family: 'SweetSansProRegular'
     padding: 10px 15px 5px 15px;
-    color: #345c50;
+    color: black;
 `;
 
 export const RecipeText = styled.Text`
@@ -68,7 +68,7 @@ export const DishNameText = styled.Text`
     font-size: 24px;
     font-family: 'SweetSansProRegular';
     color: black;
-    padding-top: 10px;
+    padding: 5px 10px;
 `;
 
 export const PrepTimeText = styled.Text`
