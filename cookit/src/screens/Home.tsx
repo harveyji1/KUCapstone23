@@ -9,7 +9,7 @@ import * as React from 'react'
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {Container} from '../styles/FeedStyles';
-import PostCard from '../components/PostCard'
+import PostCard from '../components/Posts/PostCard'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //This will be replaced by actual data from backend
