@@ -1,8 +1,9 @@
 /*
   Purpose: RegisterScreen component for handling user registration.
   Functionality: Provides input fields for username, email, and password, and handles registration logic.
-  Created By: Tony Czajka
+  Created By: Tony Czajka, Audrey Pino
   Date: 11/19/2023
+  Updated: 01/27/2024
 */
 
 import React, { useState } from "react";

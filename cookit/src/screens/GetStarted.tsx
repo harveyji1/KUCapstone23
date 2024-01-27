@@ -1,7 +1,9 @@
 /*
   Purpose: First screen
+  Functionality: Displays the logo and a button to navigate to the login screen
   Author: Audrey Pino
-  Editors: 
+  Date: 01/27/2024
+  
 */
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';

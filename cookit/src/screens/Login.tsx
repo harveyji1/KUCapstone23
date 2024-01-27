@@ -1,8 +1,9 @@
 /*
   Purpose: LoginPage component for handling user login
   Functionality: Provides input fields for username and password, and handles login logic.
-  Created By: Tony Czajka
+  Created By: Tony Czajka, Audrey Pino
   Date: 10/01/2023
+  Updated: 01/27/2024
 */
 import React, { useContext, useState } from "react";
 import { useFonts } from "expo-font";
