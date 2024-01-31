@@ -264,11 +264,11 @@ export default function App() {
             options={{
               title: "CookIt",
               headerStyle: {
-                backgroundColor: "#E5D3B3",
+                backgroundColor: "#345C50",
               },
-              headerTintColor: "#345C50",
+              headerTintColor: "#FFF",
               headerTitleStyle: {
-                fontFamily: "Quando-Regular",
+                fontFamily: "SweetSansProBold",
                 fontSize: 20,
               },
             }}
