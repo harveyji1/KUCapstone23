@@ -33,7 +33,10 @@ const Posts = [
     prepTime: 10,
     estimatedCost: 10,
     ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
+    yield: 2,
+    cookTime: 20,
+    estCost: 30
   },
   {
     id: '2',
@@ -53,7 +56,10 @@ const Posts = [
     prepTime: 10,
     estimatedCost: 10,
     ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
+    yield: 6,
+    cookTime: 15,
+    estCost: 15
   },
   {
     id: '3',
@@ -73,7 +79,10 @@ const Posts = [
     prepTime: 10,
     estimatedCost: 10,
     ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
+    yield: 4,
+    cookTime: 25,
+    estCost: 45
   },
   {
     id: '4',
@@ -93,7 +102,10 @@ const Posts = [
     prepTime: 10,
     estimatedCost: 10,
     ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
+    yield: 1,
+    cookTime: 8,
+    estCost: 13
   },
   {
     id: '5',
@@ -102,7 +114,7 @@ const Posts = [
     postTime: 'November 3rd',
     description: 'Hi everyone! This is one of my favorite recipes ever! Please enjoy and let me know what you think',
     postImg: require('../img/defaultpostimg.jpeg'),
-    upvoted: false,
+    upvoted: true,
     upvotes: 48569,
     downvoted: false,
     downvotes: 34567,
@@ -113,7 +125,10 @@ const Posts = [
     prepTime: 10,
     estimatedCost: 10,
     ingredients: ['1 lb of Chicken', '4 oz of rice', '3 oz Broccoli', 'ingredient 4', 'ingredient 5', 'ingredient 6', 'ingredient 7'],
-    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done']
+    instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
+    yield: 10,
+    cookTime: 45,
+    estCost: 100
   }
 ]
 

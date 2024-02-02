@@ -6,9 +6,9 @@ const RecipeScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Text style={styles.headerText}>{item.dishName}</Text>
-      </View>
+      </View> */}
 
       <Image style={styles.mainImage} source={item.postImg} />
 
@@ -30,22 +30,22 @@ const RecipeScreen = ({ route }) => {
         <View style={styles.infoSection}>
           <View style={styles.infoBlock}>
             <Text style={styles.infoTitle}>YIELD</Text>
-            <Text style={styles.infoContent}>6 people</Text>
+            <Text style={styles.infoContent}>{item.yield} people</Text>
           </View>
 
           <View style={styles.infoBlock}>
             <Text style={styles.infoTitle}>PREP</Text>
-            <Text style={styles.infoContent}>20 mins</Text>
+            <Text style={styles.infoContent}>{item.prepTime} mins</Text>
           </View>
 
           <View style={styles.infoBlock}>
             <Text style={styles.infoTitle}>COOK</Text>
-            <Text style={styles.infoContent}>20 mins</Text>
+            <Text style={styles.infoContent}>{item.cookTime} mins</Text>
           </View>
 
           <View style={[styles.infoBlock, { borderRightWidth: 0 }]}>
             <Text style={styles.infoTitle}>EST COST</Text>
-            <Text style={styles.infoContent}>$30</Text>
+            <Text style={styles.infoContent}>${item.estCost}</Text>
           </View>
         </View>
       </View>

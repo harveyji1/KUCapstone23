@@ -1,5 +1,5 @@
 /*
-Purpose: This file is the post component
+Purpose: This file is the recipe card component
 Author: Harvey Ji
 Editors: 
 */
@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 
 
-//type for the PostItemType that is passed in to each Post component
+//type for the RecipeItemType that is passed in to each Post component
 type RecipeItemType = {
     id: string;
     userName: string;
@@ -32,6 +32,9 @@ type RecipeItemType = {
     ingredients: string[];
     instructions: string[];
     dishName: string;
+    yield: number;
+    cookTime: number;
+    estCost: number;
   }
 
 
@@ -45,9 +48,9 @@ type RecipeItemType = {
         navigation.navigate('RecipeExpanded', { item });
     };
   
-   var upvotedIcon = item.upvoted ? 'arrow-up-circle-outline' : 'arrow-up-circle';
+   var upvotedIcon = item.upvoted ? 'arrow-up-circle' : 'arrow-up-circle-outline';
    var upvotedIconColor = item.upvoted ? 'black' : '#333'
-   var downvotedIcon = item.downvoted ? 'arrow-down-circle-outline' : 'arrow-down-circle';
+   var downvotedIcon = item.downvoted ? 'arrow-down-circle' : 'arrow-down-circle-outline';
    var downvotedIconColor = item.downvoted ? 'black' : '#333'
    var saveIcon = item.saved ? 'bookmark-outline' : 'bookmark'
    var saveIconColor = item.saved ? 'black' : '#333'
@@ -81,18 +84,6 @@ type RecipeItemType = {
     } else{
         var commentText = 'Comment'
     }
-
-    //use states to help with collapsible parts of component
-      // const [ingredientsCollapsed, setIngredientsCollapsed] = useState(true);
-      // const [instructionsCollapsed, setInstructionsCollapsed] = useState(true);
-
-      // const toggleIngredients = () => {
-      //   setIngredientsCollapsed(!ingredientsCollapsed);
-      // };
-
-      // const toggleInstructions = () => {
-      //   setInstructionsCollapsed(!instructionsCollapsed);
-      // };
 
 
     //returns the actual card
@@ -131,50 +122,6 @@ type RecipeItemType = {
               <InteractionText>{saveText}</InteractionText>
             </Interaction>
           </InteractionWrapper>
-
-          {/* this code is a little complicated but basically what is happening is that touching any part of the ingredients sections will either
-          collapse the section or expand the section. if it is collapsed it will still show the first 3 ingredients */}
-          {/* <TouchableOpacity onPress={toggleIngredients} >
-            {ingredientsCollapsed?
-            <IngredientsWrapper>
-              <IngredientsWord>Ingredients: (Touch to expand) </IngredientsWord>
-              {item.ingredients.map((ingredient, index) => 
-                index < 3 && (
-                <IngredientsText key={index}>- {ingredient}</IngredientsText>
-              ))}
-            </IngredientsWrapper> 
-            : <Collapsible collapsed = {ingredientsCollapsed}>
-              <IngredientsWrapper>
-              <IngredientsWord>Ingredients: (Touch to collapse) </IngredientsWord>
-              
-                {item.ingredients.map((ingredient, index) => (
-                    <IngredientsText key={index}>- {ingredient}</IngredientsText>
-                  ))}
-              </IngredientsWrapper>
-              </Collapsible>}
-          </TouchableOpacity> */}
-          
-          {/* this does the exact same thing as the ingredients except for with instructions. need to look into the spacing for this
-          because it looks bad if the instruction spans multiple lines */}
-          {/* <TouchableOpacity onPress={toggleInstructions} >
-            {instructionsCollapsed?
-            <InstructionsWrapper>
-              <InstructionsWord>Instructions: (Touch to expand) </InstructionsWord>
-              {item.instructions.map((instructions, index) => 
-                index < 3 && (
-                <InstructionsText key={index}>- {instructions}</InstructionsText>
-              ))}
-            </InstructionsWrapper> 
-            : <Collapsible collapsed = {instructionsCollapsed}>
-              <InstructionsWrapper>
-              <InstructionsWord>Instructions: (Touch to collapse) </InstructionsWord>
-              
-                {item.instructions.map((instructions, index) => (
-                    <InstructionsText key={index}>- {instructions}</InstructionsText>
-                  ))}
-              </InstructionsWrapper>
-              </Collapsible>}
-          </TouchableOpacity> */}
           </TouchableOpacity>
         </Card>
     );

@@ -276,6 +276,18 @@ export default function App() {
           <Stack.Screen
             name = "RecipeExpanded"
             component = {RecipeScreen}
+            options={{
+              title: "CookIt",
+              headerStyle:{
+                backgroundColor: "#345C50"
+              },
+              headerTintColor: "#FFF",
+              headerTitleStyle: {
+                fontFamily: "SweetSansProBold",
+                fontSize: 20,
+              },
+              headerBackTitleVisible: false
+            }}
             />
         </Stack.Navigator>
       </NavigationContainer>
