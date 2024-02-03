@@ -4,19 +4,34 @@
   Editors:
 */
 
-
-import * as React from 'react';
-import { Text, View, Button, TextInput, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import * as React from "react";
+import { useContext } from "react";
+import {
+  Text,
+  View,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { LoginContext } from "../../../LoginProvider";
 
 export function IngredientsScreen({ navigation }) {
-  const [ingredient, setIngredient] = React.useState<string>('');
+  const [ingredient, setIngredient] = React.useState<string>("");
   const [ingredientsList, setIngredientsList] = React.useState<string[]>([]);
+
+  const { state } = useContext(LoginContext);
+  const profileID = state.sub;
+
+  const { recipeName, description, cookingTime, cost, image } =
+    navigation.params;
 
   const addIngredient = () => {
     if (ingredient && !ingredientsList.includes(ingredient)) {
       setIngredientsList([...ingredientsList, ingredient]);
-      setIngredient('');
+      setIngredient("");
     }
   };
 
@@ -26,7 +41,7 @@ export function IngredientsScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text style={styles.headerText}>Add Your Ingredients</Text>
       <TextInput
         style={styles.inputBox}
@@ -43,7 +58,9 @@ export function IngredientsScreen({ navigation }) {
             <View style={styles.ingredientItemContainer}>
               <Text style={styles.ingredientItem}>{item}</Text>
               <TouchableOpacity onPress={() => removeIngredient(index)}>
-                <Text style={{ color: 'red' }}><Feather name="x" size={15} color="red" /></Text>
+                <Text style={{ color: "red" }}>
+                  <Feather name="x" size={15} color="red" />
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -53,11 +70,19 @@ export function IngredientsScreen({ navigation }) {
       <Button
         color={"#46996F"}
         title="Next Screen"
-        onPress={() => navigation.navigate("Instructions")}
+        onPress={() =>
+          navigation.navigate("Instructions", {
+            recipeName,
+            description,
+            cookingTime,
+            cost,
+            image,
+            ingredientsList,
+          })
+        }
       />
     </View>
   );
-
 }
 
 // Add your styles here
@@ -65,15 +90,15 @@ export function IngredientsScreen({ navigation }) {
 const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'SweetSansProBold',
+    fontWeight: "bold",
+    fontFamily: "SweetSansProBold",
     marginBottom: 20,
     marginTop: 20,
-    color: '#345C50',
+    color: "#345C50",
   },
   ingredientsList: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 5,
     marginBottom: 5,
   },
@@ -82,26 +107,26 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 5,
     marginTop: 5,
-    fontFamily: 'SweetSansProRegular',
+    fontFamily: "SweetSansProRegular",
     fontSize: 16,
-    color: '#345C50',
+    color: "#345C50",
   },
   ingredientItemContainer: {
-    borderColor: '#345C50',
+    borderColor: "#345C50",
     borderWidth: 1,
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: 8,
-    backgroundColor: '#F4EAD7',
+    backgroundColor: "#F4EAD7",
   },
   inputBox: {
-    height: 40, 
-    borderColor: '#345C50', 
-    borderWidth: 2, 
+    height: 40,
+    borderColor: "#345C50",
+    borderWidth: 2,
     borderRadius: 15,
     padding: 10,
-    width: '80%', 
+    width: "80%",
     marginBottom: 10,
-    fontFamily: 'SweetSansProRegular',
+    fontFamily: "SweetSansProRegular",
   },
 });

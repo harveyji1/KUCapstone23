@@ -4,7 +4,7 @@
   Created By: Tony Czajka and Audrey Pino
   Date: 9/10/2023
 */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { LoginContext } from "../../LoginProvider";
 
 // CreatePostScreen component
 export function CreatePostScreen({ navigation }) {
@@ -29,6 +30,8 @@ export function CreatePostScreen({ navigation }) {
   const [cookingTime, setCookingTime] = useState("");
   const [cost, setCost] = useState("");
   const [image, setImage] = useState(null);
+  const { state } = useContext(LoginContext);
+  const profileID = state.sub;
 
   // Function that handles image picking
   const pickImage = async () => {
@@ -134,7 +137,15 @@ export function CreatePostScreen({ navigation }) {
         <Button
           color={"#46996F"}
           title="Enter Ingredients"
-          onPress={() => navigation.navigate("Ingredients")}
+          onPress={() =>
+            navigation.navigate("Ingredients", {
+              recipeName,
+              description,
+              cookingTime,
+              cost,
+              image,
+            })
+          }
         />
       </View>
     </KeyboardAvoidingView>
@@ -215,5 +226,4 @@ const styles = StyleSheet.create({
     alignItems: "center", // Center children vertically within the container
     // Add additional styling as needed
   },
-
 });
