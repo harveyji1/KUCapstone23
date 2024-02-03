@@ -25,5 +25,7 @@ namespace Persistence.Models
         public bool PrivateAccount { get; set; }
         public bool VerifiedAccount { get; set; }
         public string? ProfilePicture { get; set; }
+        public virtual List<PostModel>? Posts { get; set; }
+
     }
 }

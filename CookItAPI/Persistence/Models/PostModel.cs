@@ -12,8 +12,8 @@ namespace Persistence.Models
     {
         public int ID { get; set; }
         [ForeignKey("User")]
-        public int UserID { get; set; }
-        public virtual UserModel User { get; set; }
+        public int ProfileID { get; set; }
+        public virtual ProfileModel Profile { get; set; }
         public string? Title { get; set; }
         public string? Ingredients { get; set; }
         public string? Instructions { get; set; }

@@ -21,6 +21,5 @@ namespace Persistence.Models
         public DateTime Creationdate { get; set; }
 
         public virtual ProfileModel Profile { get; set; }
-        public virtual List<PostModel>? Posts { get; set; }
     }
 }

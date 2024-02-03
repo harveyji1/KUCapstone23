@@ -1,6 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

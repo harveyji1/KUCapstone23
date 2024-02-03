@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Models;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,7 @@ namespace Persistence.Repositories
     {
         Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID);
         Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID);
     }
 
     //profile repo class. gets profile, edit profile, etc. (Crud func)
@@ -36,9 +37,10 @@ namespace Persistence.Repositories
         /// </summary>
         /// <param name="profileID"></param>
         /// <returns></returns>
-        public async Task<ProfileModel> GetProfileModelAsync(int profileID)
+        public async Task<ProfileModel> GetProfileModelAsync(int userID)
         {
-            return await _context.Profiles.SingleOrDefaultAsync(profile => profile.Id == profileID);
+            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
+            return profile;
         }
 
         /// <summary>
@@ -59,6 +61,18 @@ namespace Persistence.Repositories
             _context.Profiles.Add(profileModel);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
+        {
+            var updatedProfile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
+
+            updatedProfile.FullName = profile.FullName;
+            updatedProfile.Bio = profile.Bio;
+
+            _context.SaveChanges();
+
+            return updatedProfile;
         }
     }
 }

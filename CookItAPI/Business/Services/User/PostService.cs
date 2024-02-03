@@ -1,6 +1,7 @@
-﻿using Business.Services.Azure;
+﻿using Business.Helpers;
+using Business.Services.Azure;
 using Persistence.Repositories;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,9 @@ namespace Business.Services.User
         //calls our blob service. Uploads image and takes the string url which will be passed to repo layer
         public async Task<bool> CreatePostAsync(PostRequest newPost, int userID)
         {
+            
             string imageURL = await _blob.UploadBlob("userposts", userID, newPost.PostImage);
-            return await _repository.CreatePostAsync(newPost, imageURL, userID);
+            return await _repository.CreatePostAsync(ModelConversionHelper.PostModelToDTO(newPost), imageURL, userID);
         }
     }
 }

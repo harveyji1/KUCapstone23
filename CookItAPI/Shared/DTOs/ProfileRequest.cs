@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Shared.Request
+namespace Shared.DTOs
 {
     /// <summary>
     /// request object available to all layers
@@ -16,6 +16,5 @@ namespace Shared.Request
     {
         public string? FullName { get; set; }
         public string? Bio { get; set; }
-        public IFormFile? ProfilePicture { get; set; }
     }
 }
