@@ -1,5 +1,6 @@
 ﻿using Business.Helpers;
 using Business.Services.Azure;
+using Microsoft.AspNetCore.Http;
 using Persistence.Models;
 using Persistence.Repositories;
 using Shared.DTOs;
@@ -16,6 +17,7 @@ namespace Business.Services.User
     {
         Task<ProfileModel> GetProfileModelAsync(int userID);
         Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID);
+        Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID);
 
     }
 
@@ -42,6 +44,12 @@ namespace Business.Services.User
         {
             var response = await _profileRepo.EditProfileAsync(ModelConversionHelper.ProfileRequestDTOToModel(profile), userID);
             return ModelConversionHelper.ProfileModelToDTO(response);
+        }
+
+        public async Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID)
+        {
+            string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, image);
+            return ModelConversionHelper.ProfileModelToDTO(await _profileRepo.UploadProfileImageAsync(imageURL, userID));
         }
 
     }

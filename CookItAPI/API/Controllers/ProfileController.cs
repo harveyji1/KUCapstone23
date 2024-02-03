@@ -53,7 +53,7 @@ namespace API.Controllers
         /// <returns>Http status code</returns>
         [Authorize]
         [HttpPut("profile")]
-        public async Task<IActionResult> EditProfileAsync([FromForm] ProfileRequest profile)
+        public async Task<IActionResult> EditProfileAsync([FromBody] ProfileRequest profile)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -62,6 +62,17 @@ namespace API.Controllers
             return Ok(await _profileService.EditProfileAsync(profile, userId));
             
 
+        }
+
+        [Authorize]
+        [HttpPut("profileImage")]
+        public async Task<IActionResult> UploadProfileImageAsync(IFormFile image)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            return Ok(await _profileService.UploadProfileImageAsync(image, userId));
         }
 
 

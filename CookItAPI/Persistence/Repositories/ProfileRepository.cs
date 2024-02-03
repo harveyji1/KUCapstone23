@@ -20,6 +20,8 @@ namespace Persistence.Repositories
         Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID);
         Task<ProfileModel> GetProfileModelAsync(int profileID);
         Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID);
+        Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID);
+
     }
 
     //profile repo class. gets profile, edit profile, etc. (Crud func)
@@ -73,6 +75,14 @@ namespace Persistence.Repositories
             _context.SaveChanges();
 
             return updatedProfile;
+        }
+
+        public async Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID)
+        {
+            var profile = await _context.Profiles.SingleOrDefaultAsync(p => p.UserId == userID);
+            profile.ProfilePicture = imageURL;
+            await _context.SaveChangesAsync();
+            return profile;
         }
     }
 }
