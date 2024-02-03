@@ -16,5 +16,6 @@ namespace Shared.DTOs
         public bool PrivateAccount { get; set; }
         public bool VerifiedAccount { get; set; }
         public string ProfilePicture { get; set; }
+        public List<PostResponseDTO> Posts { get; set; }
     }
 }

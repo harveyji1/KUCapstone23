@@ -33,7 +33,7 @@ namespace Business.Services.User
         {
             
             string imageURL = await _blob.UploadBlob("userposts", userID, newPost.PostImage);
-            return await _repository.CreatePostAsync(ModelConversionHelper.PostModelToDTO(newPost), imageURL, userID);
+            return await _repository.CreatePostAsync(ModelConversionHelper.PostRequestDTOToModel(newPost), imageURL, userID);
         }
     }
 }

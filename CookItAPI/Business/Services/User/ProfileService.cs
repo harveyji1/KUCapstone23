@@ -43,13 +43,13 @@ namespace Business.Services.User
         public async Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID)
         {
             var response = await _profileRepo.EditProfileAsync(ModelConversionHelper.ProfileRequestDTOToModel(profile), userID);
-            return ModelConversionHelper.ProfileModelToDTO(response);
+            return ModelConversionHelper.ProfileModelToResponseDTO(response);
         }
 
         public async Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID)
         {
             string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, image);
-            return ModelConversionHelper.ProfileModelToDTO(await _profileRepo.UploadProfileImageAsync(imageURL, userID));
+            return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.UploadProfileImageAsync(imageURL, userID));
         }
 
     }

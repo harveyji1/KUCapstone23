@@ -17,7 +17,6 @@ namespace Persistence.Repositories
     //profile repo interface
     public interface IProfileRepository
     {
-        Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID);
         Task<ProfileModel> GetProfileModelAsync(int profileID);
         Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID);
         Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID);
@@ -45,25 +44,7 @@ namespace Persistence.Repositories
             return profile;
         }
 
-        /// <summary>
-        /// Create/edit profile
-        /// </summary>
-        /// <param name="profile"></param>
-        /// <param name="imageURL"></param>
-        /// <returns></returns>
-        public async Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID)
-        {
-            ProfileModel profileModel = new ProfileModel
-            {
-                ProfilePicture = imageURL,
-                Bio = profile.Bio,
-                FullName = profile.FullName,
-                UserId = userID
-            };
-            _context.Profiles.Add(profileModel);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+        
 
         public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
         {
@@ -79,7 +60,7 @@ namespace Persistence.Repositories
 
         public async Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID)
         {
-            var profile = await _context.Profiles.SingleOrDefaultAsync(p => p.UserId == userID);
+            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(p => p.UserId == userID);
             profile.ProfilePicture = imageURL;
             await _context.SaveChangesAsync();
             return profile;
