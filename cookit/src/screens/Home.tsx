@@ -1,7 +1,7 @@
 /*
   Purpose: This is the Home Screen of the App that contains the home feed
-  Author:Harvey Ji
-  Editors:
+  Author: Harvey Ji
+  Editors: Audrey Pino
 */
 
 //all the imports
@@ -36,7 +36,8 @@ const Posts = [
     instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
     yield: 2,
     cookTime: 20,
-    estCost: 30
+    estCost: 30,
+    filters: ['Gluten Free', 'Dairy Free', 'Vegan', 'Chicken']
   },
   {
     id: '2',
@@ -59,7 +60,8 @@ const Posts = [
     instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
     yield: 6,
     cookTime: 15,
-    estCost: 15
+    estCost: 15,
+    filters: ['Gluten Free', 'Low Calories', 'Eggs']
   },
   {
     id: '3',
@@ -82,7 +84,8 @@ const Posts = [
     instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
     yield: 4,
     cookTime: 25,
-    estCost: 45
+    estCost: 45,
+    filters: ['Rice', 'Chicken', 'Chinese']
   },
   {
     id: '4',
@@ -105,7 +108,8 @@ const Posts = [
     instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
     yield: 1,
     cookTime: 8,
-    estCost: 13
+    estCost: 13,
+    filters: ['Vegan']
   },
   {
     id: '5',
@@ -128,7 +132,8 @@ const Posts = [
     instructions: ['cook chicken', 'cook rice', 'cook broccoli', 'this is the 4th instruction and it is actually pretty long so that i can see what it looks like', 'done'],
     yield: 10,
     cookTime: 45,
-    estCost: 100
+    estCost: 100,
+    filters: ['Gluten Free', 'Dairy Free', 'Vegan', 'Chicken', 'Eggs']
   }
 ]
 

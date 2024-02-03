@@ -1,16 +1,15 @@
 /*
 Purpose: This file is the recipe card component
 Author: Harvey Ji
-Editors: 
+Editors: Audrey Pino
 */
 
 //imports
 import React, { useState } from 'react';
-import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, DescriptionText, RecipeText, IngredientsText, PostImg, InteractionWrapper, Interaction, InteractionText, DishNameText, IngredientsWrapper, IngredientsWord, InstructionsWrapper, InstructionsWord, InstructionsText} from '../../styles/FeedStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, DescriptionText, RecipeText, IngredientsText, PostImg, InteractionWrapper, Interaction, InteractionText, DishNameText, IngredientsWrapper, IngredientsWord, InstructionsWrapper, InstructionsWord, InstructionsText, Divider, PostDivider, GroupedInteraction, FollowButton, FollowButtonText, FilterPill, FiltersWrapper} from '../../styles/FeedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 //type for the RecipeItemType that is passed in to each Post component
 type RecipeItemType = {
@@ -35,10 +34,10 @@ type RecipeItemType = {
     yield: number;
     cookTime: number;
     estCost: number;
+    filters: string[];
   }
 
-
- 
+  //RecipeCard component
   const RecipeCard: React.FC<{ item: RecipeItemType }> = ({ item }) => {
 
     const navigation = useNavigation(); // Initialize navigation
@@ -47,15 +46,25 @@ type RecipeItemType = {
         // Navigate to the expanded recipe screen passing item as route params
         navigation.navigate('RecipeExpanded', { item });
     };
-  
-   var upvotedIcon = item.upvoted ? 'arrow-up-circle' : 'arrow-up-circle-outline';
-   var upvotedIconColor = item.upvoted ? 'black' : '#333'
-   var downvotedIcon = item.downvoted ? 'arrow-down-circle' : 'arrow-down-circle-outline';
-   var downvotedIconColor = item.downvoted ? 'black' : '#333'
-   var saveIcon = item.saved ? 'bookmark-outline' : 'bookmark'
-   var saveIconColor = item.saved ? 'black' : '#333'
+    
+    // Set the icons for the upvote, downvote, and save buttons
+    var upvotedIcon = item.upvoted ? 'arrow-up-bold' : 'arrow-up-bold-outline';
+    var downvotedIcon = item.downvoted ? "arrow-down-bold" : "arrow-down-bold-outline";
+    var saveIcon = item.saved ? 'bookmark-minus' : 'bookmark-minus-outline';
+    var IconColor = '#345C50'; // Set color
+    
+    const handleFollowPress = () => {
+      // Logic to follow the user
+    };
 
-//some minor logic to determine the appearance of each card
+    // Map the ingredients to a list of text components
+    const filterPills = item.filters.map((filter, index) => (
+      <FilterPill key={index}>
+        {filter}
+      </FilterPill>
+    ));
+
+    //some minor logic to determine the appearance of each card
     var upvoteText;
     if (item.upvotes <= 9999) {
         upvoteText = item.upvotes <= 999 ? item.upvotes : (item.upvotes / 1000).toFixed(1) + 'k';
@@ -85,46 +94,53 @@ type RecipeItemType = {
         var commentText = 'Comment'
     }
 
-
     //returns the actual card
     return(
-        <Card>
-          <TouchableOpacity onPress={handleCardPress}>
-          {/* The basic top part of the post such as the image, dish name, user info, and description */}
-
-          <PostImg source = {item.postImg}/>
-
+      <Card>
+        <TouchableOpacity onPress={handleCardPress}>
+          <PostDivider />
+          <PostImg source={item.postImg}/>
           <UserInfo>
-            <UserImg source = {item.userImg}/>
-            <UserName> {item.userName} </UserName>
-            <PostTime> {item.postTime}</PostTime>
+            <UserImg source={item.userImg}/>
+            <UserName>{item.userName}</UserName>
+            <PostTime>{item.postTime}</PostTime>
+            <FollowButton onPress={handleFollowPress}>
+              <FollowButtonText>+ Follow</FollowButtonText>
+            </FollowButton>
           </UserInfo>
           <DishNameText> {item.dishName} </DishNameText>
           <DescriptionText>{item.description}</DescriptionText>
-
-          {/* This is imcomplete, but this is the interaction with the posts. It needs to be connected with the backend to be complete */}
-
+          <FiltersWrapper>
+            {filterPills}
+          </FiltersWrapper>
+          <Divider />
           <InteractionWrapper>
-            <Interaction active = {item.upvoted}>
-              <Ionicons name = {upvotedIcon} size = {25} color = {upvotedIconColor}></Ionicons>
-              <InteractionText>{upvoteText}</InteractionText>
-            </Interaction>
-            <Interaction active = {item.downvoted}>
-              <Ionicons name = {downvotedIcon} size = {25} color = {downvotedIconColor}></Ionicons>
-              <InteractionText>{downvoteText}</InteractionText>
-            </Interaction>
-            <Interaction>
-              <Ionicons name = "md-chatbubble-outline" size = {25}></Ionicons>
-              <InteractionText>{commentText}</InteractionText>
-            </Interaction>
-            <Interaction active = {item.saved}>
-              <Ionicons name = {saveIcon} size = {25} color = {saveIconColor}></Ionicons>
-              <InteractionText>{saveText}</InteractionText>
-            </Interaction>
+            <GroupedInteraction>
+              <Interaction active={item.upvoted}>
+                <MaterialCommunityIcons name={upvotedIcon as any} size={25} color={IconColor} />
+                <InteractionText>{upvoteText}</InteractionText>
+              </Interaction>
+              <Interaction active={item.downvoted}>
+                <MaterialCommunityIcons name={downvotedIcon as any} size={25} color={IconColor} />
+                <InteractionText>{downvoteText}</InteractionText>
+              </Interaction>
+            </GroupedInteraction>
+            <GroupedInteraction>
+              <Interaction>
+                <MaterialCommunityIcons name="comment-outline" size={25} color={IconColor} />
+                <InteractionText>{commentText}</InteractionText>
+              </Interaction>
+            </GroupedInteraction>
+            <GroupedInteraction>
+              <Interaction active={item.saved}>
+                <MaterialCommunityIcons name={saveIcon as any} size={25} color={IconColor} />
+                <InteractionText>{saveText}</InteractionText>
+              </Interaction>
+            </GroupedInteraction>
           </InteractionWrapper>
-          </TouchableOpacity>
-        </Card>
-    );
+        </TouchableOpacity>
+      </Card>
+  );
 }
 
 //default export stmt

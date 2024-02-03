@@ -1,7 +1,7 @@
 /*
   Purpose: Main application file for a React Native app with navigation and splash screen handling.
   Author: Tony Czajka
-  Editors: 
+  Editors: Audrey Pino
 */
 
 // import components, navigation, and custom screens
@@ -25,8 +25,10 @@ import { InstructionsScreen } from "./src/screens/PostScreens/Instructions";
 import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
 import { GetStartedPage } from "./src/screens/GetStarted";
-import { LoginProvider } from "./LoginProvider"
+import { LoginProvider } from "./LoginProvider";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import RecipeScreen from "./src/screens/RecipeScreen";
+import { HomeIcon, HomeOutlineIcon, SearchIcon, SearchOutlineIcon, PostIcon, PostOutlineIcon, SavedIcon, SavedOutlineIcon, ProfileIcon, ProfileOutlineIcon } from "./assets/nav-icons";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -46,7 +48,7 @@ function BottomTabs() {
         tabBarActiveTintColor: "#345C50",
         tabBarInactiveTintColor: "#667B68",
         tabBarStyle: {
-          backgroundColor: "#E5D3B3",
+          backgroundColor: "#FFFFFF",
         },
       }}
     >
@@ -55,13 +57,8 @@ function BottomTabs() {
         component={HomeScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Octicons
-              name="home"
-              size={size}
-              color={color}
-              style={styles.centeredIcon}
-            />
+          tabBarIcon: ({ focused }) => (
+            focused ? <HomeIcon  /> : <HomeOutlineIcon />
           ),
           tabBarShowLabel: false,
         }}
@@ -71,13 +68,8 @@ function BottomTabs() {
         component={SearchScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Octicons
-              name="search"
-              size={size}
-              color={color}
-              style={styles.centeredIcon}
-            />
+          tabBarIcon: ({ focused }) => (
+            focused ? <SearchIcon  /> : <SearchOutlineIcon />
           ),
           tabBarShowLabel: false,
         }}
@@ -87,13 +79,8 @@ function BottomTabs() {
         component={CreatePostStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Octicons
-              name="plus-circle"
-              size={size}
-              color={color}
-              style={styles.centeredIcon}
-            />
+          tabBarIcon: ({ focused }) => (
+            focused ? <PostIcon  /> : <PostOutlineIcon />
           ),
           tabBarShowLabel: false,
         }}
@@ -103,13 +90,8 @@ function BottomTabs() {
         component={SavedRecipiesScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Octicons
-              name="bookmark"
-              size={size}
-              color={color}
-              style={styles.centeredIcon}
-            />
+          tabBarIcon: ({ focused }) => (
+            focused ? <SavedIcon  /> : <SavedOutlineIcon />
           ),
           tabBarShowLabel: false,
         }}
@@ -119,13 +101,8 @@ function BottomTabs() {
         component={ProfileScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Octicons
-              name="person"
-              size={size}
-              color={color}
-              style={styles.centeredIcon}
-            />
+          tabBarIcon: ({ focused }) => (
+            focused ? <ProfileIcon  /> : <ProfileOutlineIcon />
           ),
           tabBarShowLabel: false,
         }}
