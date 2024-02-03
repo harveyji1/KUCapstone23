@@ -23,7 +23,6 @@ export const UserImg = styled.Image`
     width: 25px;
     height: 25px;
     border-radius: 50px;
-    border: 1px solid #E5E7EB;
 `; 
 
 export const UserInfoText = styled.View`
