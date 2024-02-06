@@ -123,10 +123,10 @@ export function RegisterScreen({ navigation }) {
     }
   };
 
-    // Function to navigate to Login screen
-    const HandleLogin = () => {
-      navigation.navigate("Login");
-    };
+  // Function to navigate to Login screen
+  const HandleLogin = () => {
+    navigation.navigate("Login");
+  };
 
   // Render method for the RegisterScreen
   return (
@@ -135,7 +135,7 @@ export function RegisterScreen({ navigation }) {
       style={styles.container}
     >
       <View style={styles.container}>
-      <View style={styles.signInRegisterToggle}>
+        <View style={styles.signInRegisterToggle}>
           <TouchableOpacity
             style={[styles.toggleHalf, styles.inactive]}
             onPress={HandleLogin}
@@ -149,44 +149,56 @@ export function RegisterScreen({ navigation }) {
 
         {/* Register */}
         <View style={styles.registerHeadingContainer}>
-        <Text style={styles.registerHeading}>Register</Text>
-        <Text style={styles.registerSubHeading}>Let's get started</Text>
+          <Text style={styles.registerHeading}>Register</Text>
+          <Text style={styles.registerSubHeading}>Let's get started</Text>
         </View>
 
         {/* USERNAME */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons name="account-outline" size={20} style={styles.icon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Username"
-              placeholderTextColor={"#9ca3af"}
-              onChangeText={(text) => setUsername(text)}
-              value={username}
-              autoCapitalize="none"
-            />
+          <MaterialCommunityIcons
+            name="account-outline"
+            size={20}
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor={"#9ca3af"}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            autoCapitalize="none"
+          />
         </View>
 
         {/* EMAIL */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons name="email-outline" size={20} style={styles.icon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor={"#9ca3af"}
-              onChangeText={(text) => setEmail(text)}
-              value={email}
-              autoCapitalize="none"
-            />
+          <MaterialCommunityIcons
+            name="email-outline"
+            size={20}
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor={"#9ca3af"}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            autoCapitalize="none"
+          />
         </View>
 
         {/* PASSWORD */}
         <View style={styles.passwordContainer}>
           <Text style={styles.passwordRequirement}>
-              Password must be 8 or more characters and contain at least 1
-              uppercase letter, 1 number, & 1 special character
+            Password must be 8 or more characters and contain at least 1
+            uppercase letter, 1 number, & 1 special character
           </Text>
           <View style={styles.PasswordInputWrapper}>
-            <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+            <MaterialCommunityIcons
+              name="lock-outline"
+              size={20}
+              style={styles.icon}
+            />
             {/* PASSWORD */}
             <TextInput
               style={styles.input}
@@ -207,15 +219,19 @@ export function RegisterScreen({ navigation }) {
           </View>
         </View>
 
-       {/* Re-Enter Password */}
-       <View style={styles.passwordContainer}>
+        {/* Re-Enter Password */}
+        <View style={styles.passwordContainer}>
           <View style={styles.PasswordInputWrapper}>
-            <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+            <MaterialCommunityIcons
+              name="lock-outline"
+              size={20}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.input}
               placeholder="Re-Enter Password"
               placeholderTextColor={"#9ca3af"}
-              onChangeText={(text) => setPassword(text)}
+              onChangeText={(text) => setCheckPassword(text)}
               value={checkPassword}
               autoCapitalize="none"
               secureTextEntry={!showCheckPassword}
@@ -252,14 +268,13 @@ const styles = StyleSheet.create({
   },
 
   signInRegisterToggle: {
-    position: 'absolute',
+    position: "absolute",
     top: 80, // Adjust this value based on your layout
-    flexDirection: 'row',
+    flexDirection: "row",
     borderRadius: 50,
     width: 178,
     height: 30,
     backgroundColor: "#f3f4f6",
-
   },
   toggleHalf: {
     flex: 1, // Use flex to make both options take equal space
@@ -275,13 +290,13 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 12,
-    color: '#FFFFFF',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#FFFFFF",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   inactiveText: {
     fontSize: 12,
-    color: '#345c50',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#345c50",
+    fontFamily: "SF-Pro-Text-Regular",
   },
 
   registerHeadingContainer: {
@@ -294,15 +309,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: "SweetSansProMedium",
     // fontFamily: "SF-Pro-Text-Semibold",
-    textAlign: "left"
-
+    textAlign: "left",
   },
   registerSubHeading: {
     fontSize: 14,
     color: "#6b7280", // --color-dark-green
     marginBottom: 5,
-    fontFamily: 'SF-Pro-Text-Regular',
-    textAlign: "left"
+    fontFamily: "SF-Pro-Text-Regular",
+    textAlign: "left",
   },
   registerButton: {
     borderRadius: 50,
@@ -379,7 +393,7 @@ const styles = StyleSheet.create({
 
   UsernameInputWrapper: {
     position: "relative",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     width: 343,
     height: 50,
@@ -391,7 +405,7 @@ const styles = StyleSheet.create({
   },
   PasswordInputWrapper: {
     position: "relative",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     width: 343,
     height: 50,
@@ -408,6 +422,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     borderWidth: 0, // Remove the border
     textAlign: "left", // Align text to the left
-    height: '100%', // Make the input fill the height of the wrapper
+    height: "100%", // Make the input fill the height of the wrapper
   },
 });
