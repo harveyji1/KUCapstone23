@@ -41,6 +41,7 @@ import {
   ProfileIcon,
   ProfileOutlineIcon,
 } from "./assets/nav-icons";
+import { LoginRegisterToggle } from "./src/screens/LoginRegisterToggle";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -267,13 +268,8 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Login"
-              component={LoginPage}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={RegisterScreen}
+              name="LoginRegister"
+              component={LoginRegisterToggle}
               options={{ headerShown: false }}
             />
             <Stack.Screen

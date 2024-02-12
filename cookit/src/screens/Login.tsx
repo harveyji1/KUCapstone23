@@ -6,7 +6,6 @@
   Updated: 01/27/2024
 */
 import React, { useContext, useState } from "react";
-import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -19,12 +18,8 @@ import {
   Platform,
   Animated,
 } from "react-native";
-import { useTheme } from "@mui/material/styles";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
-import jwt from "react-native-pure-jwt";
 import { decode as atob } from "base-64";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -133,23 +128,7 @@ export function LoginPage({ navigation }) {
 
   // Returns the visuals for the Login Page
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
       <View style={styles.container}>
-        {/* Toggle between Sign In and Register */}
-        <View style={styles.signInRegisterToggle}>
-          <View style={[styles.toggleHalf, styles.active]}>
-            <Text style={styles.activeText}>Sign in</Text>
-          </View>
-          <TouchableOpacity
-            style={[styles.toggleHalf, styles.inactive]}
-            onPress={HandleRegister}
-          >
-            <Text style={styles.inactiveText}>Register</Text>
-          </TouchableOpacity>
-        </View>
 
         {/* SIGN IN */}
         <View style={styles.signInHeadingContainer}>
@@ -233,14 +212,13 @@ export function LoginPage({ navigation }) {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
   );
 }
 
 // styles used
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     justifyContent: "center",
     alignItems: "center",
     color: "#FFFFFF",

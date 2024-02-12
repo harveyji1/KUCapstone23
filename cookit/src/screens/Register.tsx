@@ -7,7 +7,6 @@
 */
 
 import React, { useState } from "react";
-import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -20,9 +19,6 @@ import {
   Platform,
   Animated,
 } from "react-native";
-import { useTheme } from "@mui/material/styles";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -130,22 +126,7 @@ export function RegisterScreen({ navigation }) {
 
   // Render method for the RegisterScreen
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
       <View style={styles.container}>
-        <View style={styles.signInRegisterToggle}>
-          <TouchableOpacity
-            style={[styles.toggleHalf, styles.inactive]}
-            onPress={HandleLogin}
-          >
-            <Text style={styles.inactiveText}>Sign in</Text>
-          </TouchableOpacity>
-          <View style={[styles.toggleHalf, styles.active]}>
-            <Text style={styles.activeText}>Register</Text>
-          </View>
-        </View>
 
         {/* Register */}
         <View style={styles.registerHeadingContainer}>
@@ -254,13 +235,12 @@ export function RegisterScreen({ navigation }) {
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
   );
 }
 // StyleSheet for the component
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     justifyContent: "center",
     alignItems: "center",
     color: "#FFFFFF",
