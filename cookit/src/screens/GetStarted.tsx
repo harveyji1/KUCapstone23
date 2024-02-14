@@ -15,7 +15,7 @@ export function GetStartedPage({ navigation }) {
         <Image style={styles.logo} source={require("../img/Logo-White.png")} />
         </View>
         <View style={styles.bottomView}>  
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginRegister')}>
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
       </View>

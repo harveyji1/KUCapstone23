@@ -26,9 +26,22 @@ import { IngredientsScreen } from "./src/screens/PostScreens/Ingredients";
 import { ReviewPostScreen } from "./src/screens/PostScreens/ReviewPost";
 import { GetStartedPage } from "./src/screens/GetStarted";
 import { LoginProvider } from "./LoginProvider";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { EditProfileScreen } from "./src/screens/EditProfile";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RecipeScreen from "./src/screens/RecipeScreen";
-import { HomeIcon, HomeOutlineIcon, SearchIcon, SearchOutlineIcon, PostIcon, PostOutlineIcon, SavedIcon, SavedOutlineIcon, ProfileIcon, ProfileOutlineIcon } from "./assets/nav-icons";
+import {
+  HomeIcon,
+  HomeOutlineIcon,
+  SearchIcon,
+  SearchOutlineIcon,
+  PostIcon,
+  PostOutlineIcon,
+  SavedIcon,
+  SavedOutlineIcon,
+  ProfileIcon,
+  ProfileOutlineIcon,
+} from "./assets/nav-icons";
+import { LoginRegisterToggle } from "./src/screens/LoginRegisterToggle";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -37,6 +50,7 @@ SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Stack2 = createNativeStackNavigator();
+const Stack3 = createNativeStackNavigator();
 
 // BottomTabs component: Renders the bottom tab navigation
 
@@ -57,9 +71,8 @@ function BottomTabs() {
         component={HomeScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            focused ? <HomeIcon  /> : <HomeOutlineIcon />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <HomeIcon /> : <HomeOutlineIcon />,
           tabBarShowLabel: false,
         }}
       />
@@ -68,9 +81,8 @@ function BottomTabs() {
         component={SearchScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            focused ? <SearchIcon  /> : <SearchOutlineIcon />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <SearchIcon /> : <SearchOutlineIcon />,
           tabBarShowLabel: false,
         }}
       />
@@ -79,9 +91,8 @@ function BottomTabs() {
         component={CreatePostStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            focused ? <PostIcon  /> : <PostOutlineIcon />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <PostIcon /> : <PostOutlineIcon />,
           tabBarShowLabel: false,
         }}
       />
@@ -90,20 +101,18 @@ function BottomTabs() {
         component={SavedRecipiesScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            focused ? <SavedIcon  /> : <SavedOutlineIcon />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <SavedIcon /> : <SavedOutlineIcon />,
           tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={CreateProfileStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            focused ? <ProfileIcon  /> : <ProfileOutlineIcon />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <ProfileIcon /> : <ProfileOutlineIcon />,
           tabBarShowLabel: false,
         }}
       />
@@ -116,10 +125,44 @@ function CreatePostStack() {
   // Setup for the stack navigator used in the CreatePost process
   return (
     <Stack.Navigator>
-      <Stack2.Screen name="CreatePost" component={CreatePostScreen} options={{headerShown: false}} />
-      <Stack2.Screen name="Ingredients" component={IngredientsScreen} options={{headerShown: false}} />
-      <Stack2.Screen name="Instructions" component={InstructionsScreen} options={{headerShown: false}} />
-      <Stack2.Screen name="Review" component={ReviewPostScreen} options={{headerShown: false}} />
+      <Stack2.Screen
+        name="CreatePost"
+        component={CreatePostScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack2.Screen
+        name="Ingredients"
+        component={IngredientsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack2.Screen
+        name="Instructions"
+        component={InstructionsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack2.Screen
+        name="Review"
+        component={ReviewPostScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// CreateProfileStack component: Navigates through the profile editing
+function CreateProfileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack3.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack3.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ headerShown: true }}
+      />
     </Stack.Navigator>
   );
 }
@@ -198,7 +241,6 @@ export default function App() {
     "SF-Pro-Text-Ultralight": require("./assets/fonts/SF-Pro-Text-Ultralight.otf"),
     "SF-Pro-Text-UltralightItalic": require("./assets/fonts/SF-Pro-Text-UltralightItalic.otf"),
     "SF-Pro.ttf": require("./assets/fonts/SF-Pro.ttf"),
-
   });
 
   // Hide the splash screen once fonts are loaded
@@ -216,58 +258,53 @@ export default function App() {
   // Main app layout with navigation and initial route setup
   return (
     <>
-    <LoginProvider>
-      <View style={styles.font} onLayout={handleOnLayout}></View>
-      <NavigationContainer>
-      <Stack.Navigator initialRouteName="GetStarted">
-        <Stack.Screen
-            name="GetStarted"
-            component={GetStartedPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={BottomTabs}
-            options={{
-              title: "CookIt",
-              headerStyle: {
-                backgroundColor: "#345C50",
-              },
-              headerTintColor: "#FFF",
-              headerTitleStyle: {
-                fontFamily: "SweetSansProBold",
-                fontSize: 20,
-              },
-            }}
-          />
-          <Stack.Screen
-            name = "RecipeExpanded"
-            component = {RecipeScreen}
-            options={{
-              title: "CookIt",
-              headerStyle:{
-                backgroundColor: "#345C50"
-              },
-              headerTintColor: "#FFF",
-              headerTitleStyle: {
-                fontFamily: "SweetSansProBold",
-                fontSize: 20,
-              },
-              headerBackTitleVisible: false
-            }}
+      <LoginProvider>
+        <View style={styles.font} onLayout={handleOnLayout}></View>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="GetStarted">
+            <Stack.Screen
+              name="GetStarted"
+              component={GetStartedPage}
+              options={{ headerShown: false }}
             />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen
+              name="LoginRegister"
+              component={LoginRegisterToggle}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={BottomTabs}
+              options={{
+                title: "CookIt",
+                headerStyle: {
+                  backgroundColor: "#345C50",
+                },
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontFamily: "SweetSansProBold",
+                  fontSize: 20,
+                },
+              }}
+            />
+            <Stack.Screen
+              name="RecipeExpanded"
+              component={RecipeScreen}
+              options={{
+                title: "CookIt",
+                headerStyle: {
+                  backgroundColor: "#345C50",
+                },
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontFamily: "SweetSansProBold",
+                  fontSize: 20,
+                },
+                headerBackTitleVisible: false,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </LoginProvider>
     </>
   );
