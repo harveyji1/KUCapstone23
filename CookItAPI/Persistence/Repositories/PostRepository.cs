@@ -35,6 +35,7 @@ namespace Persistence.Repositories
         {
             var profile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
             newPost.ProfileID = profile.Id;
+            newPost.PostImage = imageURL;
             await _context.Posts.AddAsync(newPost);
             await _context.SaveChangesAsync();
             return true;

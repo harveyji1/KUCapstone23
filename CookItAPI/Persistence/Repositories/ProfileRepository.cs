@@ -48,7 +48,7 @@ namespace Persistence.Repositories
 
         public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
         {
-            var updatedProfile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
+            var updatedProfile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
 
             updatedProfile.FullName = profile.FullName;
             updatedProfile.Bio = profile.Bio;

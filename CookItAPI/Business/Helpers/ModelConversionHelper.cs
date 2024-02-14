@@ -30,20 +30,22 @@ namespace Business.Helpers
         public static List<PostResponseDTO> PostModelsToPostResponseDTO(List<PostModel> posts)
         {
             List<PostResponseDTO> postContainer = new List<PostResponseDTO>();
-
-            foreach (PostModel post in posts)
+            if(posts != null)
             {
-                postContainer.Add(new PostResponseDTO
+                foreach (PostModel post in posts)
                 {
-                    ID = post.ID,
-                    Title = post.Title,
-                    Ingredients = post.Ingredients,
-                    Instructions = post.Instructions,
-                    Cost = post.Cost,
-                    PrepTime = post.PrepTime,
-                    NumOfLikes = post.NumOfLikes,
-                    Image = post.PostImage
-                });
+                    postContainer.Add(new PostResponseDTO
+                    {
+                        ID = post.ID,
+                        Title = post.Title,
+                        Ingredients = post.Ingredients,
+                        Instructions = post.Instructions,
+                        Cost = post.Cost,
+                        PrepTime = post.PrepTime,
+                        NumOfLikes = post.NumOfLikes,
+                        Image = post.PostImage
+                    });
+                }
             }
 
             return postContainer;
