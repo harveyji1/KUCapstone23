@@ -22,7 +22,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { LoginContext } from "../../LoginProvider";
-import { TagChefIcon, PrepTimeIcon, CookTimeIcon, CostIcon } from '../../assets/recipe-icons';
+import { TagChefIcon, PrepTimeIcon, CookTimeIcon, CostIcon, EditIcon, PickImageIcon } from '../../assets/recipe-icons';
+import { Dimensions } from 'react-native';
+
+  // Display selected image
+  const screenWidth = Dimensions.get('window').width;
+  const aspectRatio = 2 / 2; 
+  const imageHeight = screenWidth / aspectRatio;
 
 // CreatePostScreen component
 export function CreatePostScreen({ navigation }) {
@@ -37,7 +43,7 @@ export function CreatePostScreen({ navigation }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   // const [cookingTime, setCookingTimeSeconds] = useState('');
-
+  
 
   // Function that handles image picking
   const pickImage = async () => {
@@ -45,7 +51,7 @@ export function CreatePostScreen({ navigation }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1,
     });
 
@@ -95,16 +101,16 @@ export function CreatePostScreen({ navigation }) {
     style={styles.container}
     >
     <ScrollView style={styles.container}>
-      {/* <View style={styles.header}>
-        <Text style={styles.headerText}>Add New Recipe</Text>
-      </View> */}
       <View style={styles.imagePickerContainer}>
+      <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+      <View style={styles.changeImageButtonContent}>
+      {image ? <EditIcon /> : <PickImageIcon />}
+        <Text style={styles.buttonText}>
+          {image ? "Change Image" : "Pick an Image"}
+        </Text>
+      </View>
+    </TouchableOpacity>
         {image && <Image source={{ uri: image }} style={styles.image} />}
-        <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-          <Text style={styles.buttonText}>
-            {image ? "Change Image" : "Pick an Image"}
-          </Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.inputGroup}>
@@ -138,7 +144,7 @@ export function CreatePostScreen({ navigation }) {
     <TextInput
       style={[styles.timeInput, styles.borderInput]}
       placeholder="mm"
-      onChangeText={setPrepTimeMinutes} // Use the new state hook
+      onChangeText={setPrepTimeMinutes} 
       value={prepTimeMinutes}
       keyboardType="numeric"
     />
@@ -146,7 +152,7 @@ export function CreatePostScreen({ navigation }) {
     <TextInput
       style={[styles.timeInput, styles.borderInput]}
       placeholder="ss"
-      onChangeText={setPrepTimeSeconds} // Use the new state hook
+      onChangeText={setPrepTimeSeconds} 
       value={prepTimeSeconds}
       keyboardType="numeric"
     />
@@ -162,7 +168,7 @@ export function CreatePostScreen({ navigation }) {
   <TextInput
       style={[styles.timeInput, styles.borderInput]}
       placeholder="mm"
-      onChangeText={setCookTimeMinutes} // Use the new state hook
+      onChangeText={setCookTimeMinutes} 
       value={cookTimeMinutes}
       keyboardType="numeric"
     />
@@ -170,7 +176,7 @@ export function CreatePostScreen({ navigation }) {
     <TextInput
       style={[styles.timeInput, styles.borderInput]}
       placeholder="ss"
-      onChangeText={setCookTimeSeconds} // Use the new state hook
+      onChangeText={setCookTimeSeconds} 
       value={cookTimeSeconds}
       keyboardType="numeric"
     />
@@ -233,23 +239,30 @@ const styles = StyleSheet.create({
   },
   imagePickerContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   imageButton: {
-    backgroundColor: '#000',
+    // backgroundColor: '#000',
     padding: 10,
     borderRadius: 5,
-    marginTop: 10,
+    marginVertical: 5,
+  },
+  changeImageButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: 'center', 
   },
   buttonText: {
-    color: "#FFFFFF", 
+    color: "#345C50",
     fontSize: 14,
     textAlign: "center",
     fontFamily: "SF-Pro-Text-Semibold",
+    marginLeft: 5, 
   },
   image: {
     width: '100%',
-    height: 200, 
+    height: imageHeight,
+    resizeMode: 'cover',
     marginBottom: 10,
   },
   input: {

@@ -116,32 +116,66 @@ function CreatePostStack() {
   // Setup for the stack navigator used in the CreatePost process
   return (
     <Stack.Navigator>
-      <Stack2.Screen name="CreatePost" component={CreatePostScreen} 
-                              options={{
-                                title: "Add New Recipe",
-                                headerStyle:{
-                                  backgroundColor: "#FFF"
-                                },
-                                headerTintColor: "#111827",
-                                headerTitleStyle: {
-                                  fontFamily: "SF-Pro-Display-Semibold",
-                                  fontSize: 18,
-                                },
-                                headerBackTitleVisible: false }} />
-      <Stack2.Screen name="Ingredients" component={IngredientsScreen} 
-                        options={{
-                          title: "Add New Recipe",
-                          headerStyle:{
-                            backgroundColor: "#FFF"
-                          },
-                          headerTintColor: "#111827",
-                          headerTitleStyle: {
-                            fontFamily: "SF-Pro-Display-Semibold",
-                            fontSize: 18,
-                          },
-                          headerBackTitleVisible: false }} />
-      <Stack2.Screen name="Instructions" component={InstructionsScreen} options={{headerShown: false}} />
-      <Stack2.Screen name="Review" component={ReviewPostScreen} options={{headerShown: false}} />
+      <Stack2.Screen 
+        name="CreatePost" 
+        component={CreatePostScreen} 
+        options={{
+          title: "Add New Recipe",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
+      />        
+      <Stack2.Screen 
+        name="Ingredients" 
+        component={IngredientsScreen} 
+        options={{
+          title: "Add Ingredients",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
+      />
+      <Stack2.Screen 
+        name="Instructions" 
+        component={InstructionsScreen} 
+        options={{
+          title: "Add Instructions",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
+      />        
+      <Stack2.Screen 
+        name="Review" 
+        component={ReviewPostScreen} 
+        options={{
+          title: "Review",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
+      />        
     </Stack.Navigator>
   );
 }
