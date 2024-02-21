@@ -6,7 +6,6 @@
   Updated: 01/27/2024
 */
 import React, { useContext, useState } from "react";
-import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -17,17 +16,12 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  Animated
+  Animated,
 } from "react-native";
-import { useTheme } from "@mui/material/styles";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
-import jwt from "react-native-pure-jwt";
 import { decode as atob } from "base-64";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
@@ -73,8 +67,7 @@ export function LoginPage({ navigation }) {
   // toggle show check password
   const toggleRememberMe = () => {
     setIsRememberMe(!isRememberMe);
-  }
-
+  };
 
   // Function to handle user login
   const HandleLogin = async () => {
@@ -99,9 +92,10 @@ export function LoginPage({ navigation }) {
         console.log("DECODED TOKEN: ", decodedToken);
         console.log("Type of token: ", typeof decodedToken);
         console.log("ID: ", decodedToken.sub);
+        console.log("Not Decoded Token: Bearer ", token);
         console.log(response.status);
         // if response is okay, set global token to response token
-        setState(decodedToken);
+        setState(token);
         // await AsyncStorage.setItem('token', response.data.token);
         Alert.alert("Login Successful, Welcome " + username + "!");
         navigation.navigate("Home");
@@ -128,39 +122,27 @@ export function LoginPage({ navigation }) {
   };
 
   // Function to navigate to Register screen
-    const HandleRegister = () => {
-      navigation.navigate("Register");
-    };
+  const HandleRegister = () => {
+    navigation.navigate("Register");
+  };
 
   // Returns the visuals for the Login Page
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
       <View style={styles.container}>
-        {/* Toggle between Sign In and Register */}
-        <View style={styles.signInRegisterToggle}>
-          <View style={[styles.toggleHalf, styles.active]}>
-            <Text style={styles.activeText}>Sign in</Text>
-          </View>
-          <TouchableOpacity
-            style={[styles.toggleHalf, styles.inactive]}
-            onPress={HandleRegister}
-          >
-            <Text style={styles.inactiveText}>Register</Text>
-          </TouchableOpacity>
-        </View>
-        
+
         {/* SIGN IN */}
         <View style={styles.signInHeadingContainer}>
-        <Text style={styles.signInHeading}>Sign In</Text>
-        <Text style={styles.signInSubHeading}>Sign In to get started</Text>
+          <Text style={styles.signInHeading}>Sign In</Text>
+          <Text style={styles.signInSubHeading}>Sign In to get started</Text>
         </View>
 
         {/* USERNAME */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons name="email-outline" size={20} style={styles.icon} />
+          <MaterialCommunityIcons
+            name="email-outline"
+            size={20}
+            style={styles.icon}
+          />
           <TextInput
             style={styles.input}
             placeholder="Username"
@@ -172,7 +154,11 @@ export function LoginPage({ navigation }) {
         </View>
         {/* PASSWORD */}
         <View style={styles.PasswordInputWrapper}>
-          <MaterialCommunityIcons name="lock-outline" size={20} style={styles.icon} />
+          <MaterialCommunityIcons
+            name="lock-outline"
+            size={20}
+            style={styles.icon}
+          />
           {/* PASSWORD */}
           <TextInput
             style={styles.input}
@@ -192,56 +178,60 @@ export function LoginPage({ navigation }) {
           />
         </View>
 
-      {/* Remember Me and Forgot Password */}
-      <View style={styles.rememberMeContainer}>
-      <View style={styles.rememberMeSection}>
-        <TouchableOpacity style={styles.rememberMe} onPress={toggleRememberMe}>
-          <MaterialCommunityIcons
-            name={isRememberMe ? "checkbox-marked-outline" : "checkbox-blank-outline"}
-            size={18}
-            style={styles.iconRememberMe}
-          />
-          <Text style={styles.rememberMeText}>Keep me logged in</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Remember Me and Forgot Password */}
+        <View style={styles.rememberMeContainer}>
+          <View style={styles.rememberMeSection}>
+            <TouchableOpacity
+              style={styles.rememberMe}
+              onPress={toggleRememberMe}
+            >
+              <MaterialCommunityIcons
+                name={
+                  isRememberMe
+                    ? "checkbox-marked-outline"
+                    : "checkbox-blank-outline"
+                }
+                size={18}
+                style={styles.iconRememberMe}
+              />
+              <Text style={styles.rememberMeText}>Keep me logged in</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.forgotPasswordSection}>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <View style={styles.forgotPasswordSection}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         {/* LOGIN BUTTON */}
-        <TouchableOpacity 
-          style={styles.loginButton}
-          onPress={HandleLogin}
-        >
-            <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity style={styles.loginButton} onPress={HandleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
   );
 }
 
 // styles used
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     justifyContent: "center",
     alignItems: "center",
     color: "#FFFFFF",
     backgroundColor: "#FFFFFF", // Background color of the button
   },
   signInRegisterToggle: {
-    position: 'absolute',
+    position: "absolute",
     top: 80, // Adjust this value based on your layout
-    flexDirection: 'row',
+    flexDirection: "row",
     borderRadius: 50,
     width: 178,
     height: 30,
     backgroundColor: "#f3f4f6",
-
   },
   toggleHalf: {
     flex: 1, // Use flex to make both options take equal space
@@ -257,15 +247,15 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 12,
-    color: '#FFFFFF',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#FFFFFF",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   inactiveText: {
     fontSize: 12,
-    color: '#345c50',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#345c50",
+    fontFamily: "SF-Pro-Text-Regular",
   },
-  
+
   signInHeadingContainer: {
     marginBottom: 20,
     width: 343,
@@ -276,19 +266,18 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: "SweetSansProMedium",
     // fontFamily: "SF-Pro-Text-Semibold",
-    textAlign: "left"
-
+    textAlign: "left",
   },
   signInSubHeading: {
     fontSize: 14,
     color: "#6b7280", // --color-dark-green
     marginBottom: 5,
-    fontFamily: 'SF-Pro-Text-Regular',
-    textAlign: "left"
+    fontFamily: "SF-Pro-Text-Regular",
+    textAlign: "left",
   },
   UsernameInputWrapper: {
     position: "relative",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     width: 343,
     height: 50,
@@ -300,7 +289,7 @@ const styles = StyleSheet.create({
   },
   PasswordInputWrapper: {
     position: "relative",
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     width: 343,
     height: 50,
@@ -321,7 +310,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     borderWidth: 0, // Remove the border
     textAlign: "left", // Align text to the left
-    height: '100%', // Make the input fill the height of the wrapper
+    height: "100%", // Make the input fill the height of the wrapper
   },
   loginButton: {
     borderRadius: 50,
@@ -372,35 +361,35 @@ const styles = StyleSheet.create({
     height: 1000,
   },
   rememberMeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     // Ensure that the container takes full width if not already
-    width: 343, 
+    width: 343,
   },
   rememberMeSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   rememberMe: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   rememberMeText: {
     fontSize: 14,
-    color: '#111827',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   iconRememberMe: {
     marginRight: 5,
-    color: '#345C50',
+    color: "#345C50",
   },
   forgotPasswordSection: {
     // If additional styling is needed for the forgot password section
   },
   forgotPasswordText: {
     fontSize: 14,
-    color: '#345C50',
-    fontFamily: 'SF-Pro-Text-Regular',
+    color: "#345C50",
+    fontFamily: "SF-Pro-Text-Regular",
   },
 });

@@ -1,6 +1,7 @@
-﻿using Persistence.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using Persistence.Models;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Persistence.Repositories
     //postrepo interface
     public interface IPostRepository
     {
-        Task<bool> CreatePostAsync(PostRequest newPost, string imageURL, int userID);
+        Task<bool> CreatePostAsync(PostModel newPost, string imageURL, int userID);
     }
 
     //post repo class. creates post for now. will handle edit delete etc
@@ -30,19 +31,12 @@ namespace Persistence.Repositories
         /// <param name="newPost"></param>
         /// <param name="imageURL"></param>
         /// <returns>boolean on success</returns>
-        public async Task<bool> CreatePostAsync(PostRequest newPost, string imageURL, int userID)
+        public async Task<bool> CreatePostAsync(PostModel newPost, string imageURL, int userID)
         {
-            PostModel post = new PostModel
-            {
-                PostImage = imageURL,
-                Title = newPost.Title,
-                Cost = newPost.Cost,
-                Ingredients = newPost.Ingredients,
-                Instructions = newPost.Instructions,
-                PrepTime = newPost.PrepTime,
-                UserID = userID
-            };
-            _context.Posts.Add(post);
+            var profile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
+            newPost.ProfileID = profile.Id;
+            newPost.PostImage = imageURL;
+            await _context.Posts.AddAsync(newPost);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using Persistence.Models;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +17,10 @@ namespace Persistence.Repositories
     //profile repo interface
     public interface IProfileRepository
     {
-        Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID);
         Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID);
+        Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID);
+
     }
 
     //profile repo class. gets profile, edit profile, etc. (Crud func)
@@ -36,29 +38,32 @@ namespace Persistence.Repositories
         /// </summary>
         /// <param name="profileID"></param>
         /// <returns></returns>
-        public async Task<ProfileModel> GetProfileModelAsync(int profileID)
+        public async Task<ProfileModel> GetProfileModelAsync(int userID)
         {
-            return await _context.Profiles.SingleOrDefaultAsync(profile => profile.Id == profileID);
+            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
+            return profile;
         }
 
-        /// <summary>
-        /// Create/edit profile
-        /// </summary>
-        /// <param name="profile"></param>
-        /// <param name="imageURL"></param>
-        /// <returns></returns>
-        public async Task<bool> CreateProfileAsync(ProfileRequest profile, string imageURL, int userID)
+        
+
+        public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
         {
-            ProfileModel profileModel = new ProfileModel
-            {
-                ProfilePicture = imageURL,
-                Bio = profile.Bio,
-                FullName = profile.FullName,
-                UserId = userID
-            };
-            _context.Profiles.Add(profileModel);
+            var updatedProfile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
+
+            updatedProfile.FullName = profile.FullName;
+            updatedProfile.Bio = profile.Bio;
+
+            _context.SaveChanges();
+
+            return updatedProfile;
+        }
+
+        public async Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID)
+        {
+            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(p => p.UserId == userID);
+            profile.ProfilePicture = imageURL;
             await _context.SaveChangesAsync();
-            return true;
+            return profile;
         }
     }
 }

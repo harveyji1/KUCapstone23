@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Request
+namespace Shared.DTOs
 {
     /// <summary>
     /// post request object available to all layers

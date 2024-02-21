@@ -18,6 +18,7 @@ namespace Persistence.Models
         public int UserId { get; set; }
         public virtual UserModel User { get; set; }
         public string? FullName { get; set; }
+        public string Handle { get; set; }
         public string? Bio { get; set; }
         public int FollowerCount { get; set; }
         public int FollowingCount { get; set; }
@@ -25,5 +26,7 @@ namespace Persistence.Models
         public bool PrivateAccount { get; set; }
         public bool VerifiedAccount { get; set; }
         public string? ProfilePicture { get; set; }
+        public virtual List<PostModel>? Posts { get; set; }
+
     }
 }

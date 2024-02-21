@@ -3,7 +3,7 @@ using Business.Services.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Shared.Request;
+using Shared.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 

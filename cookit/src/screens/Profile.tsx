@@ -21,6 +21,7 @@ import {
 import { useState, useEffect, useContext } from "react"; // <-- Import useState and useEffect
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
+import { useFocusEffect } from "@react-navigation/native";
 
 type UserProfile = {
   profilePicture: string;
@@ -28,6 +29,8 @@ type UserProfile = {
   followerCount: number;
   followingCount: number;
   user: string;
+  fullName: string;
+  bio: string;
 };
 
 const LOCAL_HOST_NUBMER = "5018";
@@ -36,11 +39,15 @@ type ProfileScreenRouteParams = {
   otherParam: string;
 };
 const screenWidth = Dimensions.get("window").width;
-let profileID = 11;
+let profileID = 6;
 
-export function ProfileScreen() {
+export function ProfileScreen({ navigation }) {
   const { state } = useContext(LoginContext);
-  profileID = state.sub;
+  let loginToken = state;
+  // profileID = state.sub;
+  // console.log("Profile");
+  // console.log(state.sub);
+  // console.log(profileID);
   // profileID = state.decodedToken.sub;
   const data = [
     {
@@ -62,16 +69,36 @@ export function ProfileScreen() {
   ];
   // 1. Create state variables for profile data
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [encodedUrl, setEncodedUrl] = useState("");
+  const [postsArray, setPostsArray] = useState("");
 
   // 2. Use the useEffect hook to fetch profile data when the component mounts
   useEffect(() => {
     // Replace with your actual API endpoint
     axios
-      .get(
-        `http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/profile?profileID=${profileID}`
-      )
+      .get(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/profile`, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      })
       .then((response) => {
+        console.log("Profile Return: ", response.data);
+
+        // getting data
         setProfile(response.data);
+        setPostsArray(response.data.posts.$values);
+
+        // encode url so that its in the correct format to pull the image
+        const imageUrl = response.data.profilePicture;
+        if (imageUrl) {
+          setEncodedUrl(imageUrl.replace(/ /g, "%20"));
+          console.log("Encoded URL:", encodedUrl);
+        } else {
+          console.log("no profile pic");
+        }
+
+        // testing posts response
+        console.log("Posts: ", response.data);
       })
       .catch((error) => {
         console.error("Error fetching profile:", error);
@@ -82,12 +109,21 @@ export function ProfileScreen() {
     return <Text>Loading...</Text>; // Display loading text until the profile data is fetched
   }
 
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.cost}>${item.cost}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
         <Image
           style={styles.profilePic}
-          source={{ uri: profile.profilePicture }}
+          source={{
+            uri: encodedUrl,
+          }}
         ></Image>
         <View style={styles.postContainer}>
           <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
@@ -104,41 +140,21 @@ export function ProfileScreen() {
       </View>
       <Text style={styles.userName}>
         {/*props.userName*/}
-        {profile.user}
+        {profile.fullName}
       </Text>
+      <Text style={styles.bio}>{profile.bio}</Text>
       <TouchableOpacity
         style={styles.editProfileButton}
-        onPress={() => console.log("Edit Profile Pressed")}
+        onPress={() => navigation.navigate("EditProfile")}
       >
         <Text style={styles.editProfileButtonText}>Edit Profile</Text>
       </TouchableOpacity>
       <View style={styles.border}></View>
       <FlatList
-        data={data}
-        numColumns={3}
-        horizontal={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => {
-          // Calculate the width of the image
-          const imageWidth = (screenWidth - 20) / 3; // Assuming 10px padding on both sides of the screen
-
-          return (
-            <View
-              style={[
-                styles.postsContainer,
-                index % 3 !== 0 && styles.postSpacing,
-              ]}
-            >
-              <Image
-                source={{ uri: item.postimage }}
-                style={[
-                  styles.recipePosts,
-                  { width: imageWidth, height: imageWidth },
-                ]}
-              />
-            </View>
-          );
-        }}
+        data={postsArray}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.$id}
+        contentContainerStyle={styles.listContainer}
       />
     </View>
   );
@@ -227,6 +243,14 @@ const styles = StyleSheet.create({
     fontFamily: "SweetSansProBold",
     marginLeft: 20,
   },
+  bio: {
+    fontSize: 12,
+    color: "#667B68",
+    fontFamily: "SweetSansProRegular",
+    marginTop: 0,
+    marginBottom: 10,
+    marginLeft: 20,
+  },
   // ====== EDIT PROFILE BUTTON ======
   editProfileButton: {
     padding: 10,
@@ -258,6 +282,24 @@ const styles = StyleSheet.create({
   recipePosts: {
     // Set only the aspect ratio here
     aspectRatio: 1, // Maintain aspect ratio
+  },
+  listContainer: {
+    padding: 10,
+  },
+  itemContainer: {
+    backgroundColor: "#f9f9f9",
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 5,
+    elevation: 1, // Add shadow effect for iOS use shadow props
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  cost: {
+    fontSize: 16,
+    color: "#666",
   },
 });
 

@@ -3,7 +3,7 @@ using Business.Services.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Request;
+using Shared.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
@@ -52,19 +52,27 @@ namespace API.Controllers
         /// <param name="profile">Profile object</param>
         /// <returns>Http status code</returns>
         [Authorize]
-        [HttpPost("profile")]
-        public async Task<IActionResult> CreateProfileAsync([FromForm] ProfileRequest profile)
+        [HttpPut("profile")]
+        public async Task<IActionResult> EditProfileAsync([FromBody] ProfileRequest profile)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             int.TryParse(userID, out var userId);
 
-            if (await _profileService.CreateProfileAsync(profile, userId))
-            {
-                return Ok();
-            }
-            return BadRequest();
+            return Ok(await _profileService.EditProfileAsync(profile, userId));
+            
 
+        }
+
+        [Authorize]
+        [HttpPut("profileImage")]
+        public async Task<IActionResult> UploadProfileImageAsync(IFormFile image)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            return Ok(await _profileService.UploadProfileImageAsync(image, userId));
         }
 
 

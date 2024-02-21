@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,17 @@ namespace Business.Services.Azure
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = container.GetBlobClient(fileName);
 
-            
-            await blobClient.UploadAsync(image.OpenReadStream());
+            var httpHeaders = new BlobHttpHeaders
+            {
+                ContentType = image.ContentType 
+            };
+
+            var blobOptions = new BlobUploadOptions
+            {
+                HttpHeaders = httpHeaders
+            };
+
+            await blobClient.UploadAsync(image.OpenReadStream(), blobOptions);
             return blobClient.Uri.ToString();
         }
     }

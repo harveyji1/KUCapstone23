@@ -1,7 +1,9 @@
-﻿using Business.Services.Azure;
+﻿using Business.Helpers;
+using Business.Services.Azure;
+using Microsoft.AspNetCore.Http;
 using Persistence.Models;
 using Persistence.Repositories;
-using Shared.Request;
+using Shared.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +15,10 @@ namespace Business.Services.User
     //profile interface
     public interface IProfileService
     {
-        Task<bool> CreateProfileAsync(ProfileRequest profile, int userID);
         Task<ProfileModel> GetProfileModelAsync(int userID);
+        Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID);
+        Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID);
+
     }
 
     //profile class. handles crud related functionality for profile
@@ -35,11 +39,17 @@ namespace Business.Services.User
         {
             return await _profileRepo.GetProfileModelAsync(userID);
         }
-        //creates profile. Param is the profile object to post. Calls our blob service for uploading of profile image. passes to repo layer
-        public async Task<bool> CreateProfileAsync(ProfileRequest profile, int userID)
+        
+        public async Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID)
         {
-            string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, profile.ProfilePicture);
-            return await _profileRepo.CreateProfileAsync(profile, imageURL, userID);
+            var response = await _profileRepo.EditProfileAsync(ModelConversionHelper.ProfileRequestDTOToModel(profile), userID);
+            return ModelConversionHelper.ProfileModelToResponseDTO(response);
+        }
+
+        public async Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID)
+        {
+            string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, image);
+            return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.UploadProfileImageAsync(imageURL, userID));
         }
 
     }
