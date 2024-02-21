@@ -128,12 +128,32 @@ function CreatePostStack() {
       <Stack2.Screen
         name="CreatePost"
         component={CreatePostScreen}
-        options={{ headerShown: false }}
-      />
+        options={{
+          title: "Add New Recipe",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
+      /> 
       <Stack2.Screen
         name="Ingredients"
         component={IngredientsScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "Add Ingredients",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
       />
       <Stack2.Screen
         name="Instructions"

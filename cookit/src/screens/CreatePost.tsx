@@ -44,7 +44,8 @@ export function CreatePostScreen({ navigation }) {
   const [image, setImage] = useState(null);
   // const [cookingTime, setCookingTimeSeconds] = useState('');
   
-
+  const combinedPrepTime = `${prepTimeMinutes}:${prepTimeSeconds}`;
+  const combinedCookTime = `${cookTimeMinutes}:${cookTimeSeconds}`;
   // Function that handles image picking
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -83,14 +84,7 @@ export function CreatePostScreen({ navigation }) {
     });
     // Assume success for example purposes
     Alert.alert("Post Created Successfully!");
-    navigation.navigate('Ingredients', {
-      recipeName,
-      description,
-      cookingTime: combinedCookTime,
-      prepTime: combinedPrepTime,
-      cost: estimatedPrice,
-      image,
-    })
+    navigation.navigate("Ingredients");
     navigation.goBack(); // or navigate to another screen
   };
 
@@ -211,7 +205,17 @@ export function CreatePostScreen({ navigation }) {
           <Button
             color="#FFF"
             title="Next"
-            onPress= {handleCreatePost
+            // onPress={handleCreatePost}
+            onPress= {() =>
+              navigation.navigate('Ingredients', {
+                recipeName,
+                tagsChef,
+                combinedPrepTime,
+                combinedCookTime,
+                estimatedPrice,
+                description,
+                image,
+              })
             }
           />
           </View>

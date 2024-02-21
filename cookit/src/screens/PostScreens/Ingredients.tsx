@@ -14,19 +14,22 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Picker,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LoginContext } from "../../../LoginProvider";
+import {
+  SearchOutlineIcon,
+} from "../../../assets/recipe-icons";
 
-export function IngredientsScreen({ navigation }) {
+export function IngredientsScreen({ route, navigation }) {
   const [ingredient, setIngredient] = React.useState<string>("");
   const [ingredientsList, setIngredientsList] = React.useState<string[]>([]);
 
   const { state } = useContext(LoginContext);
   const profileID = state.sub;
 
-  const { recipeName, description, cookingTime, cost, image } =
-    navigation.params;
+  const { recipeName, tagsChef, combinedPrepTime, combinedCookTime, estimatedPrice, description, image } = route.params;
 
   const addIngredient = () => {
     if (ingredient && !ingredientsList.includes(ingredient)) {
@@ -41,15 +44,19 @@ export function IngredientsScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text style={styles.headerText}>Add Your Ingredients</Text>
-      <TextInput
-        style={styles.inputBox}
-        onChangeText={setIngredient}
-        value={ingredient}
-        placeholder="Enter an ingredient"
-        placeholderTextColor={"#3D5147"}
-      />
+    <View style={styles.container}>
+      {/* <Text style={styles.headerText}>Add Your Ingredients</Text> */}
+      <View style={styles.searchContainer}>
+        <SearchOutlineIcon />
+        <TextInput
+          style={styles.inputBox}
+          onChangeText={setIngredient}
+          value={ingredient}
+          placeholder="Search Ingredients"
+          placeholderTextColor={"#9CA3AF"}
+        />
+      </View>
+
       <Button title="Add Ingredient" onPress={addIngredient} color="#46996F" />
       <FlatList
         data={ingredientsList}
@@ -67,20 +74,26 @@ export function IngredientsScreen({ navigation }) {
         )}
         keyExtractor={(_, index) => index.toString()}
       />
-      <Button
-        color={"#46996F"}
-        title="Next Screen"
-        onPress={() =>
-          navigation.navigate("Instructions", {
-            recipeName,
-            description,
-            cookingTime,
-            cost,
-            image,
-            ingredientsList,
-          })
-        }
-      />
+    <View style={styles.buttonContainer}>
+      <View style={styles.button}>
+          <Button
+            color="#FFF"
+            title="Next"
+            onPress= {() =>
+              navigation.navigate('Instructions', {
+                recipeName,
+                tagsChef,
+                combinedPrepTime,
+                combinedCookTime,
+                estimatedPrice,
+                description,
+                image,
+                ingredientsList,
+              })
+            }
+          />
+          </View>
+        </View>
     </View>
   );
 }
@@ -88,13 +101,10 @@ export function IngredientsScreen({ navigation }) {
 // Add your styles here
 
 const styles = StyleSheet.create({
-  headerText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "SweetSansProBold",
-    marginBottom: 20,
-    marginTop: 20,
-    color: "#345C50",
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   ingredientsList: {
     flexDirection: "row",
@@ -107,7 +117,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 5,
     marginTop: 5,
-    fontFamily: "SweetSansProRegular",
+    fontFamily: "SF-Pro-Display-Medium",
     fontSize: 16,
     color: "#345C50",
   },
@@ -120,13 +130,40 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4EAD7",
   },
   inputBox: {
+    flex: 1, 
+    marginLeft: 10, 
     height: 40,
-    borderColor: "#345C50",
+    borderColor: 'transparent', 
+    borderWidth: 0, 
+    borderRadius: 12,
+    fontFamily: "SF-Pro-Display-Regular",
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: "#F7F7F9",
+    backgroundColor: "#F7F7F9",
     borderWidth: 2,
     borderRadius: 15,
-    padding: 10,
-    width: "80%",
+    // padding: 10,
+    width: "90%",
     marginBottom: 10,
-    fontFamily: "SweetSansProRegular",
+    marginTop: 10,
+    paddingLeft: 10,
   },
+  buttonContainer: {
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  button: {
+    borderRadius: 50,
+    width: 343,
+    height: 55,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: "#345C50", 
+  },
+
 });
