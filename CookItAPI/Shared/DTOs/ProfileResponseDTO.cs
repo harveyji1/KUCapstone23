@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ namespace Shared.DTOs
         public bool VerifiedAccount { get; set; }
         public string ProfilePicture { get; set; }
         public List<PostResponseDTO>? Posts { get; set; }
+
+        public string Handle { get; set; }
     }
 }

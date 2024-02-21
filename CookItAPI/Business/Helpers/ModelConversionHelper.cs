@@ -23,7 +23,8 @@ namespace Business.Helpers
                 PrivateAccount = model.PrivateAccount,
                 VerifiedAccount = model.VerifiedAccount,
                 ProfilePicture = model.ProfilePicture,
-                Posts = PostModelsToPostResponseDTO(model.Posts)
+                Posts = PostModelsToPostResponseDTO(model.Posts),
+                Handle = model.Handle
             };
         }
 
@@ -56,7 +57,7 @@ namespace Business.Helpers
             return new ProfileModel
             {
                 FullName = profile.FullName,
-                Bio = profile.Bio
+                Bio = profile.Bio,
             };
         }
 

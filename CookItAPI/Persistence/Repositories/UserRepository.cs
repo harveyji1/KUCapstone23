@@ -42,6 +42,7 @@ namespace Persistence.Repositories
         /// <returns>nothing</returns>
         public async Task AddUserAsync(UserModel user)
         {
+            user.Profile.Handle = user.Username;
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }

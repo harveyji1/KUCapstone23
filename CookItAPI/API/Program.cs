@@ -72,6 +72,8 @@ namespace API
             builder.Services.AddSingleton<IBlobService, BlobService>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<ISearchRepository, SearchRepository>();
+            builder.Services.AddScoped<ISearchService, SearchService>();
 
             builder.Services.AddCors(options =>
             {
