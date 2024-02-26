@@ -34,11 +34,8 @@ export function ReviewPostScreen({ navigation, route }) {
     formData.append("Instructions", instructions);
     formData.append("Cost", estimatedPrice);
     formData.append("PrepTime", combinedCookTime);
-    formData.append("PostImage", {
-      uri: image,
-      type: "image/jpeg", // or the correct image mime type
-      name: "upload.jpg", // or the correct filename
-    });
+    // need to append bob for image later
+
     // const data = {
     //   Title: recipeName,
     //   Ingredients: ingredientsString,
@@ -54,17 +51,21 @@ export function ReviewPostScreen({ navigation, route }) {
 
     try {
       // API call
-      const response = await axios.post(url, formData, config);
-      console.log("Response: ", response.data);
+      const response1 = await fetch(image);
+      const blob = await response1.blob();
+      formData.append("PostImage", blob, blob._data.name);
 
       // Debug stuff
       console.log("Recipe Name: ", recipeName);
       console.log("Description: ", description);
       console.log("cookingTime: ", combinedCookTime);
       console.log("cost: ", estimatedPrice);
-      console.log("image: ", image);
+      console.log("imageBlob: ", blob._data.name);
       console.log("ingredients list: ", ingredientsString);
       console.log("INstructions: ", instructions);
+
+      const response = await axios.post(url, formData, config);
+      console.log("Response: ", response.data);
 
       // Navigate back to create post
       navigation.navigate("CreatePost");
