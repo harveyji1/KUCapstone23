@@ -42,6 +42,7 @@
     "react-native": "0.72.5",
     "react-native-auth0": "^3.0.1",
     "react-native-collapsible": "^1.6.1",
+    "react-native-draglist": "^3.5.1",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-pure-jwt": "^3.0.2",

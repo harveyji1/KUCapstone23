@@ -220,7 +220,7 @@ const PrepTimeIcon = () => (
 
   const MenuIcon = () => (
     <View>
-      <Svg viewBox="0 0 24 24" width="24" height="4">
+      <Svg viewBox="0 0 24 24" width="24" height="24">
         <Path
           fill="#111827" d="M21 7.75H3C2.59 7.75 2.25 7.41 2.25 7C2.25 6.59 2.59 6.25 3 6.25H21C21.41 6.25 21.75 6.59 21.75 7C21.75 7.41 21.41 7.75 21 7.75Z"
         />
