@@ -6,6 +6,7 @@
 import * as React from "react";
 import { Text, View, Button } from "react-native";
 import { LoginContext } from "../../../LoginProvider";
+import axios from "axios";
 
 export function ReviewPostScreen({ navigation, route }) {
   const { state } = React.useContext(LoginContext);
@@ -19,14 +20,44 @@ export function ReviewPostScreen({ navigation, route }) {
     instructions,
     estimatedPrice,
   } = route.params;
+  const LOCAL_HOST_NUBMER = "5018";
 
   const HandlePost = async () => {
-    try {
-      // convert list to string
-      let ingredientsString = ingredientsList.join(", "); // Join the array elements with a comma and a space
-      // convert image to binary
+    // convert list to string
+    let ingredientsString = ingredientsList.join(", "); // Join the array elements with a comma and a space
+    // convert image to binary
 
+    const url = `http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/posts`;
+    const formData = new FormData();
+    formData.append("Title", recipeName);
+    formData.append("Ingredients", ingredientsString);
+    formData.append("Instructions", instructions);
+    formData.append("Cost", estimatedPrice);
+    formData.append("PrepTime", combinedCookTime);
+    formData.append("PostImage", {
+      uri: image,
+      type: "image/jpeg", // or the correct image mime type
+      name: "upload.jpg", // or the correct filename
+    });
+    // const data = {
+    //   Title: recipeName,
+    //   Ingredients: ingredientsString,
+    //   Cost: estimatedPrice,
+    //   PrepTime: combinedCookTime,
+    //   PostImage: image,
+    // };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    };
+
+    try {
       // API call
+      const response = await axios.post(url, formData, config);
+      console.log("Response: ", response.data);
+
+      // Debug stuff
       console.log("Recipe Name: ", recipeName);
       console.log("Description: ", description);
       console.log("cookingTime: ", combinedCookTime);
@@ -34,9 +65,12 @@ export function ReviewPostScreen({ navigation, route }) {
       console.log("image: ", image);
       console.log("ingredients list: ", ingredientsString);
       console.log("INstructions: ", instructions);
+
+      // Navigate back to create post
       navigation.navigate("CreatePost");
     } catch (error) {
       // Error handle api call
+      console.error("Error: ", error);
     }
   };
   return (
