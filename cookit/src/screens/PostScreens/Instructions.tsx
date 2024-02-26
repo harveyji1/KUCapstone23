@@ -19,10 +19,17 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-export function InstructionsScreen({ navigation }) {
+export function InstructionsScreen({ navigation, route }) {
   const [instructions, setInstructions] = useState(""); //use state for setting instructions
-  const { recipeName, description, cookingTime, cost, image, ingredientsList } =
-    navigation.params;
+  const {
+    recipeName,
+    description,
+    combinedCookTime,
+    cost,
+    image,
+    ingredientsList,
+    estimatedPrice,
+  } = route.params;
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -53,11 +60,12 @@ export function InstructionsScreen({ navigation }) {
             navigation.navigate("Review", {
               recipeName,
               description,
-              cookingTime,
+              combinedCookTime,
               cost,
               image,
               ingredientsList,
               instructions,
+              estimatedPrice,
             })
           }
         />

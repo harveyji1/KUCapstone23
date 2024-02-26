@@ -18,18 +18,24 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LoginContext } from "../../../LoginProvider";
-import {
-  SearchOutlineIcon,
-} from "../../../assets/recipe-icons";
+import { SearchOutlineIcon } from "../../../assets/recipe-icons";
 
-export function IngredientsScreen({ route, navigation }) {
+export function IngredientsScreen({ navigation, route }) {
   const [ingredient, setIngredient] = React.useState<string>("");
   const [ingredientsList, setIngredientsList] = React.useState<string[]>([]);
 
   const { state } = useContext(LoginContext);
   const profileID = state.sub;
 
-  const { recipeName, tagsChef, combinedPrepTime, combinedCookTime, estimatedPrice, description, image } = route.params;
+  const {
+    recipeName,
+    tagsChef,
+    combinedPrepTime,
+    combinedCookTime,
+    estimatedPrice,
+    description,
+    image,
+  } = route.params;
 
   const addIngredient = () => {
     if (ingredient && !ingredientsList.includes(ingredient)) {
@@ -74,13 +80,13 @@ export function IngredientsScreen({ route, navigation }) {
         )}
         keyExtractor={(_, index) => index.toString()}
       />
-    <View style={styles.buttonContainer}>
-      <View style={styles.button}>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
           <Button
             color="#FFF"
             title="Next"
-            onPress= {() =>
-              navigation.navigate('Instructions', {
+            onPress={() =>
+              navigation.navigate("Instructions", {
                 recipeName,
                 tagsChef,
                 combinedPrepTime,
@@ -92,8 +98,8 @@ export function IngredientsScreen({ route, navigation }) {
               })
             }
           />
-          </View>
         </View>
+      </View>
     </View>
   );
 }
@@ -130,17 +136,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4EAD7",
   },
   inputBox: {
-    flex: 1, 
-    marginLeft: 10, 
+    flex: 1,
+    marginLeft: 10,
     height: 40,
-    borderColor: 'transparent', 
-    borderWidth: 0, 
+    borderColor: "transparent",
+    borderWidth: 0,
     borderRadius: 12,
     fontFamily: "SF-Pro-Display-Regular",
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderColor: "#F7F7F9",
     backgroundColor: "#F7F7F9",
     borderWidth: 2,
@@ -152,8 +158,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   buttonContainer: {
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
     marginBottom: 10,
   },
@@ -161,9 +167,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 343,
     height: 55,
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    backgroundColor: "#345C50", 
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#345C50",
   },
-
 });

@@ -22,28 +22,36 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { LoginContext } from "../../LoginProvider";
-import { TagChefIcon, PrepTimeIcon, CookTimeIcon, CostIcon, EditIcon, PickImageIcon } from '../../assets/recipe-icons';
-import { Dimensions } from 'react-native';
+import {
+  TagChefIcon,
+  PrepTimeIcon,
+  CookTimeIcon,
+  CostIcon,
+  EditIcon,
+  PickImageIcon,
+} from "../../assets/recipe-icons";
+import { Dimensions } from "react-native";
+import { err } from "react-native-svg/lib/typescript/xml";
 
-  // Display selected image
-  const screenWidth = Dimensions.get('window').width;
-  const aspectRatio = 2 / 2; 
-  const imageHeight = screenWidth / aspectRatio;
+// Display selected image
+const screenWidth = Dimensions.get("window").width;
+const aspectRatio = 2 / 2;
+const imageHeight = screenWidth / aspectRatio;
 
 // CreatePostScreen component
-export function CreatePostScreen({ navigation }) {
+export function CreatePostScreen({ navigation, route }) {
   // Setup state hooks for managing the post details
   const [recipeName, setRecipeName] = useState("");
   const [tagsChef, setTagsChef] = useState("");
-  const [prepTimeMinutes, setPrepTimeMinutes] = useState('');
-  const [prepTimeSeconds, setPrepTimeSeconds] = useState('');
-  const [cookTimeMinutes, setCookTimeMinutes] = useState('');
-  const [cookTimeSeconds, setCookTimeSeconds] = useState('');
+  const [prepTimeMinutes, setPrepTimeMinutes] = useState("");
+  const [prepTimeSeconds, setPrepTimeSeconds] = useState("");
+  const [cookTimeMinutes, setCookTimeMinutes] = useState("");
+  const [cookTimeSeconds, setCookTimeSeconds] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   // const [cookingTime, setCookingTimeSeconds] = useState('');
-  
+
   const combinedPrepTime = `${prepTimeMinutes}:${prepTimeSeconds}`;
   const combinedCookTime = `${cookTimeMinutes}:${cookTimeSeconds}`;
   // Function that handles image picking
@@ -83,144 +91,139 @@ export function CreatePostScreen({ navigation }) {
       image,
     });
     // Assume success for example purposes
-    Alert.alert("Post Created Successfully!");
-    navigation.navigate("Ingredients");
-    navigation.goBack(); // or navigate to another screen
+    try {
+      navigation.navigate("Ingredients", {
+        recipeName,
+        tagsChef,
+        combinedPrepTime,
+        combinedCookTime,
+        estimatedPrice,
+        description,
+        image,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Main return statement rendering the UI elements
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
-    <ScrollView style={styles.container}>
-      <View style={styles.imagePickerContainer}>
-      <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-      <View style={styles.changeImageButtonContent}>
-      {image ? <EditIcon /> : <PickImageIcon />}
-        <Text style={styles.buttonText}>
-          {image ? "Change Image" : "Pick an Image"}
-        </Text>
-      </View>
-    </TouchableOpacity>
-        {image && <Image source={{ uri: image }} style={styles.image} />}
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.imagePickerContainer}>
+          <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+            <View style={styles.changeImageButtonContent}>
+              {image ? <EditIcon /> : <PickImageIcon />}
+              <Text style={styles.buttonText}>
+                {image ? "Change Image" : "Pick an Image"}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          {image && <Image source={{ uri: image }} style={styles.image} />}
+        </View>
 
-      <View style={styles.inputGroup}>
-        <TextInput
-          style={styles.inputTitle}
-          placeholder="Write Recipe Name..."
-          onChangeText={setRecipeName}
-          value={recipeName}
-        />
-    </View>
-
-<View style={styles.inputGroup}>
-  <View style={styles.labelWithIcon}>
-    <TagChefIcon />
-    <Text style={styles.inputLabel}>Tag Chef</Text>
-  </View>
-  <TextInput
-    style={styles.textInput}
-    placeholder="@username"
-    onChangeText={setTagsChef}
-    value={tagsChef}
-  />
-</View>
-
-  <View style={styles.inputGroup}>
-  <View style={styles.labelWithIcon}>
-    <PrepTimeIcon />
-    <Text style={styles.inputLabel}>Prep Time</Text>
-  </View>
-  <View style={styles.timeInputGroup}>
-    <TextInput
-      style={[styles.timeInput, styles.borderInput]}
-      placeholder="mm"
-      onChangeText={setPrepTimeMinutes} 
-      value={prepTimeMinutes}
-      keyboardType="numeric"
-    />
-    <Text style={styles.timeColon}>:</Text>
-    <TextInput
-      style={[styles.timeInput, styles.borderInput]}
-      placeholder="ss"
-      onChangeText={setPrepTimeSeconds} 
-      value={prepTimeSeconds}
-      keyboardType="numeric"
-    />
-  </View>
-</View>
-
-<View style={styles.inputGroup}>
-  <View style={styles.labelWithIcon}>
-    <CookTimeIcon />
-    <Text style={styles.inputLabel}>Cook Time</Text>
-  </View>
-  <View style={styles.timeInputGroup}>
-  <TextInput
-      style={[styles.timeInput, styles.borderInput]}
-      placeholder="mm"
-      onChangeText={setCookTimeMinutes} 
-      value={cookTimeMinutes}
-      keyboardType="numeric"
-    />
-    <Text style={styles.timeColon}>:</Text>
-    <TextInput
-      style={[styles.timeInput, styles.borderInput]}
-      placeholder="ss"
-      onChangeText={setCookTimeSeconds} 
-      value={cookTimeSeconds}
-      keyboardType="numeric"
-    />
-  </View>
-</View>
-
-    <View style={styles.inputGroup}>
-    <View style={styles.labelWithIcon}>
-    <CostIcon />
-    <Text style={styles.inputLabel}>Estimated Price</Text>
-    </View>
-    <TextInput
-      style={styles.textInput}
-      placeholder="Enter Price"
-      onChangeText={setEstimatedPrice}
-      value={estimatedPrice}
-      keyboardType="numeric"
-    />
-  </View>
-
-      <View style={styles.inputGroup}>
-      <TextInput
-        style={[styles.inputMain, styles.descriptionInput]}
-        placeholder="Write Description here..."
-        onChangeText={setDescription}
-        value={description}
-        multiline
-      />
-    </View>
-    <View style={styles.buttonContainer}>
-      <View style={styles.button}>
-          <Button
-            color="#FFF"
-            title="Next"
-            // onPress={handleCreatePost}
-            onPress= {() =>
-              navigation.navigate('Ingredients', {
-                recipeName,
-                tagsChef,
-                combinedPrepTime,
-                combinedCookTime,
-                estimatedPrice,
-                description,
-                image,
-              })
-            }
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={styles.inputTitle}
+            placeholder="Write Recipe Name..."
+            onChangeText={setRecipeName}
+            value={recipeName}
           />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <View style={styles.labelWithIcon}>
+            <TagChefIcon />
+            <Text style={styles.inputLabel}>Tag Chef</Text>
+          </View>
+          <TextInput
+            style={styles.textInput}
+            placeholder="@username"
+            onChangeText={setTagsChef}
+            value={tagsChef}
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <View style={styles.labelWithIcon}>
+            <PrepTimeIcon />
+            <Text style={styles.inputLabel}>Prep Time</Text>
+          </View>
+          <View style={styles.timeInputGroup}>
+            <TextInput
+              style={[styles.timeInput, styles.borderInput]}
+              placeholder="mm"
+              onChangeText={setPrepTimeMinutes}
+              value={prepTimeMinutes}
+              keyboardType="numeric"
+            />
+            <Text style={styles.timeColon}>:</Text>
+            <TextInput
+              style={[styles.timeInput, styles.borderInput]}
+              placeholder="ss"
+              onChangeText={setPrepTimeSeconds}
+              value={prepTimeSeconds}
+              keyboardType="numeric"
+            />
           </View>
         </View>
-    </ScrollView>
+
+        <View style={styles.inputGroup}>
+          <View style={styles.labelWithIcon}>
+            <CookTimeIcon />
+            <Text style={styles.inputLabel}>Cook Time</Text>
+          </View>
+          <View style={styles.timeInputGroup}>
+            <TextInput
+              style={[styles.timeInput, styles.borderInput]}
+              placeholder="mm"
+              onChangeText={setCookTimeMinutes}
+              value={cookTimeMinutes}
+              keyboardType="numeric"
+            />
+            <Text style={styles.timeColon}>:</Text>
+            <TextInput
+              style={[styles.timeInput, styles.borderInput]}
+              placeholder="ss"
+              onChangeText={setCookTimeSeconds}
+              value={cookTimeSeconds}
+              keyboardType="numeric"
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputGroup}>
+          <View style={styles.labelWithIcon}>
+            <CostIcon />
+            <Text style={styles.inputLabel}>Estimated Price</Text>
+          </View>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Price"
+            onChangeText={setEstimatedPrice}
+            value={estimatedPrice}
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={[styles.inputMain, styles.descriptionInput]}
+            placeholder="Write Description here..."
+            onChangeText={setDescription}
+            value={description}
+            multiline
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button color="#FFF" title="Next" onPress={handleCreatePost} />
+          </View>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -229,7 +232,7 @@ export function CreatePostScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   header: {
     marginTop: 0,
@@ -237,12 +240,12 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    fontFamily: 'SF-Pro-Display-Regular',
-    textAlign: 'center',
-    color: '#111827',
+    fontFamily: "SF-Pro-Display-Regular",
+    textAlign: "center",
+    color: "#111827",
   },
   imagePickerContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 10,
   },
   imageButton: {
@@ -252,43 +255,43 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   changeImageButtonContent: {
-    flexDirection: 'row',
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "#345C50",
     fontSize: 14,
     textAlign: "center",
     fontFamily: "SF-Pro-Text-Semibold",
-    marginLeft: 5, 
+    marginLeft: 5,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: imageHeight,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     marginBottom: 10,
   },
   input: {
     borderWidth: 0.5,
-    borderColor: '#F3F4F6',
+    borderColor: "#F3F4F6",
     padding: 10,
   },
   timeInputGroup: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end', 
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   timeInput: {
-    width: 50, 
-    textAlign: 'center',
+    width: 50,
+    textAlign: "center",
     paddingVertical: 5,
-    color: '#111827',
-    fontFamily: 'SF-Pro-Display-Regular',
+    color: "#111827",
+    fontFamily: "SF-Pro-Display-Regular",
   },
   borderInput: {
     borderWidth: 1,
-    borderColor: '#F3F4F6',
+    borderColor: "#F3F4F6",
     borderRadius: 7,
     marginHorizontal: 5,
   },
@@ -296,58 +299,58 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   descriptionInput: {
-    height: 100, 
-    textAlignVertical: 'top',
+    height: 100,
+    textAlignVertical: "top",
   },
   buttonContainer: {
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    marginTop: 20, 
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
   },
   button: {
     borderRadius: 50,
     width: 343,
     height: 55,
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    backgroundColor: "#345C50", 
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#345C50",
   },
   inputGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', 
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#F3F4F6',
+    borderColor: "#F3F4F6",
     padding: 20,
   },
   inputLabel: {
     marginRight: 10,
     marginLeft: 3,
     fontSize: 14,
-    fontFamily: 'SF-Pro-Display-Regular',
-    color: '#111827',
+    fontFamily: "SF-Pro-Display-Regular",
+    color: "#111827",
   },
   textInput: {
-    flex: 1, 
+    flex: 1,
     paddingVertical: 0,
     padding: 0,
-    fontFamily: 'SF-Pro-Display-Regular',
+    fontFamily: "SF-Pro-Display-Regular",
     fontSize: 14,
-    color: '#111827',
-    textAlign: 'right', 
+    color: "#111827",
+    textAlign: "right",
   },
   inputMain: {
-    fontFamily: 'SF-Pro-Display-Regular',
+    fontFamily: "SF-Pro-Display-Regular",
     fontSize: 14,
-    color: '#111827',
+    color: "#111827",
   },
   labelWithIcon: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   inputTitle: {
-    fontFamily: 'SF-Pro-Display-Semibold',
+    fontFamily: "SF-Pro-Display-Semibold",
     fontSize: 15,
-    color: '#111827',  }
+    color: "#111827",
+  },
 });
-
