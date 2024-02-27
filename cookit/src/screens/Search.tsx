@@ -3,33 +3,46 @@
   Author: Aiden Frevert
   Editors: 
 */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, StatusBar, Keyboard } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function SearchScreen({ navigation }) {
+
+  const [searchString, setSearchString] = useState<string>('');
+
+  const [searchOn , setSearchOn] = useState( searchString !== '');
+
+  useEffect(() => {
+    setSearchOn( searchString !== '');
+  }, [searchString])
+
   return (
+
     <View style={styles.container}>
       <StatusBar backgroundColor="#345C50" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Discover New Recipes</Text>
         <View style={styles.searchContainer}>
-          <TextInput placeholder="Search here..." style={styles.searchInput} />
+          <TextInput placeholder="Search here..." style={styles.searchInput} onChangeText={(e) => {setSearchString(e)}} />
           <TouchableOpacity style={styles.filtersButton} onPress={Keyboard.dismiss}>
             <MaterialCommunityIcons name="filter-variant" size={24} />
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.grid}>
-        <CategoryItem title="Trending (Top)" iconName="fire" iconColor="#FF4500" />
-        <CategoryItem title="Trending (Local)" iconName="map-marker" iconColor="#4DB8FF" />
-        <CategoryItem title="Lunch" iconName="food" iconColor="#FFD700" />
-        <CategoryItem title="Dinner" iconName="food-variant" iconColor="#FF6347" />
-        <CategoryItem title="Italian" iconName="pizza" iconColor="#FF4500" />
-        <CategoryItem title="Vegan" iconName="leaf" iconColor="#32CD32" />
-        <CategoryItem title="Indian" iconName="bowl" iconColor="#FF8C00" />
-        <CategoryItem title="Chinese" iconName="noodles" iconColor="#FF4500" />
-      </View>
+      {searchOn ? 
+      <View/>
+     :
+     <View style={styles.grid}>
+     <CategoryItem title="Trending (Top)" iconName="fire" iconColor="#FF4500" />
+     <CategoryItem title="Trending (Local)" iconName="map-marker" iconColor="#4DB8FF" />
+     <CategoryItem title="Lunch" iconName="food" iconColor="#FFD700" />
+     <CategoryItem title="Dinner" iconName="food-variant" iconColor="#FF6347" />
+     <CategoryItem title="Italian" iconName="pizza" iconColor="#FF4500" />
+     <CategoryItem title="Vegan" iconName="leaf" iconColor="#32CD32" />
+     <CategoryItem title="Indian" iconName="bowl" iconColor="#FF8C00" />
+     <CategoryItem title="Chinese" iconName="noodles" iconColor="#FF4500" />
+   </View>}
     </View>
   );
 }
@@ -55,7 +68,7 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Text-Regular",
   },
   header: {
-    marginTop: 25,
+    marginTop: 10,
     marginLeft: 10,
     fontSize: 20,
     fontWeight: 'bold',
