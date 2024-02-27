@@ -75,6 +75,36 @@ namespace API.Controllers
             return Ok(await _profileService.UploadProfileImageAsync(image, userId));
         }
 
+        [Authorize]
+        [HttpPost("follow")]
+        public async Task<IActionResult> FollowAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _profileService.FollowAsync(profileID, userId))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpDelete("unfollow")]
+        public async Task<IActionResult> UnfollowAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _profileService.UnfollowAsync(profileID, userId))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
 
     }
 }

@@ -18,6 +18,8 @@ namespace Business.Services.User
         Task<ProfileModel> GetProfileModelAsync(int userID);
         Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID);
         Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID);
+        Task<bool> FollowAsync(int profileID, int userID);
+        Task<bool> UnfollowAsync(int profileID, int userID);
 
     }
 
@@ -50,6 +52,16 @@ namespace Business.Services.User
         {
             string imageURL = await _blob.UploadBlob("profileimagescontainer", userID, image);
             return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.UploadProfileImageAsync(imageURL, userID));
+        }
+
+        public async Task<bool> FollowAsync(int profileID, int userID)
+        {
+            return await _profileRepo.FollowAsync(profileID, userID);
+        }
+
+        public async Task<bool> UnfollowAsync(int profileID, int userID)
+        {
+            return await _profileRepo.UnfollowAsync(profileID, userID);
         }
 
     }
