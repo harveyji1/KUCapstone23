@@ -74,6 +74,8 @@ namespace API
             builder.Services.AddScoped<IPostRepository, PostRepository>();
             builder.Services.AddScoped<ISearchRepository, SearchRepository>();
             builder.Services.AddScoped<ISearchService, SearchService>();
+            builder.Services.AddScoped<IFeedRepository, FeedRepository>();
+            builder.Services.AddScoped<IFeedService, FeedService>();
 
             builder.Services.AddCors(options =>
             {

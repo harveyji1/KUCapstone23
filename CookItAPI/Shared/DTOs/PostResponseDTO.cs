@@ -9,6 +9,7 @@ namespace Shared.DTOs
 {
     public class PostResponseDTO
     {
+
         public int ID { get; set; }
         public string Title { get; set; }
         public string Ingredients { get; set; }
@@ -17,5 +18,9 @@ namespace Shared.DTOs
         public string PrepTime { get; set; }
         public int NumOfLikes { get; set; }
         public string Image { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public string Handle { get; set; }
+        public string ProfileImage { get; set; }
     }
 }

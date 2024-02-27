@@ -44,7 +44,11 @@ namespace Business.Helpers
                         Cost = post.Cost,
                         PrepTime = post.PrepTime,
                         NumOfLikes = post.NumOfLikes,
-                        Image = post.PostImage
+                        Image = post.PostImage,
+                        CreatedAt = post.CreatedAt,
+                        Handle = post.Profile.Handle,
+                        ProfileImage = post.Profile.ProfilePicture
+                        
                     });
                 }
             }
