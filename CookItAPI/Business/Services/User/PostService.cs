@@ -16,6 +16,8 @@ namespace Business.Services.User
         Task<bool> CreatePostAsync(PostRequest newPost, int userID);
         Task<bool> UpvoteAsync(int postID, int userID);
         Task<bool> RevertUpvoteAsync(int postID, int userID);
+        Task<bool> DownvoteAsync(int postID, int userID);
+        Task<bool> RevertDownvoteAsync(int postID, int userID);
     }
 
     //post class. will handle uploading of post images and pass to repo layer
@@ -46,6 +48,16 @@ namespace Business.Services.User
         public async Task<bool> RevertUpvoteAsync(int postID, int userID)
         {
             return await _repository.RevertUpvoteAsync(postID, userID);
+        }
+
+        public async Task<bool> DownvoteAsync(int postID, int userID)
+        {
+            return await _repository.DownvoteAsync(postID, userID);
+        }
+
+        public async Task<bool> RevertDownvoteAsync(int postID, int userID)
+        {
+            return await _repository.RevertDownvoteAsync(postID, userID);
         }
     }
 }

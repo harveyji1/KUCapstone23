@@ -20,6 +20,7 @@ namespace Persistence.Context
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<FollowerModel> Follower { get; set; }
         public DbSet<LikeModel> Likes { get; set; }
+        public DbSet<DislikeModel> Dislikes { get; set; }
 
     }
 }

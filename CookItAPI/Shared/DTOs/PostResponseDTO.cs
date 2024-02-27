@@ -20,6 +20,7 @@ namespace Shared.DTOs
         public string Image { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsLikedByUser { get; set; }
+        public bool IsDislikedByUser { get; set; }
         public string Handle { get; set; }
         public string ProfileImage { get; set; }
     }

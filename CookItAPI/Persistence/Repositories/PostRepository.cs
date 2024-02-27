@@ -16,6 +16,8 @@ namespace Persistence.Repositories
         Task<bool> CreatePostAsync(PostModel newPost, string imageURL, int userID);
         Task<bool> UpvoteAsync(int postID, int userID);
         Task<bool> RevertUpvoteAsync(int postID, int userID);
+        Task<bool> DownvoteAsync(int postID, int userID);
+        Task<bool> RevertDownvoteAsync(int postID, int userID);
     }
 
     //post repo class. creates post for now. will handle edit delete etc
@@ -105,6 +107,57 @@ namespace Persistence.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> DownvoteAsync(int postID, int userID)
+        {
+            var existingDislike = await _context.Dislikes
+                                                .FirstOrDefaultAsync(l => l.PostId == postID && l.UserId == userID);
+            if (existingDislike != null)
+            {
+                return false;
+            }
+
+            var dislike = new DislikeModel 
+            {
+                PostId = postID,
+                UserId = userID,
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.Dislikes.Add(dislike); 
+
+            var post = await _context.Posts.FindAsync(postID);
+            if (post != null)
+            {
+                post.NumOfDislikes += 1; 
+                _context.Posts.Update(post);
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RevertDownvoteAsync(int postID, int userID)
+        {
+            var existingDislike = await _context.Dislikes
+                                                .FirstOrDefaultAsync(l => l.PostId == postID && l.UserId == userID);
+            if (existingDislike == null)
+            {
+                return false;
+            }
+
+            _context.Dislikes.Remove(existingDislike);
+
+            var post = await _context.Posts.FindAsync(postID);
+            if (post != null)
+            {
+                post.NumOfDislikes = Math.Max(0, post.NumOfDislikes - 1); 
+                _context.Posts.Update(post);
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
 
     }
 }

@@ -47,6 +47,7 @@ namespace Business.Helpers
                         Image = post.PostImage,
                         CreatedAt = post.CreatedAt,
                         IsLikedByUser = post.IsLikedByUser,
+                        IsDislikedByUser = post.IsDislikedByUser,
                         Handle = post.Profile.Handle,
                         ProfileImage = post.Profile.ProfilePicture
                         

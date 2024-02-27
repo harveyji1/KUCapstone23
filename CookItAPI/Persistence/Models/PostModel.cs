@@ -20,9 +20,12 @@ namespace Persistence.Models
         public decimal Cost { get; set; }
         public string? PrepTime { get; set; }
         public int NumOfLikes { get; set; }
+        public int NumOfDislikes { get; set; }
         public string? PostImage { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [NotMapped]
         public bool IsLikedByUser { get; set; }
+        [NotMapped]
+        public bool IsDislikedByUser { get; set; }
     }
 }

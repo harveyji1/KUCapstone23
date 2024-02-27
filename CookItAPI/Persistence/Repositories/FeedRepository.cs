@@ -57,7 +57,8 @@ namespace Persistence.Repositories
                     NumOfLikes = p.NumOfLikes,
                     PostImage = p.PostImage,
                     CreatedAt = p.CreatedAt,
-                    IsLikedByUser = _context.Likes.Any(like => like.PostId == p.ID && like.UserId == userID) 
+                    IsLikedByUser = _context.Likes.Any(like => like.PostId == p.ID && like.UserId == userID),
+                    IsDislikedByUser = _context.Dislikes.Any(like => like.PostId == p.ID && like.UserId == userID)
                 })
                 .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
