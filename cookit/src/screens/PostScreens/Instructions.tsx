@@ -1,105 +1,215 @@
 /*
   Purpose: This is the Insturctions Screen of the Create Post Screens that allows the user to enter in the instructions of their recipe
   Author: Audrey Pino & Harvey Ji
-  Editors:
+  Editors: Audrey Pino
 */
-//imports
-import React, { useState } from "react";
+
+import React, { useState } from 'react';
 import {
   View,
-  Text,
   TextInput,
   TouchableOpacity,
+  Text,
   StyleSheet,
-  Alert,
-  Image,
   KeyboardAvoidingView,
   Platform,
   Button,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+} from 'react-native';
+import { PlusIcon, TrashIcon, MenuIcon } from "../../../assets/recipe-icons";
+import DragList, { DragListRenderItemInfo } from 'react-native-draglist';
 
-export function InstructionsScreen({ navigation }) {
-  const [instructions, setInstructions] = useState(""); //use state for setting instructions
-  const { recipeName, description, cookingTime, cost, image, ingredientsList } =
-    navigation.params;
+interface instructions {
+  id: string;
+  instruction: string;
+}
+
+export function InstructionsScreen({ route, navigation }) {
+  const {
+    recipeName,
+    // tagsChef,
+    combinedPrepTime,
+    combinedCookTime,
+    estimatedPrice,
+    description,
+    tagInput,
+    image,
+    ingredientsList,
+  } = route.params;
+
+  // State to store the instructions and set the initial state to have 2 empty instructions
+  const [instructions, setInstructions] = useState<Array<instructions>>(
+    Array.from({ length: 2 }, (_, i) => ({
+      id: `step-${i}`,
+      instruction: '',
+    }))
+  );
+
+  // Function to reorder the instructions
+  const onReordered = async (fromIndex: number, toIndex: number) => {
+    const copy = [...instructions]; 
+    const removed = copy.splice(fromIndex, 1);
+    copy.splice(toIndex, 0, removed[0]); 
+    setInstructions(copy);
+  };
+
+  // Function to add an instruction to the list
+  const addInstructionStep = () => {
+    const newId = `step-${instructions.length + 1}`; // Updated to keep the id format consistent
+    const newStep = { id: newId, instruction: '' }; // Create a new step with an empty instruction
+    setInstructions([...instructions, newStep]);
+  };
+  
+  // Function to update the instruction step
+  const updateInstructionStep = (text: string, index: number) => {
+    const newInstructions = [...instructions];
+    newInstructions[index].instruction = text;
+    setInstructions(newInstructions);
+  };
+
+  // Function to remove an instruction step
+  const removeInstructionStep = (index: number) => {
+    const newInstructions = [...instructions];
+    newInstructions.splice(index, 1);
+    setInstructions(newInstructions);
+  };
+
+  // Function to render the instruction step
+  const renderItem = ({ item, index, onDragStart, onDragEnd }) => {
+    if (item === 'AddMoreButton') {
+      return (
+        <TouchableOpacity
+          key={item}
+          style={[styles.addMoreButton]}
+          onPress={addInstructionStep}>
+            <PlusIcon />
+          <Text style={styles.addMoreButtonText}>Add more</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <View style={[styles.instructionInputContainer, item.isActive && styles.active]} key={item.id}>
+          <TouchableOpacity
+            onPressIn={onDragStart}
+            onPressOut={onDragEnd}
+            style={styles.menuButton}
+          >
+            <MenuIcon />
+          </TouchableOpacity>
+          <TextInput
+            style={styles.instructionInput}
+            onChangeText={(text) => updateInstructionStep(text, index)}
+            value={item.instruction}
+            placeholder={`Step ${index + 1}`}
+            multiline
+          />
+          <TouchableOpacity onPress={() => removeInstructionStep(index)}>
+            <Text><TrashIcon /></Text> 
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  };
+
+  // Function to extract the key from the item
+  const keyExtractor = (item: any) => {
+    return typeof item === 'object' ? item.id.toString() : item;
+  };
+  
+  // Main return statement rendering the UI elements and the button to navigate to the next screen
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      {/*gradient for background */}
-      <LinearGradient
-        colors={["#F4EAD7", "#F4EAD7", "#FFF6E7"]}
-        style={styles.background}
-      />
-      <View style={styles.container}>
-        {/*input for instructions */}
-        <TextInput
-          style={[styles.input, styles.instructions]}
-          placeholder="Instructions"
-          placeholderTextColor={"#3D5147"}
-          onChangeText={setInstructions}
-          value={instructions}
-          autoCapitalize="none"
-          multiline
-          numberOfLines={4}
-        />
-        {/*button to review Post */}
-        <Button
-          color={"#46996F"}
-          title="Review Post"
-          onPress={() =>
-            navigation.navigate("Review", {
-              recipeName,
-              description,
-              cookingTime,
-              cost,
-              image,
-              ingredientsList,
-              instructions,
-            })
-          }
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <DragList
+          data={[...instructions, 'AddMoreButton']} 
+          renderItem={({ item, index, onDragStart, onDragEnd }) => 
+            renderItem({ item, index, onDragStart, onDragEnd })}
+          onReordered={onReordered}
+          keyExtractor={keyExtractor} 
         />
       </View>
-    </KeyboardAvoidingView>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Button
+                color="#FFF"
+                title="Post"
+                onPress={() =>
+                  navigation.navigate('Review', {
+                    recipeName,
+                    // tagsChef,
+                    combinedPrepTime,
+                    combinedCookTime,
+                    estimatedPrice,
+                    description,
+                    tagInput,
+                    image,
+                    ingredientsList,
+                    instructions: instructions.map(instruction => instruction.instruction), // Pass the instructions text only
+                  })
+                }
+              />
+        </View>
+      </View>
+    </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#E5E3DB",
+    justifyContent: 'space-between', 
+    backgroundColor: "#FFF",
   },
-
-  input: {
-    position: "relative",
-    width: 330,
-    height: 50,
-    borderColor: "#667B68", // --color-forest-green
-    borderWidth: 4,
-    marginBottom: 20,
+  content: {
+    flex: 1,
+  },
+  buttonContainer: {
+    width: '100%', 
+    paddingBottom: 10, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  instructionInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
-    color: "#3D5147", // --color-forest-green
-    borderRadius: 10,
-    alignItems: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    fontFamily: "PlayfairDisplay-Medium",
+    width: '100%', 
   },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 1000,
+  instructionInput: {
+    flex: 1, 
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    fontFamily: "SF-Pro-Display-Medium",
   },
-
-  instructions: {
-    // Additional styles for ingredients input
-    height: "80%", // Set appropriate height
-    textAlignVertical: "top", // Start the text from the top
+  addMoreButton: {
+    flexDirection: 'row',
+    marginRight: 0, 
+    alignSelf: 'flex-end', 
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'flex-end', 
+  },
+  addMoreButtonText: {
+    color: '#345C50',
+    fontSize: 14,
+    fontFamily: "SF-Pro-Display-Bold",
+  },
+  menuButton: {
+    marginRight: 10,
+  },
+  active: {
+    borderColor: '#345C50', 
+  },
+  button: {
+    borderRadius: 50,
+    width: 343,
+    height: 55,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: "#345C50",
   },
 });
