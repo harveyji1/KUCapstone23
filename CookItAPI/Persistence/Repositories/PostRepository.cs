@@ -34,10 +34,23 @@ namespace Persistence.Repositories
         public async Task<bool> CreatePostAsync(PostModel newPost, string imageURL, int userID)
         {
             var profile = await _context.Profiles.SingleOrDefaultAsync(profile => profile.UserId == userID);
+
+            if (profile == null)
+            {
+                return false;
+            }
+
             newPost.ProfileID = profile.Id;
             newPost.PostImage = imageURL;
+
             await _context.Posts.AddAsync(newPost);
+
+            profile.PostCount += 1;
+
+            _context.Profiles.Update(profile);
+
             await _context.SaveChangesAsync();
+
             return true;
         }
     }
