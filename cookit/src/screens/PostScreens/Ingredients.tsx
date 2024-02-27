@@ -1,7 +1,7 @@
 /*
   Purpose: This is the Ingredeients Screen of the Create Post Screens that allows the user to enter in the ingredients of their recipe
   Author: Audrey Pino & Harvey Ji
-  Editors:
+  Editors: Audrey Pino
 */
 
 import * as React from "react";
@@ -46,6 +46,7 @@ export function IngredientsScreen({ navigation, route }) {
     combinedCookTime,
     estimatedPrice,
     description,
+    tagInput,
     image,
   } = route.params;
 
@@ -161,6 +162,7 @@ export function IngredientsScreen({ navigation, route }) {
                 combinedCookTime,
                 estimatedPrice,
                 description,
+                tagInput,
                 image,
                 ingredientsList,
               })

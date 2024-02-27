@@ -1,7 +1,7 @@
 /*
   Purpose: This is the Insturctions Screen of the Create Post Screens that allows the user to enter in the instructions of their recipe
   Author: Audrey Pino & Harvey Ji
-  Editors:
+  Editors: Audrey Pino
 */
 
 import React, { useState } from 'react';
@@ -31,6 +31,7 @@ export function InstructionsScreen({ route, navigation }) {
     combinedCookTime,
     estimatedPrice,
     description,
+    tagInput,
     image,
     ingredientsList,
   } = route.params;
@@ -130,7 +131,7 @@ export function InstructionsScreen({ route, navigation }) {
         <View style={styles.button}>
           <Button
                 color="#FFF"
-                title="Review Post"
+                title="Post"
                 onPress={() =>
                   navigation.navigate('Review', {
                     recipeName,
@@ -139,6 +140,7 @@ export function InstructionsScreen({ route, navigation }) {
                     combinedCookTime,
                     estimatedPrice,
                     description,
+                    tagInput,
                     image,
                     ingredientsList,
                     instructions: instructions.map(instruction => instruction.instruction), // Pass the instructions text only
