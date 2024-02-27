@@ -26,7 +26,7 @@ interface instructions {
 export function InstructionsScreen({ route, navigation }) {
   const {
     recipeName,
-    tagsChef,
+    // tagsChef,
     combinedPrepTime,
     combinedCookTime,
     estimatedPrice,
@@ -135,7 +135,7 @@ export function InstructionsScreen({ route, navigation }) {
                 onPress={() =>
                   navigation.navigate('Review', {
                     recipeName,
-                    tagsChef,
+                    // tagsChef,
                     combinedPrepTime,
                     combinedCookTime,
                     estimatedPrice,

@@ -41,7 +41,7 @@ export function IngredientsScreen({ navigation, route }) {
 
   const {
     recipeName,
-    tagsChef,
+    // tagsChef,
     combinedPrepTime,
     combinedCookTime,
     estimatedPrice,
@@ -157,7 +157,7 @@ export function IngredientsScreen({ navigation, route }) {
             onPress= {() =>
               navigation.navigate('Instructions', {
                 recipeName,
-                tagsChef,
+                // tagsChef,
                 combinedPrepTime,
                 combinedCookTime,
                 estimatedPrice,
