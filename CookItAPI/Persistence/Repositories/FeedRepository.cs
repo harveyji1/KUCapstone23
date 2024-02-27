@@ -41,8 +41,24 @@ namespace Persistence.Repositories
                 .Select(f => f.ProfileID)
                 .ToListAsync();
 
-            var posts = await _context.Posts.Include("Profile")
+            var posts = await _context.Posts
+                .Include(p => p.Profile) 
                 .Where(p => followingIDs.Contains(p.ProfileID))
+                .Select(p => new PostModel
+                {
+                    ID = p.ID,
+                    ProfileID = p.ProfileID,
+                    Profile = p.Profile,
+                    Title = p.Title,
+                    Ingredients = p.Ingredients,
+                    Instructions = p.Instructions,
+                    Cost = p.Cost,
+                    PrepTime = p.PrepTime,
+                    NumOfLikes = p.NumOfLikes,
+                    PostImage = p.PostImage,
+                    CreatedAt = p.CreatedAt,
+                    IsLikedByUser = _context.Likes.Any(like => like.PostId == p.ID && like.UserId == userID) 
+                })
                 .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
 

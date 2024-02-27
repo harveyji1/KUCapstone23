@@ -51,7 +51,30 @@ namespace API.Controllers
                 return Ok();
             }
             return BadRequest();
-            
+        }
+
+        [Authorize]
+        [HttpPost("upvote")]
+        public async Task<IActionResult> UpvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.UpvoteAsync(postID, userId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("revertUpvote")]
+        public async Task<IActionResult> RevertUpvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.RevertUpvoteAsync(postID, userId);
+            return Ok();
         }
 
 

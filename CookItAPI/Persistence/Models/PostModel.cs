@@ -22,5 +22,7 @@ namespace Persistence.Models
         public int NumOfLikes { get; set; }
         public string? PostImage { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [NotMapped]
+        public bool IsLikedByUser { get; set; }
     }
 }

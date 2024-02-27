@@ -19,7 +19,7 @@ namespace Shared.DTOs
         public int NumOfLikes { get; set; }
         public string Image { get; set; }
         public DateTime CreatedAt { get; set; }
-
+        public bool IsLikedByUser { get; set; }
         public string Handle { get; set; }
         public string ProfileImage { get; set; }
     }

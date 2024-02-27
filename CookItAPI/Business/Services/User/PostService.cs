@@ -14,6 +14,8 @@ namespace Business.Services.User
     public interface IPostService
     {
         Task<bool> CreatePostAsync(PostRequest newPost, int userID);
+        Task<bool> UpvoteAsync(int postID, int userID);
+        Task<bool> RevertUpvoteAsync(int postID, int userID);
     }
 
     //post class. will handle uploading of post images and pass to repo layer
@@ -34,6 +36,16 @@ namespace Business.Services.User
             
             string imageURL = await _blob.UploadBlob("userposts", userID, newPost.PostImage);
             return await _repository.CreatePostAsync(ModelConversionHelper.PostRequestDTOToModel(newPost), imageURL, userID);
+        }
+
+        public async Task<bool> UpvoteAsync(int postID, int userID)
+        {
+            return await _repository.UpvoteAsync(postID, userID);
+        }
+
+        public async Task<bool> RevertUpvoteAsync(int postID, int userID)
+        {
+            return await _repository.RevertUpvoteAsync(postID, userID);
         }
     }
 }

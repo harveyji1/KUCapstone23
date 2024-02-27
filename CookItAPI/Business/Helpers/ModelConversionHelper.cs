@@ -46,6 +46,7 @@ namespace Business.Helpers
                         NumOfLikes = post.NumOfLikes,
                         Image = post.PostImage,
                         CreatedAt = post.CreatedAt,
+                        IsLikedByUser = post.IsLikedByUser,
                         Handle = post.Profile.Handle,
                         ProfileImage = post.Profile.ProfilePicture
                         

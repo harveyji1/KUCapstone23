@@ -24,13 +24,13 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("getFeed")]
-        public async Task<List<PostResponseDTO>> GetFeedAsync()
+        public async Task<IActionResult> GetFeedAsync()
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             int.TryParse(userID, out var userId);
 
-            return await _service.GetFeedAsync(userId);
+            return Ok(await _service.GetFeedAsync(userId));
         }
 
     }
