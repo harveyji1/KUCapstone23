@@ -46,20 +46,20 @@ export function CreatePostScreen({ navigation, route }) {
   // Setup state hooks for managing the post details
   const [recipeName, setRecipeName] = useState("");
   // const [tagsChef, setTagsChef] = useState("");
+  const [prepTimeHours, setPrepTimeHours] = useState("");
   const [prepTimeMinutes, setPrepTimeMinutes] = useState("");
-  const [prepTimeSeconds, setPrepTimeSeconds] = useState("");
+  const [cookTimeHours, setCookTimeHours] = useState("");
   const [cookTimeMinutes, setCookTimeMinutes] = useState("");
-  const [cookTimeSeconds, setCookTimeSeconds] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  // const [cookingTime, setCookingTimeSeconds] = useState('');
-// State for the input field
-const [tagInput, setTagInput] = useState(""); // State for the input field
-const [tags, setTags] = useState<string[]>([]); // State for all tags
 
-  const combinedPrepTime = `${prepTimeMinutes}:${prepTimeSeconds}`;
-  const combinedCookTime = `${cookTimeMinutes}:${cookTimeSeconds}`;
+
+  const [tagInput, setTagInput] = useState(""); 
+  const [tags, setTags] = useState<string[]>([]); 
+
+  const combinedPrepTime = `${prepTimeHours}:${prepTimeMinutes}`;
+  const combinedCookTime = `${cookTimeHours}:${cookTimeMinutes}`;
   // Function that handles image picking
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -97,18 +97,18 @@ const [tags, setTags] = useState<string[]>([]); // State for all tags
   // Function to handle post creation
   const handleCreatePost = () => {
 
-    const combinedPrepTime = `${prepTimeMinutes}:${prepTimeSeconds}`;
-    const combinedCookTime = `${cookTimeMinutes}:${cookTimeSeconds}`;
+    const combinedPrepTime = `${prepTimeHours}:${prepTimeMinutes}`;
+    const combinedCookTime = `${cookTimeHours}:${cookTimeMinutes}`;
 
     console.log("Creating post with:", {
       recipeName,
       // tagsChef,
       combinedPrepTime,
       combinedCookTime,
+      // prepTimeHours,
       // prepTimeMinutes,
-      // prepTimeSeconds,
+      // cookTimeHours,
       // cookTimeMinutes,
-      // cookTimeSeconds,
       estimatedPrice,
       tagInput,
       description,
@@ -180,17 +180,17 @@ const [tags, setTags] = useState<string[]>([]); // State for all tags
           <View style={styles.timeInputGroup}>
             <TextInput
               style={[styles.timeInput, styles.borderInput]}
-              placeholder="mm"
-              onChangeText={setPrepTimeMinutes}
-              value={prepTimeMinutes}
+              placeholder="hh"
+              onChangeText={setPrepTimeHours}
+              value={prepTimeHours}
               keyboardType="numeric"
             />
             <Text style={styles.timeColon}>:</Text>
             <TextInput
               style={[styles.timeInput, styles.borderInput]}
-              placeholder="ss"
-              onChangeText={setPrepTimeSeconds}
-              value={prepTimeSeconds}
+              placeholder="mm"
+              onChangeText={setPrepTimeMinutes}
+              value={prepTimeMinutes}
               keyboardType="numeric"
             />
           </View>
@@ -204,17 +204,17 @@ const [tags, setTags] = useState<string[]>([]); // State for all tags
           <View style={styles.timeInputGroup}>
             <TextInput
               style={[styles.timeInput, styles.borderInput]}
-              placeholder="mm"
-              onChangeText={setCookTimeMinutes}
-              value={cookTimeMinutes}
+              placeholder="hh"
+              onChangeText={setCookTimeHours}
+              value={cookTimeHours}
               keyboardType="numeric"
             />
             <Text style={styles.timeColon}>:</Text>
             <TextInput
               style={[styles.timeInput, styles.borderInput]}
-              placeholder="ss"
-              onChangeText={setCookTimeSeconds}
-              value={cookTimeSeconds}
+              placeholder="mm"
+              onChangeText={setCookTimeMinutes}
+              value={cookTimeMinutes}
               keyboardType="numeric"
             />
           </View>
