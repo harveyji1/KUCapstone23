@@ -299,7 +299,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   imageButton: {
-    // backgroundColor: '#000',
     padding: 10,
     borderRadius: 5,
     marginVertical: 5,
@@ -308,13 +307,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-  },
-  buttonText: {
-    color: "#345C50",
-    fontSize: 14,
-    textAlign: "center",
-    fontFamily: "SF-Pro-Text-Semibold",
-    marginLeft: 5,
   },
   image: {
     width: "100%",
@@ -334,31 +326,28 @@ const styles = StyleSheet.create({
     color: "#111827",
     fontFamily: "SF-Pro-Display-Regular",
   },
+  timeColon: {
+    fontSize: 18,
+  },
+  inputTitle: {
+    fontFamily: "SF-Pro-Display-Semibold",
+    fontSize: 15,
+    color: "#111827",
+  },
+  descriptionInput: {
+    height: 100,
+    textAlignVertical: "top",
+  },
   borderInput: {
     borderWidth: 1,
     borderColor: "#F3F4F6",
     borderRadius: 7,
     marginHorizontal: 5,
   },
-  timeColon: {
-    fontSize: 18,
-  },
-  descriptionInput: {
-    height: 100,
-    textAlignVertical: "top",
-  },
-  buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  button: {
-    borderRadius: 50,
-    width: 343,
-    height: 55,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#345C50",
+  inputMain: {
+    fontFamily: "SF-Pro-Display-Regular",
+    fontSize: 14,
+    color: "#111827",
   },
   inputGroup: {
     flexDirection: "row",
@@ -367,6 +356,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F3F4F6",
     padding: 15,
+  },
+  labelWithIcon: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   inputLabel: {
     marginRight: 10,
@@ -383,20 +376,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#111827",
     textAlign: "right",
-  },
-  inputMain: {
-    fontFamily: "SF-Pro-Display-Regular",
-    fontSize: 14,
-    color: "#111827",
-  },
-  labelWithIcon: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  inputTitle: {
-    fontFamily: "SF-Pro-Display-Semibold",
-    fontSize: 15,
-    color: "#111827",
   },
   tagsContainer: {
     flexDirection: 'row', 
@@ -416,13 +395,33 @@ const styles = StyleSheet.create({
   tagText: {
     color: '#000000',
   },
+  addIconContainer: {
+    paddingLeft: 20,
+    marginRight: -10,
+  },
   removeButton: {
     marginLeft: 5,
     color: '#111827',
     marginRight: -5,
   },
-  addIconContainer: {
-    paddingLeft: 20,
-    marginRight: -10,
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  button: {
+    borderRadius: 50,
+    width: 343,
+    height: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#345C50",
+  },
+  buttonText: {
+    color: "#345C50",
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "SF-Pro-Text-Semibold",
+    marginLeft: 5,
   },
 });
