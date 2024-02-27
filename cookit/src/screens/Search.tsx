@@ -3,18 +3,58 @@
   Author: Aiden Frevert
   Editors: 
 */
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, StatusBar, Keyboard } from 'react-native';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, StatusBar, Keyboard, Image } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { LoginContext } from '../../LoginProvider';
+import { Use } from 'react-native-svg';
+
+const LOCAL_HOST_NUBMER = "5018";
+
+type UserProfile = {
+  profilePicture: string;
+  postCount: number;
+  followerCount: number;
+  followingCount: number;
+  handle: string;
+  fullName: string;
+  bio: string;
+};
 
 export function SearchScreen({ navigation }) {
+
+  const { state } = useContext(LoginContext);
+  let loginToken = state;
 
   const [searchString, setSearchString] = useState<string>('');
 
   const [searchOn , setSearchOn] = useState( searchString !== '');
 
+  const [profiles, setProfiles] = useState<any | null>(null);
+
+
   useEffect(() => {
     setSearchOn( searchString !== '');
+
+    axios
+      .get(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/Search?keyWord=${searchString}`, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("Profile Return: ", response.data["$values"]);
+
+        // getting data
+        setProfiles(response.data["$values"]);
+
+        // testing posts response
+        console.log("Posts: ", response.data["$values"]);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
   }, [searchString])
 
   return (
@@ -31,7 +71,19 @@ export function SearchScreen({ navigation }) {
         </View>
       </View>
       {searchOn ? 
-      <View/>
+      <View>
+        { profiles ? profiles.map((profile) => {
+          return (
+          <View style={styles.itemContainer}>
+            <Image source={{ uri: profile.profilePicture ? profile.profilePicture.replace(/ /g, "%20") : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" }} style={styles.image} />
+            <View style={styles.textContainer}>
+              <Text style={styles.name}>{profile.fullName || profile.handle}</Text>
+              <Text style={styles.username}>@{profile.handle}</Text>
+            </View>
+          </View>
+          )
+        }) : <View/>}
+      </View>
      :
      <View style={styles.grid}>
      <CategoryItem title="Trending (Top)" iconName="fire" iconColor="#FF4500" />
@@ -113,5 +165,25 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 16,
     fontFamily: "SweetSansProMedium",
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  textContainer: {
+    flexDirection: 'column',
+  },
+  name: {
+    fontWeight: 'bold',
+  },
+  username: {
+    color: 'grey',
   },
 });
