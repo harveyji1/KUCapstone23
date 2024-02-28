@@ -40,7 +40,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost("posts")]
-        public async Task<IActionResult> CreatePostAsync([FromForm] PostRequest post)
+        public async Task<IActionResult> CreatePostAsync([FromForm] PostRequestDTO post)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -51,7 +51,54 @@ namespace API.Controllers
                 return Ok();
             }
             return BadRequest();
-            
+        }
+
+        [Authorize]
+        [HttpPost("upvote")]
+        public async Task<IActionResult> UpvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.UpvoteAsync(postID, userId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("revertUpvote")]
+        public async Task<IActionResult> RevertUpvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.RevertUpvoteAsync(postID, userId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("downvote")]
+        public async Task<IActionResult> DownvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.DownvoteAsync(postID, userId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("revertDownvote")]
+        public async Task<IActionResult> RevertDownvoteAsync(int postID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            await _postService.RevertDownvoteAsync(postID, userId);
+            return Ok();
         }
 
 

@@ -46,6 +46,17 @@ namespace API.Controllers
             return Ok(await _profileService.GetProfileModelAsync(userId));
         }
 
+        [Authorize]
+        [HttpGet("profileByID")]
+        public async Task<IActionResult> GetProfileByProfileIDAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            return Ok(await _profileService.GetProfileByProfileIdAsync(profileID, userId));
+        }
+
         /// <summary>
         /// Passes to service layer for processing
         /// </summary>
@@ -53,7 +64,7 @@ namespace API.Controllers
         /// <returns>Http status code</returns>
         [Authorize]
         [HttpPut("profile")]
-        public async Task<IActionResult> EditProfileAsync([FromBody] ProfileRequest profile)
+        public async Task<IActionResult> EditProfileAsync([FromBody] ProfileRequestDTO profile)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -73,6 +84,36 @@ namespace API.Controllers
             int.TryParse(userID, out var userId);
 
             return Ok(await _profileService.UploadProfileImageAsync(image, userId));
+        }
+
+        [Authorize]
+        [HttpPost("follow")]
+        public async Task<IActionResult> FollowAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _profileService.FollowAsync(profileID, userId))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpDelete("unfollow")]
+        public async Task<IActionResult> UnfollowAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            if (await _profileService.UnfollowAsync(profileID, userId))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
 

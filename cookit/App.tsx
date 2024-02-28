@@ -70,7 +70,15 @@ function BottomTabs() {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown: false,
+          title: "CookIt",
+          headerStyle: {
+            backgroundColor: "#345C50",
+          },
+          headerTintColor: "#FFF",
+          headerTitleStyle: {
+            fontFamily: "SweetSansProBold",
+            fontSize: 20,
+          },
           tabBarIcon: ({ focused }) =>
             focused ? <HomeIcon /> : <HomeOutlineIcon />,
           tabBarShowLabel: false,
@@ -80,7 +88,15 @@ function BottomTabs() {
         name="Search"
         component={SearchScreen}
         options={{
-          headerShown: false,
+          title: "CookIt",
+          headerStyle: {
+            backgroundColor: "#345C50",
+          },
+          headerTintColor: "#FFF",
+          headerTitleStyle: {
+            fontFamily: "SweetSansProBold",
+            fontSize: 20,
+          },
           tabBarIcon: ({ focused }) =>
             focused ? <SearchIcon /> : <SearchOutlineIcon />,
           tabBarShowLabel: false,
@@ -100,7 +116,15 @@ function BottomTabs() {
         name="SavedRecipies"
         component={SavedRecipiesScreen}
         options={{
-          headerShown: false,
+          title: "CookIt",
+          headerStyle: {
+            backgroundColor: "#345C50",
+          },
+          headerTintColor: "#FFF",
+          headerTitleStyle: {
+            fontFamily: "SweetSansProBold",
+            fontSize: 20,
+          },
           tabBarIcon: ({ focused }) =>
             focused ? <SavedIcon /> : <SavedOutlineIcon />,
           tabBarShowLabel: false,
@@ -110,7 +134,15 @@ function BottomTabs() {
         name="Profile"
         component={CreateProfileStack}
         options={{
-          headerShown: false,
+          title: "CookIt",
+          headerStyle: {
+            backgroundColor: "#345C50",
+          },
+          headerTintColor: "#FFF",
+          headerTitleStyle: {
+            fontFamily: "SweetSansProBold",
+            fontSize: 20,
+          },
           tabBarIcon: ({ focused }) =>
             focused ? <ProfileIcon /> : <ProfileOutlineIcon />,
           tabBarShowLabel: false,
@@ -158,7 +190,17 @@ function CreatePostStack() {
       <Stack2.Screen
         name="Instructions"
         component={InstructionsScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "Add Instructions",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
       />
       <Stack2.Screen
         name="Review"
@@ -295,17 +337,7 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={BottomTabs}
-              options={{
-                title: "CookIt",
-                headerStyle: {
-                  backgroundColor: "#345C50",
-                },
-                headerTintColor: "#FFF",
-                headerTitleStyle: {
-                  fontFamily: "SweetSansProBold",
-                  fontSize: 20,
-                },
-              }}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="RecipeExpanded"

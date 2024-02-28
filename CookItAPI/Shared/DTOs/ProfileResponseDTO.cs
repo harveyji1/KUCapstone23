@@ -20,5 +20,6 @@ namespace Shared.DTOs
         public List<PostResponseDTO>? Posts { get; set; }
 
         public string Handle { get; set; }
+        public bool IsFollowedByUser { get; set; }
     }
 }

@@ -28,5 +28,8 @@ namespace Persistence.Models
         public string? ProfilePicture { get; set; }
         public virtual List<PostModel>? Posts { get; set; }
 
+        [NotMapped]
+        public bool IsFollowedByUser { get; set; }
+
     }
 }
