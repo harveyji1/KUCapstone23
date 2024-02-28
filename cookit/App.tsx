@@ -134,15 +134,13 @@ function BottomTabs() {
         name="Profile"
         component={CreateProfileStack}
         options={{
-          title: "CookIt",
-          headerStyle: {
-            backgroundColor: "#345C50",
+          headerStyle: { 
+            backgroundColor: '#fff', 
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 50,
           },
           headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontFamily: "SweetSansProBold",
-            fontSize: 20,
-          },
           tabBarIcon: ({ focused }) =>
             focused ? <ProfileIcon /> : <ProfileOutlineIcon />,
           tabBarShowLabel: false,
@@ -223,7 +221,17 @@ function CreateProfileStack() {
       <Stack3.Screen
         name="EditProfile"
         component={EditProfileScreen}
-        options={{ headerShown: true }}
+        options={{
+          title: "Edit Profile",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
       />
     </Stack.Navigator>
   );

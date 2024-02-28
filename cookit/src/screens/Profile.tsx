@@ -22,12 +22,16 @@ import { useState, useEffect, useContext } from "react"; // <-- Import useState 
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import { useFocusEffect } from "@react-navigation/native";
+import {
+  EditProfileIcon,
+} from "../../assets/recipe-icons";
 
 type UserProfile = {
   profilePicture: string;
   postCount: number;
   followerCount: number;
   followingCount: number;
+  handle: string;
   user: string;
   fullName: string;
   bio: string;
@@ -111,45 +115,71 @@ export function ProfileScreen({ navigation }) {
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.cost}>${item.cost}</Text>
+      <View style={styles.postDetailContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{item.title}</Text>
+        </View>
+
+        <View style={styles.detailsContainer}>
+          <Text style={styles.cost}>${item.cost}</Text>
+          {/* <Text style={styles.cost}>{item.ingredients}</Text> */}
+        </View>
+
+      </View>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={{ uri: item.PostImage }} />
+      </View>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.infoContainer}>
+
+<View style={styles.headerContainer}>
+  <View style={styles.headerUsernameContainer}>
+    <Text style={styles.headerUsername}>{profile.handle}</Text>
+  </View>
+  <TouchableOpacity
+    onPress={() => navigation.navigate("EditProfile")}
+  >
+    <View style={styles.headerEditButton}><EditProfileIcon/></View>
+  </TouchableOpacity>
+</View>
+
+  <View style={styles.infoContainer}>
+    <View style={styles.profileAndNameContainer}>
+      <View style={styles.profilePicContainer}>
         <Image
           style={styles.profilePic}
           source={{
             uri: encodedUrl,
           }}
-        ></Image>
-        <View style={styles.postContainer}>
-          <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
-          <Text style={styles.postWord}>Posts</Text>
-        </View>
-        <View style={styles.followersContainer}>
-          <Text style={styles.numOfFollowers}>{profile.followerCount}</Text>
-          <Text style={styles.followersWord}>Followers</Text>
-        </View>
-        <View style={styles.followingContainer}>
-          <Text style={styles.numOfFollowing}>{profile.followingCount}</Text>
-          <Text style={styles.followingWord}>Following</Text>
-        </View>
+        />
       </View>
-      <Text style={styles.userName}>
-        {/*props.userName*/}
-        {profile.fullName}
-      </Text>
-      <Text style={styles.bio}>{profile.bio}</Text>
-      <TouchableOpacity
-        style={styles.editProfileButton}
-        onPress={() => navigation.navigate("EditProfile")}
-      >
-        <Text style={styles.editProfileButtonText}>Edit Profile</Text>
-      </TouchableOpacity>
-      <View style={styles.border}></View>
+      <View style={styles.nameBioContainer}>
+        <Text style={styles.userName}>
+          {profile.fullName}
+        </Text>
+        <Text style={styles.bio}>{profile.bio}</Text>
+      </View>
+    </View>
+
+    <View style={styles.statsContainer}>
+      <View style={styles.postContainer}>
+        <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
+        <Text style={styles.postWord}>Posts</Text>
+      </View>
+      <View style={styles.followersContainer}>
+        <Text style={styles.numOfFollowers}>{profile.followerCount}</Text>
+        <Text style={styles.followersWord}>Followers</Text>
+      </View>
+      <View style={styles.followingContainer}>
+        <Text style={styles.numOfFollowing}>{profile.followingCount}</Text>
+        <Text style={styles.followingWord}>Following</Text>
+      </View>
+    </View>
+  </View>
+
       <FlatList
         data={postsArray}
         renderItem={renderItem}
@@ -162,95 +192,139 @@ export function ProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F4EAD7",
+    backgroundColor: "#FFF",
     height: "100%",
   },
   // ====== STATS: CONTAINER ======
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around', 
+    width: '100%', 
+    marginTop: 20,
+    marginBottom: 10,
+  },
   infoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 30,
-    marginLeft: 40,
-    width: "100%",
+    alignItems: 'center',
+    marginTop: 10,
+    width: '100%',
+    borderBottomWidth: 4,
+    borderBottomColor: "#F3F4F6",
+    marginBottom: 6,
   },
   // ====== STATS: POSTS ======
   postContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
-    marginLeft: 50,
+    marginHorizontal: 20, 
   },
   numberOfPosts: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   postWord: {
     fontSize: 12,
     paddingTop: 5,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== STATS: FOLLOWERS ======
   followersContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
+    marginHorizontal: 20, 
   },
   numOfFollowers: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   followersWord: {
     paddingTop: 5,
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== STATS: FOLLOWING ======
   followingContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
+    marginHorizontal: 20, 
   },
   numOfFollowing: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   followingWord: {
     paddingTop: 5,
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== PROFILE PIC & USERNAME ======
+  profileAndNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around', 
+  },
+  profilePicContainer: {
+    paddingHorizontal: 20,
+  },
   profilePic: {
-    height: 60,
-    width: 60,
+    height: 80,
+    width: 80,
     borderRadius: 50,
+    // borderColor: "#345C50",
+    // borderWidth: 1,
   },
   userName: {
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
     marginTop: 15,
-    fontWeight: "bold",
-    marginBottom: 20,
-    fontFamily: "SweetSansProBold",
+    marginBottom: 10,
+    fontFamily: "SF-Pro-Text-Medium",
     marginLeft: 20,
   },
   bio: {
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#4B5563",
+    fontFamily: "SF-Pro-Text-Regular",
     marginTop: 0,
     marginBottom: 10,
     marginLeft: 20,
   },
+  nameBioContainer : {
+    flex: 1,
+  },
+  // ====== HEADER: USERNAME ======
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  headerUsernameContainer: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginLeft: 26,
+  },
+  headerUsername: {
+    fontSize: 20,
+    color: '#4B5563',
+    fontFamily: 'SF-Pro-Text-Semibold',
+  },
+  headerEditButton: {
+    paddingRight: 2,
+  },
+
   // ====== EDIT PROFILE BUTTON ======
   editProfileButton: {
     padding: 10,
@@ -258,48 +332,51 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  editProfileButtonText: {
-    color: "#667B68",
-    fontSize: 16,
-    fontFamily: "SweetSansProBold",
-  },
-  // ====== DIVIDER ======
-  border: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#345C50",
-    marginBottom: 5,
-  },
   // ====== IMAGES: POSTS ======
-  postsContainer: {
-    flex: 1,
-    paddingVertical: 5,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  postSpacing: {
-    paddingLeft: 10, // This creates spacing between images
-  },
-  recipePosts: {
-    // Set only the aspect ratio here
-    aspectRatio: 1, // Maintain aspect ratio
-  },
+
   listContainer: {
-    padding: 10,
+    // padding: 5,
+    // paddingBottom: 16,
   },
   itemContainer: {
-    backgroundColor: "#f9f9f9",
-    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // alignItems: 'center',
+    backgroundColor: "#FFF",
+    paddingHorizontal: 20,
+    paddingBottom: 15,
+    paddingTop: 0,
     marginVertical: 8,
-    borderRadius: 5,
-    elevation: 1, // Add shadow effect for iOS use shadow props
+    elevation: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  postDetailContainer: {
+    flex: 1,
+    paddingTop: 5,
+  },
+  titleContainer:{
+    marginBottom: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 15,
+    fontFamily: "SF-Pro-Text-Semibold",
   },
   cost: {
     fontSize: 16,
     color: "#666",
+  },
+  detailsContainer: {
+    
+  },
+  imageContainer: {
+    paddingTop: 0,
+  },
+  image: {
+    height: 80,
+    width: 80,
+    borderColor: "#345C50",
+    borderWidth: 1,
   },
 });
 
