@@ -40,6 +40,7 @@ namespace Business.Helpers
                     {
                         ID = post.ID,
                         Title = post.Title,
+                        Description = post.Description,
                         Ingredients = post.Ingredients,
                         Instructions = post.Instructions,
                         Cost = post.Cost,
@@ -89,6 +90,7 @@ namespace Business.Helpers
             return new PostModel
             {
                 Title = postRequest.Title,
+                Description = postRequest.Description,
                 Ingredients = postRequest.Ingredients,
                 Instructions = postRequest.Instructions,
                 Cost = postRequest.Cost,
