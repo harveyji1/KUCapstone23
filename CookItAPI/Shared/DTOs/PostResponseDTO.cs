@@ -23,5 +23,8 @@ namespace Shared.DTOs
         public bool IsDislikedByUser { get; set; }
         public string Handle { get; set; }
         public string ProfileImage { get; set; }
+        public List<CommentResponseDTO>? Comments { get; set; }
+
+        
     }
 }

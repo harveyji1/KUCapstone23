@@ -14,6 +14,7 @@ namespace Persistence.Models
         [ForeignKey("User")]
         public int ProfileID { get; set; }
         public virtual ProfileModel Profile { get; set; }
+        public virtual List<CommentModel> Comments { get; set; }
         public string? Title { get; set; }
         public string? Ingredients { get; set; }
         public string? Instructions { get; set; }

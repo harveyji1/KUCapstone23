@@ -13,7 +13,7 @@ namespace Business.Services.User
     //post interface
     public interface IPostService
     {
-        Task<bool> CreatePostAsync(PostRequest newPost, int userID);
+        Task<bool> CreatePostAsync(PostRequestDTO newPost, int userID);
         Task<bool> UpvoteAsync(int postID, int userID);
         Task<bool> RevertUpvoteAsync(int postID, int userID);
         Task<bool> DownvoteAsync(int postID, int userID);
@@ -33,7 +33,7 @@ namespace Business.Services.User
         }
 
         //calls our blob service. Uploads image and takes the string url which will be passed to repo layer
-        public async Task<bool> CreatePostAsync(PostRequest newPost, int userID)
+        public async Task<bool> CreatePostAsync(PostRequestDTO newPost, int userID)
         {
             
             string imageURL = await _blob.UploadBlob("userposts", userID, newPost.PostImage);

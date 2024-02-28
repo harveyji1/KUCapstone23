@@ -42,7 +42,9 @@ namespace Persistence.Repositories
                 .ToListAsync();
 
             var posts = await _context.Posts
-                .Include(p => p.Profile) 
+                .Include(p => p.Profile)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.User)
                 .Where(p => followingIDs.Contains(p.ProfileID))
                 .Select(p => new PostModel
                 {
@@ -58,10 +60,19 @@ namespace Persistence.Repositories
                     PostImage = p.PostImage,
                     CreatedAt = p.CreatedAt,
                     IsLikedByUser = _context.Likes.Any(like => like.PostId == p.ID && like.UserId == userID),
-                    IsDislikedByUser = _context.Dislikes.Any(like => like.PostId == p.ID && like.UserId == userID)
+                    IsDislikedByUser = _context.Dislikes.Any(dislike => dislike.PostId == p.ID && dislike.UserId == userID),
+                    Comments = p.Comments.Select(c => new CommentModel 
+                    {
+                        ID = c.ID,
+                        PostID = c.PostID,
+                        UserID = c.UserID,
+                        Comment = c.Comment,
+                        User = c.User 
+                    }).ToList()
                 })
                 .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync();
+
 
             return posts;
 

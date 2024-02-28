@@ -43,7 +43,11 @@ namespace Persistence.Repositories
         /// <returns></returns>
         public async Task<ProfileModel> GetProfileModelAsync(int userID)
         {
-            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
+            var profile = await _context.Profiles
+                    .Where(profile => profile.UserId == userID)
+                    .Include(profile => profile.Posts)
+                        .ThenInclude(post => post.Comments)
+                    .SingleOrDefaultAsync();
             return profile;
         }
 

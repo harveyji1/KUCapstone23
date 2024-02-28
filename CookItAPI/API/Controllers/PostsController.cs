@@ -40,7 +40,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost("posts")]
-        public async Task<IActionResult> CreatePostAsync([FromForm] PostRequest post)
+        public async Task<IActionResult> CreatePostAsync([FromForm] PostRequestDTO post)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

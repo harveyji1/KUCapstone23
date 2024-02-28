@@ -31,11 +31,12 @@ namespace Business.Helpers
         public static List<PostResponseDTO> PostModelsToPostResponseDTO(List<PostModel> posts)
         {
             List<PostResponseDTO> postContainer = new List<PostResponseDTO>();
-            if(posts != null)
+            if (posts != null)
             {
                 foreach (PostModel post in posts)
                 {
-                    postContainer.Add(new PostResponseDTO
+                    // Initialize the postDto with basic post information
+                    var postDto = new PostResponseDTO
                     {
                         ID = post.ID,
                         Title = post.Title,
@@ -49,16 +50,32 @@ namespace Business.Helpers
                         IsLikedByUser = post.IsLikedByUser,
                         IsDislikedByUser = post.IsDislikedByUser,
                         Handle = post.Profile.Handle,
-                        ProfileImage = post.Profile.ProfilePicture
-                        
-                    });
+                        ProfileImage = post.Profile.ProfilePicture,
+                        Comments = new List<CommentResponseDTO>() 
+                    };
+
+                    if (post.Comments != null && post.Comments.Any())
+                    {
+                        postDto.Comments = post.Comments.Select(comment => new CommentResponseDTO
+                        {
+                            UserID = comment.UserID,
+                            Comment = comment.Comment,
+                            Handle = comment.User?.Profile.Handle ?? "Unknown", 
+                            ProfilePicture = comment.User?.Profile.ProfilePicture ?? "DefaultImagePath",
+                            CreatedAt = comment.CreatedAt
+                        }).ToList();
+                    }
+
+                    postContainer.Add(postDto);
                 }
             }
 
             return postContainer;
         }
 
-        public static ProfileModel ProfileRequestDTOToModel(ProfileRequest profile)
+
+
+        public static ProfileModel ProfileRequestDTOToModel(ProfileRequestDTO profile)
         {
             return new ProfileModel
             {
@@ -67,7 +84,7 @@ namespace Business.Helpers
             };
         }
 
-        public static PostModel PostRequestDTOToModel(PostRequest postRequest)
+        public static PostModel PostRequestDTOToModel(PostRequestDTO postRequest)
         {
             return new PostModel
             {
@@ -76,6 +93,16 @@ namespace Business.Helpers
                 Instructions = postRequest.Instructions,
                 Cost = postRequest.Cost,
                 PrepTime = postRequest.PrepTime            
+            };
+        }
+
+        public static CommentModel CommentRequestDTOToModel(CommentRequestDTO comment, int userID)
+        {
+            return new CommentModel
+            {
+                PostID = comment.PostID,
+                Comment = comment.Comment,
+                UserID = userID
             };
         }
     }
