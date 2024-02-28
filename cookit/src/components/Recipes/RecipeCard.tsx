@@ -97,7 +97,7 @@ type RecipeItemType = {
     //returns the actual card
     return(
       <Card>
-        <TouchableOpacity onPress={handleCardPress}>
+        <TouchableOpacity onPress={handleCardPress} activeOpacity={1.0}>
           <PostDivider />
           <PostImg source={item.postImg}/>
           <UserInfo>
