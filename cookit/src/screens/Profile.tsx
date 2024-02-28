@@ -135,16 +135,16 @@ export function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
 
-<View style={styles.headerContainer}>
-  <View style={styles.headerUsernameContainer}>
-    <Text style={styles.headerUsername}>{profile.handle}</Text>
+  <View style={styles.headerContainer}>
+    <View style={styles.headerUsernameContainer}>
+      <Text style={styles.headerUsername}>{profile.handle}</Text>
+    </View>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("EditProfile")}
+    >
+      <View style={styles.headerEditButton}><EditProfileIcon/></View>
+    </TouchableOpacity>
   </View>
-  <TouchableOpacity
-    onPress={() => navigation.navigate("EditProfile")}
-  >
-    <View style={styles.headerEditButton}><EditProfileIcon/></View>
-  </TouchableOpacity>
-</View>
 
   <View style={styles.infoContainer}>
     <View style={styles.profileAndNameContainer}>
