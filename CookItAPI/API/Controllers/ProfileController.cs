@@ -46,6 +46,17 @@ namespace API.Controllers
             return Ok(await _profileService.GetProfileModelAsync(userId));
         }
 
+        [Authorize]
+        [HttpGet("profileByID")]
+        public async Task<IActionResult> GetProfileByProfileIDAsync(int profileID)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            int.TryParse(userID, out var userId);
+
+            return Ok(await _profileService.GetProfileByProfileIdAsync(profileID, userId));
+        }
+
         /// <summary>
         /// Passes to service layer for processing
         /// </summary>

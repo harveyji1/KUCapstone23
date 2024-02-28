@@ -16,6 +16,7 @@ namespace Business.Services.User
     public interface IProfileService
     {
         Task<ProfileResponseDTO> GetProfileModelAsync(int userID);
+        Task<ProfileResponseDTO> GetProfileByProfileIdAsync(int profileID, int userID);
         Task<ProfileResponseDTO> EditProfileAsync(ProfileRequestDTO profile, int userID);
         Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID);
         Task<bool> FollowAsync(int profileID, int userID);
@@ -41,7 +42,12 @@ namespace Business.Services.User
         {
             return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.GetProfileModelAsync(userID));
         }
-        
+
+        public async Task<ProfileResponseDTO> GetProfileByProfileIdAsync(int profileID, int userID)
+        {
+            return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.GetProfileByProfileIdAsync(profileID, userID));
+        }
+
         public async Task<ProfileResponseDTO> EditProfileAsync(ProfileRequestDTO profile, int userID)
         {
             var response = await _profileRepo.EditProfileAsync(ModelConversionHelper.ProfileRequestDTOToModel(profile), userID);

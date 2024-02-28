@@ -24,7 +24,8 @@ namespace Business.Helpers
                 VerifiedAccount = model.VerifiedAccount,
                 ProfilePicture = model.ProfilePicture,
                 Posts = PostModelsToPostResponseDTO(model.Posts),
-                Handle = model.Handle
+                Handle = model.Handle,
+                IsFollowedByUser = model.IsFollowedByUser
             };
         }
 

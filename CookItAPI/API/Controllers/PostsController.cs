@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("revertUpvote")]
+        [HttpDelete("revertUpvote")]
         public async Task<IActionResult> RevertUpvoteAsync(int postID)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -90,7 +90,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("revertDownvote")]
+        [HttpDelete("revertDownvote")]
         public async Task<IActionResult> RevertDownvoteAsync(int postID)
         {
             var userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
