@@ -9,6 +9,7 @@ namespace Shared.DTOs
 {
     public class ProfileResponseDTO
     {
+        public int ProfileID { get; set; }
         public string FullName { get; set; }
         public string Bio { get; set; }
         public int FollowerCount { get; set; }

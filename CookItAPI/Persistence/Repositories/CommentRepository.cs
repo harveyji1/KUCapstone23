@@ -25,6 +25,13 @@ namespace Persistence.Repositories
         public async Task CreateCommentAsync(CommentModel comment)
         {
             await _context.Comments.AddAsync(comment);
+
+            var post = await _context.Posts.FindAsync(comment.PostID);
+            if (post != null)
+            {
+                post.NumOfComments += 1;
+            }
+            
             await _context.SaveChangesAsync();
         }
     }

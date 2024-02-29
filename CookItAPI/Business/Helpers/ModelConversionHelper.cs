@@ -15,6 +15,7 @@ namespace Business.Helpers
         {
             return new ProfileResponseDTO
             {
+                ProfileID = model.Id,
                 FullName = model.FullName,
                 Bio = model.Bio,
                 FollowerCount = model.FollowerCount,
@@ -47,6 +48,8 @@ namespace Business.Helpers
                         Cost = post.Cost,
                         PrepTime = post.PrepTime,
                         NumOfLikes = post.NumOfLikes,
+                        NumOfDislikes = post.NumOfDislikes,
+                        NumOfComments = post.NumOfComments,
                         Image = post.PostImage,
                         CreatedAt = post.CreatedAt,
                         IsLikedByUser = post.IsLikedByUser,
