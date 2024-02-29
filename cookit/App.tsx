@@ -88,14 +88,11 @@ function BottomTabs() {
         name="Search"
         component={SearchScreen}
         options={{
-          title: "CookIt",
-          headerStyle: {
-            backgroundColor: "#345C50",
-          },
-          headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontFamily: "SweetSansProBold",
-            fontSize: 20,
+          headerStyle: { 
+            backgroundColor: '#345C50', 
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 50,
           },
           tabBarIcon: ({ focused }) =>
             focused ? <SearchIcon /> : <SearchOutlineIcon />,

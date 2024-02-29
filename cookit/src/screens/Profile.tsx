@@ -25,6 +25,15 @@ import { useFocusEffect } from "@react-navigation/native";
 import {
   EditProfileIcon,
 } from "../../assets/recipe-icons";
+import { 
+  SavedReactionIcon, 
+  SavedReactionOutlineIcon, 
+  UpReactionIcon,
+  UpReactionOutlineIcon,
+  DownReactionIcon,
+  DownReactionOutlineIcon,
+  CommentReactionIcon,
+} from "../../assets/reaction-icons";
 
 type UserProfile = {
   profilePicture: string;
@@ -75,7 +84,7 @@ export function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [encodedUrl, setEncodedUrl] = useState("");
   const [postsArray, setPostsArray] = useState("");
-
+  const [encodedPostImageUrl, setEncodedPostImageUrl] = useState("");
   // 2. Use the useEffect hook to fetch profile data when the component mounts
   useEffect(() => {
     // Replace with your actual API endpoint
@@ -102,7 +111,19 @@ export function ProfileScreen({ navigation }) {
         }
 
         // testing posts response
-        console.log("Posts: ", response.data);
+        console.log("Posts: ", response.data.posts);
+
+        // Check if posts and $values exist
+        if (response.data.posts && response.data.posts.$values) {
+          const encodedPosts = response.data.posts.$values.map(post => {
+            return {
+              ...post,
+              postImage: post.image ? post.image.replace(/ /g, "%20") : post.image,
+            };
+          });
+          setPostsArray(encodedPosts);
+        }
+
       })
       .catch((error) => {
         console.error("Error fetching profile:", error);
@@ -121,13 +142,22 @@ export function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.detailsContainer}>
-          <Text style={styles.cost}>${item.cost}</Text>
-          {/* <Text style={styles.cost}>{item.ingredients}</Text> */}
+          {/* <Text style={styles.cost}>${item.cost}</Text> */}
+          <View style={styles.reactionsContainer}>
+            <View style={styles.upVoteContainer}> 
+              <View style={styles.icon}><UpReactionOutlineIcon/></View>
+              <Text style={styles.upVote}>{item.NumOfLikes}</Text>
+            </View>
+          </View>
+
         </View>
 
       </View>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: item.PostImage }} />
+        <Image
+          style={styles.image}
+          source={{ uri: item.postImage }} // This URL is already encoded
+        />
       </View>
     </View>
   );
@@ -333,7 +363,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   // ====== IMAGES: POSTS ======
-
   listContainer: {
     // padding: 5,
     // paddingBottom: 16,
@@ -378,6 +407,25 @@ const styles = StyleSheet.create({
     borderColor: "#345C50",
     borderWidth: 1,
   },
+  // ====== REACTIONS ======
+  reactionsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  upVoteContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    padding: 10,
+  },
+  upVote:{
+    fontSize: 12,
+    color: "#666",
+    fontFamily: "SF-Pro-Text-Regular",
+  },
+
 });
 
 export default ProfileScreen;
