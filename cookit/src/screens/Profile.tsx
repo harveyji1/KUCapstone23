@@ -111,8 +111,12 @@ export function ProfileScreen({ navigation }) {
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.cost}>${item.cost}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("RecipeExpanded", { item })}
+      >
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.cost}>${item.cost}</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -122,7 +126,9 @@ export function ProfileScreen({ navigation }) {
         <Image
           style={styles.profilePic}
           source={{
-            uri: encodedUrl ? encodedUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            uri: encodedUrl
+              ? encodedUrl
+              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
           }}
         ></Image>
         <View style={styles.postContainer}>
