@@ -18,6 +18,7 @@ namespace Persistence.Repositories
     public interface IProfileRepository
     {
         Task<ProfileModel> GetProfileModelAsync(int profileID);
+        Task<ProfileModel> GetProfileByProfileIdAsync(int profileId, int userID);
         Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID);
         Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID);
         Task<bool> FollowAsync(int profileID, int userID);
@@ -43,11 +44,37 @@ namespace Persistence.Repositories
         /// <returns></returns>
         public async Task<ProfileModel> GetProfileModelAsync(int userID)
         {
-            var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
+            var profile = await _context.Profiles
+                    .Where(profile => profile.UserId == userID)
+                    .Include(profile => profile.Posts)
+                        .ThenInclude(post => post.Comments)
+                    .SingleOrDefaultAsync();
             return profile;
         }
 
-        
+        public async Task<ProfileModel> GetProfileByProfileIdAsync(int profileId, int userID)
+        {
+            var profile = await _context.Profiles
+                            .Where(profile => profile.Id == profileId) 
+                            .Include(profile => profile.Posts)
+                                .ThenInclude(post => post.Comments)
+                            .SingleOrDefaultAsync();
+
+            var userProfile = await _context.Profiles
+                        .SingleOrDefaultAsync(x => x.UserId == userID); 
+
+            if (userProfile != null)
+            {
+                var isFollowing = await _context.Follower
+                                     .AnyAsync(f => f.FollowerID == userProfile.Id && f.ProfileID == profileId);
+
+                profile.IsFollowedByUser = isFollowing;
+            }
+
+            return profile; 
+        }
+
+
 
         public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
         {

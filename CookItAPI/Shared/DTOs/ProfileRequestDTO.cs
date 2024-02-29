@@ -12,7 +12,7 @@ namespace Shared.DTOs
     /// <summary>
     /// request object available to all layers
     /// </summary>
-    public class ProfileRequest
+    public class ProfileRequestDTO
     {
         public string? FullName { get; set; }
         public string? Bio { get; set; }

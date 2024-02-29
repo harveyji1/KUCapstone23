@@ -15,8 +15,9 @@ namespace Business.Services.User
     //profile interface
     public interface IProfileService
     {
-        Task<ProfileModel> GetProfileModelAsync(int userID);
-        Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID);
+        Task<ProfileResponseDTO> GetProfileModelAsync(int userID);
+        Task<ProfileResponseDTO> GetProfileByProfileIdAsync(int profileID, int userID);
+        Task<ProfileResponseDTO> EditProfileAsync(ProfileRequestDTO profile, int userID);
         Task<ProfileResponseDTO> UploadProfileImageAsync(IFormFile image, int userID);
         Task<bool> FollowAsync(int profileID, int userID);
         Task<bool> UnfollowAsync(int profileID, int userID);
@@ -37,12 +38,17 @@ namespace Business.Services.User
 
 
         //retrieves profile. This will take userid in the future
-        public async Task<ProfileModel> GetProfileModelAsync(int userID)
+        public async Task<ProfileResponseDTO> GetProfileModelAsync(int userID)
         {
-            return await _profileRepo.GetProfileModelAsync(userID);
+            return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.GetProfileModelAsync(userID));
         }
-        
-        public async Task<ProfileResponseDTO> EditProfileAsync(ProfileRequest profile, int userID)
+
+        public async Task<ProfileResponseDTO> GetProfileByProfileIdAsync(int profileID, int userID)
+        {
+            return ModelConversionHelper.ProfileModelToResponseDTO(await _profileRepo.GetProfileByProfileIdAsync(profileID, userID));
+        }
+
+        public async Task<ProfileResponseDTO> EditProfileAsync(ProfileRequestDTO profile, int userID)
         {
             var response = await _profileRepo.EditProfileAsync(ModelConversionHelper.ProfileRequestDTOToModel(profile), userID);
             return ModelConversionHelper.ProfileModelToResponseDTO(response);

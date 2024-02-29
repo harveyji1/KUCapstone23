@@ -11,9 +11,10 @@ namespace Shared.DTOs
     /// <summary>
     /// post request object available to all layers
     /// </summary>
-    public class PostRequest
+    public class PostRequestDTO
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public string? Ingredients { get; set; }
         public string? Instructions { get; set; }
         public decimal Cost { get; set; }
