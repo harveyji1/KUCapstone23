@@ -7,6 +7,7 @@ import * as React from "react";
 import { Text, View, Button } from "react-native";
 import { LoginContext } from "../../../LoginProvider";
 import axios from "axios";
+import * as FileSystem from "expo-file-system";
 
 export function ReviewPostScreen({ navigation, route }) {
   const { state } = React.useContext(LoginContext);
@@ -47,22 +48,37 @@ export function ReviewPostScreen({ navigation, route }) {
 
     try {
       // API call
-      const response1 = await fetch(image);
-      const blob = await response1.blob();
+
+      // file system stuff
+      // Read the image file as a base64-encoded string
+      const base64 = await FileSystem.readAsStringAsync(image, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      // Create a Blob object from the base64 string
+      // const blob = new Blob([base64], { type: "image/jpeg" }); // Replace 'image/jpeg' with the correct MIME type of your image
+      // const contents = await FileSystem.readAsStringAsync(image);
+
       const formData = new FormData();
       formData.append("Title", recipeName);
       formData.append("Ingredients", ingredientsString);
       formData.append("Instructions", instructions);
       formData.append("Cost", priceAsString);
       formData.append("PrepTime", combinedCookTime);
-      formData.append("PostImage", blob, "image.jpg");
+      // Append the base64 image to the FormData
+      formData.append("PostImage", {
+        uri: `data:image/jpeg;base64,${base64}`,
+        name: "image.jpg",
+        type: "image/jpeg",
+      });
+      // formData.append("PostImage", blob);
 
       // Debug stuff
       console.log("Recipe Name: ", recipeName);
       console.log("Description: ", description);
       console.log("cookingTime: ", combinedCookTime);
       console.log("cost: ", estimatedPrice);
-      console.log("imageBlob: ", blob);
+      console.log("imageBlob: ", "Test");
       console.log("ingredients list: ", ingredientsString);
       console.log("INstructions: ", instructions);
 
