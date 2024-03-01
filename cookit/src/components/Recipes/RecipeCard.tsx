@@ -10,6 +10,16 @@ import {Container, Card, UserInfo, UserImg, UserName, UserInfoText, PostTime, De
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  SavedReactionIcon,
+  SavedReactionOutlineIcon,
+  UpReactionIcon,
+  DownReactionIcon,
+  UpReactionOutlineIcon,
+  DownReactionOutlineIcon,
+  CommentReactionIcon,
+} from '../../../assets/reaction-icons';
+
 
 //type for the RecipeItemType that is passed in to each Post component
 type RecipeItemType = {
@@ -48,9 +58,9 @@ type RecipeItemType = {
     };
     
     // Set the icons for the upvote, downvote, and save buttons
-    var upvotedIcon = item.upvoted ? 'arrow-up-bold' : 'arrow-up-bold-outline';
-    var downvotedIcon = item.downvoted ? "arrow-down-bold" : "arrow-down-bold-outline";
-    var saveIcon = item.saved ? 'bookmark-minus' : 'bookmark-minus-outline';
+    var upvotedIcon = item.upvoted ? <UpReactionIcon/> : <UpReactionOutlineIcon/>;
+    var downvotedIcon = item.downvoted ? <DownReactionIcon/> : <DownReactionOutlineIcon/>;
+    var saveIcon = item.saved ? <SavedReactionIcon/> : <SavedReactionOutlineIcon/>;
     var IconColor = '#345C50'; // Set color
     
     const handleFollowPress = () => {
@@ -117,23 +127,23 @@ type RecipeItemType = {
           <InteractionWrapper>
             <GroupedInteraction>
               <Interaction active={item.upvoted}>
-                <MaterialCommunityIcons name={upvotedIcon as any} size={25} color={IconColor} />
+                {upvotedIcon}
                 <InteractionText>{upvoteText}</InteractionText>
               </Interaction>
               <Interaction active={item.downvoted}>
-                <MaterialCommunityIcons name={downvotedIcon as any} size={25} color={IconColor} />
+                {downvotedIcon}
                 <InteractionText>{downvoteText}</InteractionText>
               </Interaction>
             </GroupedInteraction>
             <GroupedInteraction>
               <Interaction>
-                <MaterialCommunityIcons name="comment-outline" size={25} color={IconColor} />
+                <CommentReactionIcon />
                 <InteractionText>{commentText}</InteractionText>
               </Interaction>
             </GroupedInteraction>
             <GroupedInteraction>
               <Interaction active={item.saved}>
-                <MaterialCommunityIcons name={saveIcon as any} size={25} color={IconColor} />
+                {saveIcon}
                 <InteractionText>{saveText}</InteractionText>
               </Interaction>
             </GroupedInteraction>
