@@ -12,7 +12,7 @@ import Svg, {
 
 const SavedReactionIcon = () => (
   <View>
-    <Svg viewBox="0 0 25 25" width="24" height="24">
+    <Svg viewBox="0 0 24 24" width="24" height="24">
       <Path
         fill="#345C50" d="M16.8203 2H7.18031C5.05031 2 3.32031 3.74 3.32031 5.86V19.95C3.32031 21.75 4.61031 22.51 6.19031 21.64L11.0703 18.93C11.5903 18.64 12.4303 18.64 12.9403 18.93L17.8203 21.64C19.4003 22.52 20.6903 21.76 20.6903 19.95V5.86C20.6803 3.74 18.9503 2 16.8203 2ZM15.0103 9.75C14.0403 10.1 13.0203 10.28 12.0003 10.28C10.9803 10.28 9.96031 10.1 8.99031 9.75C8.60031 9.61 8.40031 9.18 8.54031 8.79C8.69031 8.4 9.12031 8.2 9.51031 8.34C11.1203 8.92 12.8903 8.92 14.5003 8.34C14.8903 8.2 15.3203 8.4 15.4603 8.79C15.6003 9.18 15.4003 9.61 15.0103 9.75Z"
       />
@@ -26,7 +26,7 @@ export {
 
 const SavedReactionOutlineIcon = () => (
     <View>
-      <Svg viewBox="0 0 25 25" width="24" height="24">
+      <Svg viewBox="0 0 24 24" width="24" height="24">
         <Path
           fill="#718093" d="M10 8.56671C9.15 8.56671 8.3 8.41671 7.49167 8.12504C7.16667 8.00838 7 7.65004 7.11667 7.32504C7.24167 7.00004 7.6 6.83338 7.925 6.95004C9.26667 7.43338 10.7417 7.43338 12.0833 6.95004C12.4083 6.83338 12.7667 7.00004 12.8833 7.32504C13 7.65004 12.8333 8.00838 12.5083 8.12504C11.7 8.41671 10.85 8.56671 10 8.56671Z"
         />
@@ -46,7 +46,7 @@ const SavedReactionOutlineIcon = () => (
 
   const UpReactionIcon = () => (
     <View>
-      <Svg viewBox="0 0 25 25" width="24" height="24">
+      <Svg viewBox="0 0 24 24" width="24" height="24">
         <Path
           fill="#FFF" d="M2.08337 10L10 2.5L17.9167 10H12.9167V17.5H7.08337V10H2.08337Z" stroke="#345C50" stroke-linecap="round" stroke-linejoin="round"
         />
@@ -60,9 +60,9 @@ const SavedReactionOutlineIcon = () => (
   
   const UpReactionOutlineIcon = () => (
       <View>
-        <Svg viewBox="0 0 25 25" width="24" height="24">
+        <Svg viewBox="0 0 24 24" width="24" height="24">
           <Path
-            fill="#FFF" d="M2.08337 10L10 2.5L17.9167 10H12.9167V17.5H7.08337V10H2.08337Z" stroke="#1F2937" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+            fill="#FFF" d="M2.08337 10L10 2.5L17.9167 10H12.9167V17.5H7.08337V10H2.08337Z" stroke="#718093" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
           />
         </Svg>
       </View>
@@ -75,7 +75,7 @@ const SavedReactionOutlineIcon = () => (
 
     const DownReactionIcon = () => (
         <View>
-          <Svg viewBox="0 0 25 25" width="24" height="24">
+          <Svg viewBox="0 0 24 24" width="24" height="24">
             <Path
               fill="#345C50" d="M2.08337 10L10 17.5L17.9167 10H12.9167V2.5H7.08337V10H2.08337Z" stroke="#1F2937" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
             />
@@ -89,9 +89,9 @@ const SavedReactionOutlineIcon = () => (
       
     const DownReactionOutlineIcon = () => (
         <View>
-        <Svg viewBox="0 0 25 25" width="24" height="24">
+        <Svg viewBox="0 0 24 24" width="24" height="24">
             <Path
-            fill="#FFF" d="M2.08337 10L10 17.5L17.9167 10H12.9167V2.5H7.08337V10H2.08337Z" stroke="#345C50" stroke-linecap="round" stroke-linejoin="round"
+            fill="#FFF" d="M2.08337 10L10 17.5L17.9167 10H12.9167V2.5H7.08337V10H2.08337Z" stroke="#718093" stroke-linecap="round" stroke-linejoin="round"
             />
         </Svg>
         </View>
@@ -104,9 +104,9 @@ const SavedReactionOutlineIcon = () => (
 
     const CommentReactionIcon = () => (
         <View>
-          <Svg viewBox="0 0 25 25" width="24" height="24">
+          <Svg viewBox="0 0 24 24" width="24" height="24">
             <Path
-              fill="#FFF" d="M16.5 11.5C16.5 11.942 16.3244 12.366 16.0118 12.6785C15.6993 12.9911 15.2754 13.1667 14.8333 13.1667H4.83333L1.5 16.5V3.16667C1.5 2.72464 1.67559 2.30072 1.98816 1.98816C2.30072 1.67559 2.72464 1.5 3.16667 1.5H14.8333C15.2754 1.5 15.6993 1.67559 16.0118 1.98816C16.3244 2.30072 16.5 2.72464 16.5 3.16667V11.5Z" stroke="#1F2937" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+              fill="#FFF" d="M16.5 11.5C16.5 11.942 16.3244 12.366 16.0118 12.6785C15.6993 12.9911 15.2754 13.1667 14.8333 13.1667H4.83333L1.5 16.5V3.16667C1.5 2.72464 1.67559 2.30072 1.98816 1.98816C2.30072 1.67559 2.72464 1.5 3.16667 1.5H14.8333C15.2754 1.5 15.6993 1.67559 16.0118 1.98816C16.3244 2.30072 16.5 2.72464 16.5 3.16667V11.5Z" stroke="#718093" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
             />
           </Svg>
         </View>

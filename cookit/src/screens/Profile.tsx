@@ -141,18 +141,31 @@ export function ProfileScreen({ navigation }) {
           <Text style={styles.title}>{item.title}</Text>
         </View>
 
-        <View style={styles.detailsContainer}>
           {/* <Text style={styles.cost}>${item.cost}</Text> */}
-          <View style={styles.reactionsContainer}>
-            <View style={styles.upVoteContainer}> 
+          <View style={styles.detailsContainer}>
+            <View style={styles.reactionContainer}> 
               <View style={styles.icon}><UpReactionOutlineIcon/></View>
-              <Text style={styles.upVote}>{item.NumOfLikes}</Text>
+              <Text style={styles.reactionText}>###{item.NumOfLikes}</Text>
+            </View>
+
+            <View style={styles.reactionContainer}> 
+              <View style={styles.icon}><DownReactionOutlineIcon/></View>
+              <Text style={styles.reactionText}>###{item.NumOfLikes}</Text>
+            </View>
+
+            <View style={styles.reactionContainer}> 
+              <View style={styles.icon}><CommentReactionIcon /></View>
+              <Text style={styles.reactionText}>###{item.NumOfLikes}</Text>
+            </View>
+
+            <View style={styles.reactionContainer}> 
+              <View style={styles.icon}><SavedReactionOutlineIcon /></View>
+              <Text style={styles.reactionText}>###{item.NumOfLikes}</Text>
             </View>
           </View>
 
         </View>
 
-      </View>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -372,7 +385,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // alignItems: 'center',
     backgroundColor: "#FFF",
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingBottom: 15,
     paddingTop: 0,
     marginVertical: 8,
@@ -386,6 +399,7 @@ const styles = StyleSheet.create({
   },
   titleContainer:{
     marginBottom: 10,
+    paddingLeft: 10,
   },
   title: {
     fontSize: 15,
@@ -395,11 +409,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
   },
-  detailsContainer: {
-    
-  },
   imageContainer: {
     paddingTop: 0,
+    paddingRight: 20,
   },
   image: {
     height: 80,
@@ -408,21 +420,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   // ====== REACTIONS ======
-  reactionsContainer: {
+  detailsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 10,
   },
-  upVoteContainer: {
-    flexDirection: "row",
+  reactionContainer: {
+    flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 15,
+    // padding: 10,
+    // borderColor: "#718093",
+    // borderWidth: 1,
   },
   icon: {
-    padding: 10,
+    paddingBottom: 2,
+    paddingLeft: 3,
   },
-  upVote:{
+  reactionText:{
     fontSize: 12,
-    color: "#666",
+    color: "#718093",
     fontFamily: "SF-Pro-Text-Regular",
   },
 
