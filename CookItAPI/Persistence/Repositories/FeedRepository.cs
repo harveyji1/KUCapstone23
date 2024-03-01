@@ -57,6 +57,8 @@ namespace Persistence.Repositories
                     Cost = p.Cost,
                     PrepTime = p.PrepTime,
                     NumOfLikes = p.NumOfLikes,
+                    NumOfComments = p.NumOfComments,
+                    NumOfDislikes = p.NumOfDislikes,
                     PostImage = p.PostImage,
                     CreatedAt = p.CreatedAt,
                     IsLikedByUser = _context.Likes.Any(like => like.PostId == p.ID && like.UserId == userID),

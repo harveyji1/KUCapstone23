@@ -23,11 +23,13 @@ namespace Persistence.Models
         public string? PrepTime { get; set; }
         public int NumOfLikes { get; set; }
         public int NumOfDislikes { get; set; }
+        public int NumOfComments { get; set; }
         public string? PostImage { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [NotMapped]
         public bool IsLikedByUser { get; set; }
         [NotMapped]
         public bool IsDislikedByUser { get; set; }
+
     }
 }

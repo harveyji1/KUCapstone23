@@ -18,6 +18,8 @@ namespace Shared.DTOs
         public Decimal Cost { get; set; }
         public string? PrepTime { get; set; }
         public int NumOfLikes { get; set; }
+        public int NumOfDislikes { get; set; }
+        public int NumOfComments { get; set; }
         public string? Image { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsLikedByUser { get; set; }
