@@ -22,12 +22,25 @@ import { useState, useEffect, useContext } from "react"; // <-- Import useState 
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import { useFocusEffect } from "@react-navigation/native";
+import {
+  EditProfileIcon,
+} from "../../assets/recipe-icons";
+import { 
+  ProfileSavedReactionIcon, 
+  ProfileSavedReactionOutlineIcon, 
+  ProfileUpReactionIcon,
+  ProfileUpReactionOutlineIcon,
+  ProfileDownReactionIcon,
+  ProfileDownReactionOutlineIcon,
+  ProfileCommentReactionIcon,
+} from "../../assets/reaction-icons";
 
 type UserProfile = {
   profilePicture: string;
   postCount: number;
   followerCount: number;
   followingCount: number;
+  handle: string;
   user: string;
   fullName: string;
   bio: string;
@@ -71,10 +84,9 @@ export function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [encodedUrl, setEncodedUrl] = useState("");
   const [postsArray, setPostsArray] = useState("");
-
+  
   // 2. Use the useEffect hook to fetch profile data when the component mounts
   useEffect(() => {
-    // Replace with your actual API endpoint
     axios
       .get(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/profile`, {
         headers: {
@@ -98,7 +110,19 @@ export function ProfileScreen({ navigation }) {
         }
 
         // testing posts response
-        console.log("Posts: ", response.data);
+        console.log("Posts: ", response.data.posts);
+
+        // Check if posts and $values exist
+        if (response.data.posts && response.data.posts.$values) {
+          const encodedPosts = response.data.posts.$values.map(post => {
+            return {
+              ...post,
+              postImage: post.image ? post.image.replace(/ /g, "%20") : post.image,
+            };
+          });
+          setPostsArray(encodedPosts);
+        }
+
       })
       .catch((error) => {
         console.error("Error fetching profile:", error);
@@ -109,22 +133,104 @@ export function ProfileScreen({ navigation }) {
     return <Text>Loading...</Text>; // Display loading text until the profile data is fetched
   }
 
-  const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.cost}>${item.cost}</Text>
-    </View>
-  );
+  const formatCount = (count) => {
+    if (count <= 999) {
+      return count; // Return the count as is if less than 999
+    } else if (count <= 9999) {
+      // If count is between 1000 and 9999, format with one decimal place
+      return (count / 1000).toFixed(1) + 'k';
+    } else {
+      // If count is 10000 or more, format as an integer with 'k'
+      return Math.floor(count / 1000) + 'k';
+    }
+  };
 
+  const renderItem = ({ item }) => {
+    
+    // Format the counts for likes, dislikes, comments, and saves
+    const likesText = formatCount(item.numOfLikes);
+    const dislikesText = formatCount(item.numOfDislikes);
+    const commentsText = formatCount(item.numOfComments);
+    const savesText = formatCount(item.numOfSaves); 
+
+    // Determine which reaction icon to display based on whether the user has liked or disliked the post
+    var upvotedIcon = item.isLikedByUser ? <ProfileUpReactionIcon/> : <ProfileUpReactionOutlineIcon/>;
+    var downvotedIcon = item.isDislikedByUser ? <ProfileDownReactionIcon/> : <ProfileDownReactionOutlineIcon/>;
+    
+    // Render the post item
+    return (
+      <View style={styles.itemContainer}>
+        <View style={styles.postDetailContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{item.title}</Text>
+          </View>
+          
+          <View style={styles.detailsContainer}>
+            <View style={styles.reactionContainer}>
+              <View style={styles.icon}>{upvotedIcon}</View>
+              <Text style={styles.reactionText}>{likesText}</Text>
+            </View>
+  
+            <View style={styles.reactionContainer}>
+              <View style={styles.icon}>{downvotedIcon}</View>
+              <Text style={styles.reactionText}>{dislikesText}</Text>
+            </View>
+  
+            <View style={styles.reactionContainer}>
+              <View style={styles.icon}><ProfileCommentReactionIcon /></View>
+              <Text style={styles.reactionText}>{commentsText}</Text>
+            </View>
+  
+            <View style={styles.reactionContainer}>
+              <View style={styles.icon}><ProfileSavedReactionOutlineIcon /></View>
+              <Text style={styles.reactionText}>{savesText}</Text> 
+            </View>
+          </View>
+        </View>
+  
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: item.postImage }} 
+          />
+        </View>
+      </View>
+    );
+  };
+  
   return (
     <View style={styles.container}>
+
+      <View style={styles.headerContainer}>
+        <View style={styles.headerUsernameContainer}>
+          <Text style={styles.headerUsername}>{profile.handle}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("EditProfile")}
+        >
+          <View style={styles.headerEditButton}><EditProfileIcon/></View>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.infoContainer}>
-        <Image
-          style={styles.profilePic}
-          source={{
-            uri: encodedUrl ? encodedUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-          }}
-        ></Image>
+        <View style={styles.profileAndNameContainer}>
+          <View style={styles.profilePicContainer}>
+            <Image
+              style={styles.profilePic}
+              source={{
+                uri: encodedUrl ? encodedUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+              }}
+            />
+          </View>
+          <View style={styles.nameBioContainer}>
+            <Text style={styles.userName}>
+              {profile.fullName}
+            </Text>
+            <Text style={styles.bio}>{profile.bio}</Text>
+          </View>
+        </View>
+
+      <View style={styles.statsContainer}>
         <View style={styles.postContainer}>
           <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
           <Text style={styles.postWord}>Posts</Text>
@@ -138,18 +244,8 @@ export function ProfileScreen({ navigation }) {
           <Text style={styles.followingWord}>Following</Text>
         </View>
       </View>
-      <Text style={styles.userName}>
-        {/*props.userName*/}
-        {profile.fullName}
-      </Text>
-      <Text style={styles.bio}>{profile.bio}</Text>
-      <TouchableOpacity
-        style={styles.editProfileButton}
-        onPress={() => navigation.navigate("EditProfile")}
-      >
-        <Text style={styles.editProfileButtonText}>Edit Profile</Text>
-      </TouchableOpacity>
-      <View style={styles.border}></View>
+    </View>
+
       <FlatList
         data={postsArray}
         renderItem={renderItem}
@@ -162,95 +258,139 @@ export function ProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F4EAD7",
+    backgroundColor: "#FFF",
     height: "100%",
   },
   // ====== STATS: CONTAINER ======
-  infoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around', 
+    width: '100%', 
     marginTop: 30,
-    marginLeft: 40,
-    width: "100%",
+    marginBottom: 10,
+  },
+  infoContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    width: '100%',
+    borderBottomWidth: 4,
+    borderBottomColor: "#F3F4F6",
+    marginBottom: 6,
   },
   // ====== STATS: POSTS ======
   postContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
-    marginLeft: 50,
+    marginHorizontal: 20, 
   },
   numberOfPosts: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   postWord: {
     fontSize: 12,
     paddingTop: 5,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== STATS: FOLLOWERS ======
   followersContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
+    marginHorizontal: 20, 
   },
   numOfFollowers: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   followersWord: {
     paddingTop: 5,
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== STATS: FOLLOWING ======
   followingContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 15, // Add horizontal margin
+    marginHorizontal: 20, 
   },
   numOfFollowing: {
-    fontWeight: "400",
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Medium",
   },
   followingWord: {
     paddingTop: 5,
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#111827",
+    fontFamily: "SF-Pro-Text-Regular",
   },
   // ====== PROFILE PIC & USERNAME ======
+  profileAndNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around', 
+  },
+  profilePicContainer: {
+    paddingHorizontal: 20,
+  },
   profilePic: {
-    height: 60,
-    width: 60,
+    height: 80,
+    width: 80,
     borderRadius: 50,
+    // borderColor: "#345C50",
+    // borderWidth: 1,
   },
   userName: {
     fontSize: 18,
-    color: "#345C50",
+    color: "#111827",
     marginTop: 15,
-    fontWeight: "bold",
-    marginBottom: 20,
-    fontFamily: "SweetSansProBold",
+    marginBottom: 10,
+    fontFamily: "SF-Pro-Text-Medium",
     marginLeft: 20,
   },
   bio: {
     fontSize: 12,
-    color: "#667B68",
-    fontFamily: "SweetSansProRegular",
+    color: "#4B5563",
+    fontFamily: "SF-Pro-Text-Regular",
     marginTop: 0,
     marginBottom: 10,
     marginLeft: 20,
   },
+  nameBioContainer : {
+    flex: 1,
+  },
+  // ====== HEADER: USERNAME ======
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  headerUsernameContainer: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginLeft: 26,
+  },
+  headerUsername: {
+    fontSize: 20,
+    color: '#4B5563',
+    fontFamily: 'SF-Pro-Text-Semibold',
+  },
+  headerEditButton: {
+    paddingRight: 2,
+  },
+
   // ====== EDIT PROFILE BUTTON ======
   editProfileButton: {
     padding: 10,
@@ -258,49 +398,75 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  editProfileButtonText: {
-    color: "#667B68",
-    fontSize: 16,
-    fontFamily: "SweetSansProBold",
-  },
-  // ====== DIVIDER ======
-  border: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#345C50",
-    marginBottom: 5,
-  },
   // ====== IMAGES: POSTS ======
-  postsContainer: {
-    flex: 1,
-    paddingVertical: 5,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  postSpacing: {
-    paddingLeft: 10, // This creates spacing between images
-  },
-  recipePosts: {
-    // Set only the aspect ratio here
-    aspectRatio: 1, // Maintain aspect ratio
-  },
   listContainer: {
-    padding: 10,
+    // padding: 5,
+    // paddingBottom: 16,
   },
   itemContainer: {
-    backgroundColor: "#f9f9f9",
-    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#FFF",
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 0,
     marginVertical: 8,
-    borderRadius: 5,
-    elevation: 1, // Add shadow effect for iOS use shadow props
+    elevation: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  postDetailContainer: {
+    flex: 1,
+    paddingTop: 5,
+  },
+  titleContainer:{
+    marginBottom: 10,
+    paddingLeft: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 15,
+    fontFamily: "SF-Pro-Text-Semibold",
   },
   cost: {
     fontSize: 16,
     color: "#666",
   },
+  imageContainer: {
+    paddingTop: 0,
+    paddingRight: 25,
+  },
+  image: {
+    height: 80,
+    width: 80,
+    // borderColor: "#345C50",
+    // borderWidth: 1,
+  },
+  // ====== REACTIONS ======
+  detailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  reactionContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 15,
+    // padding: 10,
+    // borderColor: "#718093",
+    // borderWidth: 1,
+  },
+  icon: {
+    paddingBottom: 2,
+    paddingLeft: 3,
+  },
+  reactionText:{
+    fontSize: 12,
+    color: "#718093",
+    fontFamily: "SF-Pro-Text-Regular",
+  },
+
 });
 
 export default ProfileScreen;

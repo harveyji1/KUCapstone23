@@ -22,7 +22,10 @@ import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import { decode as atob } from "base-64";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import {
+  AccountIcon,
+  PasswordIcon
+} from "../../assets/recipe-icons";
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
 const COMPUTER_IP_ADDRESS = "";
@@ -138,11 +141,7 @@ export function LoginPage({ navigation }) {
 
         {/* USERNAME */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons
-            name="email-outline"
-            size={20}
-            style={styles.icon}
-          />
+          <View style={styles.icon}><AccountIcon/></View>
           <TextInput
             style={styles.input}
             placeholder="Username"
@@ -154,11 +153,7 @@ export function LoginPage({ navigation }) {
         </View>
         {/* PASSWORD */}
         <View style={styles.PasswordInputWrapper}>
-          <MaterialCommunityIcons
-            name="lock-outline"
-            size={20}
-            style={styles.icon}
-          />
+          <View style={styles.icon}><PasswordIcon/></View>
           {/* PASSWORD */}
           <TextInput
             style={styles.input}
@@ -301,7 +296,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-    color: "#9ca3af",
   },
   input: {
     flex: 1,

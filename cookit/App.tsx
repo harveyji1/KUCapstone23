@@ -88,14 +88,11 @@ function BottomTabs() {
         name="Search"
         component={SearchScreen}
         options={{
-          title: "CookIt",
-          headerStyle: {
-            backgroundColor: "#345C50",
-          },
-          headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontFamily: "SweetSansProBold",
-            fontSize: 20,
+          headerStyle: { 
+            backgroundColor: '#345C50', 
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 50,
           },
           tabBarIcon: ({ focused }) =>
             focused ? <SearchIcon /> : <SearchOutlineIcon />,
@@ -116,15 +113,13 @@ function BottomTabs() {
         name="SavedRecipies"
         component={SavedRecipiesScreen}
         options={{
-          title: "CookIt",
-          headerStyle: {
-            backgroundColor: "#345C50",
+          headerStyle: { 
+            backgroundColor: '#fff', 
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 60,
           },
           headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontFamily: "SweetSansProBold",
-            fontSize: 20,
-          },
           tabBarIcon: ({ focused }) =>
             focused ? <SavedIcon /> : <SavedOutlineIcon />,
           tabBarShowLabel: false,
@@ -134,15 +129,13 @@ function BottomTabs() {
         name="Profile"
         component={CreateProfileStack}
         options={{
-          title: "CookIt",
-          headerStyle: {
-            backgroundColor: "#345C50",
+          headerStyle: { 
+            backgroundColor: '#fff', 
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 50,
           },
           headerTintColor: "#FFF",
-          headerTitleStyle: {
-            fontFamily: "SweetSansProBold",
-            fontSize: 20,
-          },
           tabBarIcon: ({ focused }) =>
             focused ? <ProfileIcon /> : <ProfileOutlineIcon />,
           tabBarShowLabel: false,
@@ -223,7 +216,17 @@ function CreateProfileStack() {
       <Stack3.Screen
         name="EditProfile"
         component={EditProfileScreen}
-        options={{ headerShown: true }}
+        options={{
+          title: "Edit Profile",
+          headerStyle:{
+            backgroundColor: "#FFF"
+          },
+          headerTintColor: "#111827",
+          headerTitleStyle: {
+            fontFamily: "SF-Pro-Display-Semibold",
+            fontSize: 18,
+          },
+          headerBackTitleVisible: false }} 
       />
     </Stack.Navigator>
   );
@@ -239,22 +242,6 @@ export default function App() {
     SweetSansProBold: require("./assets/fonts/SweetSansProBold.otf"),
     SweetSansProLight: require("./assets/fonts/SweetSansProLight.otf"),
     SweetSansProMedium: require("./assets/fonts/SweetSansProMedium.otf"),
-
-    "Trispace-Bold": require("./assets/fonts/Trispace-Bold.ttf"),
-    "Trispace-Regular": require("./assets/fonts/Trispace-Regular.ttf"),
-    "Trispace-Light": require("./assets/fonts/Trispace-Light.ttf"),
-    "Trispace-Medium": require("./assets/fonts/Trispace-Medium.ttf"),
-    "Trispace-ExtraBold": require("./assets/fonts/Trispace-ExtraBold.ttf"),
-    "Trispace-SemiBold": require("./assets/fonts/Trispace-SemiBold.ttf"),
-
-    "PlayfairDisplay-Black": require("./assets/fonts/PlayfairDisplay-Black.ttf"),
-    "PlayfairDisplay-Bold": require("./assets/fonts/PlayfairDisplay-Bold.ttf"),
-    "PlayfairDisplay-ExtraBold": require("./assets/fonts/PlayfairDisplay-ExtraBold.ttf"),
-    "PlayfairDisplay-Medium": require("./assets/fonts/PlayfairDisplay-Medium.ttf"),
-    "PlayfairDisplay-Regular": require("./assets/fonts/PlayfairDisplay-Regular.ttf"),
-    "PlayfairDisplay-SemiBold": require("./assets/fonts/PlayfairDisplay-SemiBold.ttf"),
-
-    "Quando-Regular": require("./assets/fonts/Quando-Regular.ttf"),
 
     "SF-Pro-Display-Black": require("./assets/fonts/SF-Pro-Display-Black.otf"),
     "SF-Pro-Display-BlackItalic": require("./assets/fonts/SF-Pro-Display-BlackItalic.otf"),
@@ -275,15 +262,6 @@ export default function App() {
     "SF-Pro-Display-Ultralight": require("./assets/fonts/SF-Pro-Display-Ultralight.otf"),
     "SF-Pro-Display-UltralightItalic": require("./assets/fonts/SF-Pro-Display-UltralightItalic.otf"),
     "SF-Pro-Italic": require("./assets/fonts/SF-Pro-Italic.ttf"),
-    "SF-Pro-Rounded-Black": require("./assets/fonts/SF-Pro-Rounded-Black.otf"),
-    "SF-Pro-Rounded-Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
-    "SF-Pro-Rounded-Heavy": require("./assets/fonts/SF-Pro-Rounded-Heavy.otf"),
-    "SF-Pro-Rounded-Light": require("./assets/fonts/SF-Pro-Rounded-Light.otf"),
-    "SF-Pro-Rounded-Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
-    "SF-Pro-Rounded-Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
-    "SF-Pro-Rounded-Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
-    "SF-Pro-Rounded-Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
-    "SF-Pro-Rounded-Ultralight": require("./assets/fonts/SF-Pro-Rounded-Ultralight.otf"),
     "SF-Pro-Text-Black": require("./assets/fonts/SF-Pro-Text-Black.otf"),
     "SF-Pro-Text-BlackItalic": require("./assets/fonts/SF-Pro-Text-BlackItalic.otf"),
     "SF-Pro-Text-Bold": require("./assets/fonts/SF-Pro-Text-Bold.otf"),
