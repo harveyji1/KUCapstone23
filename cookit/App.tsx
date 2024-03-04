@@ -42,6 +42,7 @@ import {
   ProfileOutlineIcon,
 } from "./assets/nav-icons";
 import { LoginRegisterToggle } from "./src/screens/LoginRegisterToggle";
+import RecipeFolderScreen from "./src/screens/RecipeFolder";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -67,7 +68,7 @@ function BottomTabs() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           title: "CookIt",
@@ -85,7 +86,7 @@ function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name="SearchScreen"
         component={SearchScreen}
         options={{
           headerStyle: { 
@@ -151,7 +152,7 @@ function CreatePostStack() {
   return (
     <Stack.Navigator>
       <Stack2.Screen
-        name="CreatePost"
+        name="CreatePostScreen"
         component={CreatePostScreen}
         options={{
           title: "Add New Recipe",
@@ -209,7 +210,7 @@ function CreateProfileStack() {
   return (
     <Stack.Navigator>
       <Stack3.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
@@ -320,6 +321,22 @@ export default function App() {
             <Stack.Screen
               name="RecipeExpanded"
               component={RecipeScreen}
+              options={{
+                title: "CookIt",
+                headerStyle: {
+                  backgroundColor: "#345C50",
+                },
+                headerTintColor: "#FFF",
+                headerTitleStyle: {
+                  fontFamily: "SweetSansProBold",
+                  fontSize: 20,
+                },
+                headerBackTitleVisible: false,
+              }}
+            />
+              <Stack.Screen
+              name="RecipeFolder"
+              component={RecipeFolderScreen}
               options={{
                 title: "CookIt",
                 headerStyle: {

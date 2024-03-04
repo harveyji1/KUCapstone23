@@ -22,7 +22,7 @@ import {
 
 
 //type for the RecipeItemType that is passed in to each Post component
-type RecipeItemType = {
+export type RecipeItemType = {
     id: string;
     userName: string;
     userImg: string; 

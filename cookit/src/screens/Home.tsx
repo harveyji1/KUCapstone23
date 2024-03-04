@@ -14,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //This will be replaced by actual data from backend
 //For now this is passing in the posts
-const Posts = [
+export const Posts = [
   {
     id: '1',
     userName: 'Nick Anaya',
