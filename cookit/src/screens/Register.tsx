@@ -21,6 +21,11 @@ import {
 } from "react-native";
 import axios from "axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AccountIcon,
+  PasswordIcon,
+  EmailIcon,
+} from "../../assets/recipe-icons";
 
 // Constants for API communication
 const LOCAL_HOST_NUBMER = "5018";
@@ -136,11 +141,7 @@ export function RegisterScreen({ navigation }) {
 
         {/* USERNAME */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons
-            name="account-outline"
-            size={20}
-            style={styles.icon}
-          />
+          <View style={styles.icon}><AccountIcon/></View>
           <TextInput
             style={styles.input}
             placeholder="Username"
@@ -153,11 +154,7 @@ export function RegisterScreen({ navigation }) {
 
         {/* EMAIL */}
         <View style={styles.UsernameInputWrapper}>
-          <MaterialCommunityIcons
-            name="email-outline"
-            size={20}
-            style={styles.icon}
-          />
+        <View style={styles.icon}><EmailIcon/></View>
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -175,11 +172,7 @@ export function RegisterScreen({ navigation }) {
             uppercase letter, 1 number, & 1 special character
           </Text>
           <View style={styles.PasswordInputWrapper}>
-            <MaterialCommunityIcons
-              name="lock-outline"
-              size={20}
-              style={styles.icon}
-            />
+            <View style={styles.icon}><PasswordIcon/></View>
             {/* PASSWORD */}
             <TextInput
               style={styles.input}
@@ -203,11 +196,7 @@ export function RegisterScreen({ navigation }) {
         {/* Re-Enter Password */}
         <View style={styles.passwordContainer}>
           <View style={styles.PasswordInputWrapper}>
-            <MaterialCommunityIcons
-              name="lock-outline"
-              size={20}
-              style={styles.icon}
-            />
+            <View style={styles.icon}><PasswordIcon/></View>
             <TextInput
               style={styles.input}
               placeholder="Re-Enter Password"
@@ -228,7 +217,7 @@ export function RegisterScreen({ navigation }) {
         </View>
 
         {/* Register Button */}
-        <TouchableOpacity // Use TouchableOpacity for the custom button
+        <TouchableOpacity 
           style={styles.registerButton}
           onPress={handleRegister}
         >
@@ -359,7 +348,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     padding: 10,
-    color: "#3D5147", // --color-forest-green
   },
   passwordRequirement: {
     color: "#3D5147", // --color-forest-green
@@ -400,8 +388,8 @@ const styles = StyleSheet.create({
     color: "#9ca3af",
     fontFamily: "SF-Pro-Text-Medium",
     fontSize: 12,
-    borderWidth: 0, // Remove the border
-    textAlign: "left", // Align text to the left
-    height: "100%", // Make the input fill the height of the wrapper
+    borderWidth: 0, 
+    textAlign: "left", 
+    height: "100%", 
   },
 });

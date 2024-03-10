@@ -23,6 +23,13 @@ import { useState, useEffect, useContext } from "react"; // <-- Import useState 
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import { useFocusEffect } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AccountIcon,
+  EmailIcon,
+  PasswordIcon,
+  BioIcon,
+} from "../../assets/recipe-icons";
 
 const LOCAL_HOST_NUBMER = "5018";
 
@@ -62,22 +69,34 @@ export function EditProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Full Name</Text>
-      <TextInput
-        style={styles.input}
-        value={fullName}
-        onChangeText={setFullName}
-        placeholder="Enter your full name"
-      />
-      <Text style={styles.label}>Bio</Text>
-      <TextInput
-        style={styles.input}
-        value={bio}
-        onChangeText={setBio}
-        placeholder="Enter your bio"
-        multiline
-      />
-      <Button title="Update Profile" onPress={updateProfile} />
+      <View style={styles.inputContainer}> 
+        <View style={styles.UsernameInputWrapper}>
+          <View style={styles.icon}><AccountIcon /></View>
+          <TextInput
+            style={styles.input}
+            value={fullName}
+            onChangeText={setFullName}
+            placeholder="Full Name"
+          />
+        </View>
+
+        <View style={styles.UsernameInputWrapper}>
+          <View style={styles.icon}><BioIcon /></View>
+          <TextInput
+            style={styles.input}
+            value={bio}
+            onChangeText={setBio}
+            placeholder="Bio"
+          />
+        </View>
+      </View> 
+
+      <TouchableOpacity
+        style={styles.updateProfileButton}
+        onPress={updateProfile}
+      >
+        <Text style={styles.buttonText}>Update Profile</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -86,21 +105,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between", 
     padding: 20,
-    backgroundColor: "#F4EAD7",
+    backgroundColor: "#FFF",
+  },
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center', 
+    width: '100%', 
+  },
+  UsernameInputWrapper: {
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    width: 343,
+    height: 50,
+    borderColor: "#e5e7eb",
+    borderWidth: 2,
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingHorizontal: 10,
   },
   input: {
-    width: "100%",
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    padding: 10,
+    flex: 1,
+    color: "#9ca3af",
+    fontFamily: "SF-Pro-Text-Medium",
+    fontSize: 12,
+    borderWidth: 0, 
+    textAlign: "left", 
+    height: "100%", 
   },
-  label: {
-    alignSelf: "flex-start",
-    marginLeft: "5%",
-    marginTop: 10,
+  icon: {
+    padding: 10, 
+  },
+  updateProfileButton: {
+    borderRadius: 50,
+    width: 343,
+    height: 55,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#345C50",
+  },
+  buttonText: {
+    color: "#FFFFFF", 
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "SF-Pro-Text-Semibold",
   },
 });
 
