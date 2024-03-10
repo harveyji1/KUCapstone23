@@ -78,6 +78,8 @@ namespace API
             builder.Services.AddScoped<IFeedService, FeedService>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<IListRepository, ListRepository>();
+            builder.Services.AddScoped<IListService, ListService>();
 
 
             builder.Services.AddCors(options =>

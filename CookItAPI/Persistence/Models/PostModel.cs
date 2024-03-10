@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Persistence.Models
@@ -26,6 +27,8 @@ namespace Persistence.Models
         public int NumOfComments { get; set; }
         public string? PostImage { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [JsonIgnore]
+        public ICollection<ListModel> Lists { get; set; } = new List<ListModel>();
         [NotMapped]
         public bool IsLikedByUser { get; set; }
         [NotMapped]
