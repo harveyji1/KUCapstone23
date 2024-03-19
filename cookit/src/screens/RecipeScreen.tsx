@@ -5,7 +5,30 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 const RecipeScreen = ({ route }) => {
   const { item } = route.params;
 
+  function stringToIngredients(ingredientsString: string) {
+    return ingredientsString.split("|").map((ingredient) => {
+      const [amount, name, unit] = ingredient.split("~");
+      return { amount, name, unit };
+    });
+  }
+  const extractedIngredients = stringToIngredients(item.ingredients);
+
   console.log(item);
+  // console.log("Ingredients: ", item.ingredients);
+  // console.log(
+  //   "Ingredients stringified:",
+  //   JSON.stringify(item.ingredients, null, 2)
+  // );
+  console.log("Type of : ", typeof item.ingredients);
+  try {
+    const extractedIngredients = stringToIngredients(item.ingredients);
+    console.log("Extracted Ingredients: ", extractedIngredients);
+  } catch (e) {
+    console.log("Ingredients format error");
+  }
+
+  // console.log(" 1: ", item.ingredients[0]);
+
   const [encodedPic, setPic] = useState("");
   const [encodedProfilePic, setProfilePic] = useState("");
 
@@ -77,12 +100,12 @@ const RecipeScreen = ({ route }) => {
       {/* Ingredients Section */}
       <View style={styles.ingredientsSection}>
         <Text style={styles.sectionTitle}>Ingredients</Text>
-        {/* {item.ingredients.map((ingredient, index) => (
+        {extractedIngredients.map((ingredient, index) => (
           <View key={index} style={styles.ingredientItem}>
             <View style={styles.bulletPoint} />
-            <Text style={styles.ingredientText}>{ingredient}</Text>
+            <Text style={styles.ingredientText}>{ingredient.name}</Text>
           </View>
-        ))} */}
+        ))}
       </View>
 
       {/* Instructions Section */}

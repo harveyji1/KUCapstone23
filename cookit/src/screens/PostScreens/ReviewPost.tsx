@@ -17,7 +17,7 @@ export function ReviewPostScreen({ navigation, route }) {
     description,
     combinedCookTime,
     image,
-    ingredientsList,
+    ingredientsString,
     instructions,
     estimatedPrice,
   } = route.params;
@@ -26,7 +26,6 @@ export function ReviewPostScreen({ navigation, route }) {
   const HandlePost = async () => {
     // convert list to string
     let priceAsString = parseFloat(estimatedPrice).toFixed(2);
-    let ingredientsString = ingredientsList.join(", "); // Join the array elements with a comma and a space
     // convert image to binary
 
     const url = `http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/posts`;
