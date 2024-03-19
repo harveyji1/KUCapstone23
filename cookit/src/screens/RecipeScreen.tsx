@@ -1,8 +1,32 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 const RecipeScreen = ({ route }) => {
   const { item } = route.params;
+
+  console.log(item);
+  const [encodedPic, setPic] = useState("");
+  const [encodedProfilePic, setProfilePic] = useState("");
+
+  useEffect(() => {
+    const pic = item.image;
+    const profilePic = item.profileImage;
+
+    if (pic) {
+      setPic(pic.replace(/ /g, "%20"));
+      console.log("Encoded URL:", encodedPic);
+    } else {
+      console.log("no profile pic");
+    }
+
+    if (profilePic) {
+      setProfilePic(profilePic.replace(/ /g, "%20"));
+      console.log("Encoded URL:", encodedProfilePic);
+    } else {
+      console.log("no profile pic");
+    }
+  });
 
   return (
     <ScrollView style={styles.container}>
@@ -10,15 +34,15 @@ const RecipeScreen = ({ route }) => {
         <Text style={styles.headerText}>{item.dishName}</Text>
       </View> */}
 
-      <Image style={styles.mainImage} source={item.postImg} />
+      <Image style={styles.mainImage} source={{ uri: encodedPic }} />
 
       <View style={styles.userInfo}>
-        <Image style={styles.userAvatar} source={item.userImg} />
-        <Text style={styles.username}>{item.userName}</Text>
+        <Image style={styles.userAvatar} source={{ uri: encodedProfilePic }} />
+        <Text style={styles.username}>{item.handle}</Text>
       </View>
 
       <View style={styles.recipeTitle}>
-        <Text style={styles.titleText}>{item.dishName}</Text>
+        <Text style={styles.titleText}>{item.title}</Text>
       </View>
 
       <View style={styles.recipeOverview}>
@@ -29,7 +53,7 @@ const RecipeScreen = ({ route }) => {
         {/* Yield, Prep, Cook, Estimated Cost */}
         <View style={styles.infoSection}>
           <View style={styles.infoBlock}>
-            <Text style={styles.infoTitle}>YIELD</Text>
+            {/* <Text style={styles.infoTitle}>YIELD</Text> */}
             <Text style={styles.infoContent}>{item.yield} people</Text>
           </View>
 
@@ -40,12 +64,12 @@ const RecipeScreen = ({ route }) => {
 
           <View style={styles.infoBlock}>
             <Text style={styles.infoTitle}>COOK</Text>
-            <Text style={styles.infoContent}>{item.cookTime} mins</Text>
+            {/* <Text style={styles.infoContent}>{item.cookTime} mins</Text> */}
           </View>
 
           <View style={[styles.infoBlock, { borderRightWidth: 0 }]}>
             <Text style={styles.infoTitle}>EST COST</Text>
-            <Text style={styles.infoContent}>${item.estCost}</Text>
+            <Text style={styles.infoContent}>${item.cost}</Text>
           </View>
         </View>
       </View>
@@ -53,23 +77,23 @@ const RecipeScreen = ({ route }) => {
       {/* Ingredients Section */}
       <View style={styles.ingredientsSection}>
         <Text style={styles.sectionTitle}>Ingredients</Text>
-        {item.ingredients.map((ingredient, index) => (
+        {/* {item.ingredients.map((ingredient, index) => (
           <View key={index} style={styles.ingredientItem}>
             <View style={styles.bulletPoint} />
             <Text style={styles.ingredientText}>{ingredient}</Text>
           </View>
-        ))}
+        ))} */}
       </View>
 
       {/* Instructions Section */}
       <View style={styles.instructionsSection}>
         <Text style={styles.sectionTitle}>Instructions</Text>
-        {item.instructions.map((instruction, index) => (
+        {/* {item.instructions.map((instruction, index) => (
           <View key={index} style={styles.instructionItem}>
             <Text style={styles.stepTitle}>Step {index + 1}:</Text>
             <Text style={styles.instructionText}>{instruction}</Text>
           </View>
-        ))}
+        ))} */}
       </View>
 
       {/* Footer navigation */}
