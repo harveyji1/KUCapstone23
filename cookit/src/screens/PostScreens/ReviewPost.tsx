@@ -64,6 +64,7 @@ export function ReviewPostScreen({ navigation, route }) {
       formData.append("Instructions", instructions);
       formData.append("Cost", priceAsString);
       formData.append("PrepTime", combinedCookTime);
+      formData.append("Description", description);
       // Append the base64 image to the FormData
       formData.append("PostImage", {
         uri: `data:image/jpeg;base64,${base64}`,

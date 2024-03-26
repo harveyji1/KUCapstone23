@@ -13,6 +13,12 @@ const RecipeScreen = ({ route }) => {
   }
   const extractedIngredients = stringToIngredients(item.ingredients);
 
+  function stringToInstructions(instructionsString: string) {
+    return instructionsString.split("|");
+  }
+
+  const extractedInstructions = stringToInstructions(item.instructions);
+
   console.log(item);
   // console.log("Ingredients: ", item.ingredients);
   // console.log(
@@ -23,6 +29,9 @@ const RecipeScreen = ({ route }) => {
   try {
     const extractedIngredients = stringToIngredients(item.ingredients);
     console.log("Extracted Ingredients: ", extractedIngredients);
+    console.log("Instructions: ", item.instructions);
+    console.log("Instruction zero: ", item.instructions[0]);
+    console.log("Type of instructions : ", typeof item.instructions);
   } catch (e) {
     console.log("Ingredients format error");
   }
@@ -103,7 +112,9 @@ const RecipeScreen = ({ route }) => {
         {extractedIngredients.map((ingredient, index) => (
           <View key={index} style={styles.ingredientItem}>
             <View style={styles.bulletPoint} />
-            <Text style={styles.ingredientText}>{ingredient.name}</Text>
+            <Text style={styles.ingredientText}>
+              {ingredient.name} | {ingredient.amount} {ingredient.unit}
+            </Text>
           </View>
         ))}
       </View>
@@ -111,12 +122,12 @@ const RecipeScreen = ({ route }) => {
       {/* Instructions Section */}
       <View style={styles.instructionsSection}>
         <Text style={styles.sectionTitle}>Instructions</Text>
-        {/* {item.instructions.map((instruction, index) => (
+        {extractedInstructions.map((instruction, index) => (
           <View key={index} style={styles.instructionItem}>
             <Text style={styles.stepTitle}>Step {index + 1}:</Text>
             <Text style={styles.instructionText}>{instruction}</Text>
           </View>
-        ))} */}
+        ))}
       </View>
 
       {/* Footer navigation */}

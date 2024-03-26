@@ -153,9 +153,9 @@ export function InstructionsScreen({ route, navigation }) {
                 tagInput,
                 image,
                 ingredientsString,
-                instructions: instructions.map(
-                  (instruction) => instruction.instruction
-                ), // Pass the instructions text only
+                instructions: instructions
+                  .map((instruction) => instruction.instruction)
+                  .join("|"), // Pass the instructions text only
               })
             }
           />
