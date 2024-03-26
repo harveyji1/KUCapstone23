@@ -22,12 +22,10 @@ import { useState, useEffect, useContext } from "react"; // <-- Import useState 
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
 import { useFocusEffect } from "@react-navigation/native";
+import { EditProfileIcon } from "../../assets/recipe-icons";
 import {
-  EditProfileIcon,
-} from "../../assets/recipe-icons";
-import { 
-  ProfileSavedReactionIcon, 
-  ProfileSavedReactionOutlineIcon, 
+  ProfileSavedReactionIcon,
+  ProfileSavedReactionOutlineIcon,
   ProfileUpReactionIcon,
   ProfileUpReactionOutlineIcon,
   ProfileDownReactionIcon,
@@ -84,7 +82,7 @@ export function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [encodedUrl, setEncodedUrl] = useState("");
   const [postsArray, setPostsArray] = useState("");
-  
+
   // 2. Use the useEffect hook to fetch profile data when the component mounts
   useEffect(() => {
     axios
@@ -114,15 +112,16 @@ export function ProfileScreen({ navigation }) {
 
         // Check if posts and $values exist
         if (response.data.posts && response.data.posts.$values) {
-          const encodedPosts = response.data.posts.$values.map(post => {
+          const encodedPosts = response.data.posts.$values.map((post) => {
             return {
               ...post,
-              postImage: post.image ? post.image.replace(/ /g, "%20") : post.image,
+              postImage: post.image
+                ? post.image.replace(/ /g, "%20")
+                : post.image,
             };
           });
           setPostsArray(encodedPosts);
         }
-
       })
       .catch((error) => {
         console.error("Error fetching profile:", error);
@@ -138,77 +137,88 @@ export function ProfileScreen({ navigation }) {
       return count; // Return the count as is if less than 999
     } else if (count <= 9999) {
       // If count is between 1000 and 9999, format with one decimal place
-      return (count / 1000).toFixed(1) + 'k';
+      return (count / 1000).toFixed(1) + "k";
     } else {
       // If count is 10000 or more, format as an integer with 'k'
-      return Math.floor(count / 1000) + 'k';
+      return Math.floor(count / 1000) + "k";
     }
   };
 
   const renderItem = ({ item }) => {
-    
     // Format the counts for likes, dislikes, comments, and saves
     const likesText = formatCount(item.numOfLikes);
     const dislikesText = formatCount(item.numOfDislikes);
     const commentsText = formatCount(item.numOfComments);
-    const savesText = formatCount(item.numOfSaves); 
+    const savesText = formatCount(item.numOfSaves);
 
     // Determine which reaction icon to display based on whether the user has liked or disliked the post
-    var upvotedIcon = item.isLikedByUser ? <ProfileUpReactionIcon/> : <ProfileUpReactionOutlineIcon/>;
-    var downvotedIcon = item.isDislikedByUser ? <ProfileDownReactionIcon/> : <ProfileDownReactionOutlineIcon/>;
-    
+    var upvotedIcon = item.isLikedByUser ? (
+      <ProfileUpReactionIcon />
+    ) : (
+      <ProfileUpReactionOutlineIcon />
+    );
+    var downvotedIcon = item.isDislikedByUser ? (
+      <ProfileDownReactionIcon />
+    ) : (
+      <ProfileDownReactionOutlineIcon />
+    );
+
     // Render the post item
     return (
-      <View style={styles.itemContainer}>
-        <View style={styles.postDetailContainer}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{item.title}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("RecipeExpanded", { item })}
+      >
+        <View style={styles.itemContainer}>
+          <View style={styles.postDetailContainer}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{item.title}</Text>
+            </View>
+
+            <View style={styles.detailsContainer}>
+              <View style={styles.reactionContainer}>
+                <View style={styles.icon}>{upvotedIcon}</View>
+                <Text style={styles.reactionText}>{likesText}</Text>
+              </View>
+
+              <View style={styles.reactionContainer}>
+                <View style={styles.icon}>{downvotedIcon}</View>
+                <Text style={styles.reactionText}>{dislikesText}</Text>
+              </View>
+
+              <View style={styles.reactionContainer}>
+                <View style={styles.icon}>
+                  <ProfileCommentReactionIcon />
+                </View>
+                <Text style={styles.reactionText}>{commentsText}</Text>
+              </View>
+
+              <View style={styles.reactionContainer}>
+                <View style={styles.icon}>
+                  <ProfileSavedReactionOutlineIcon />
+                </View>
+                <Text style={styles.reactionText}>{savesText}</Text>
+              </View>
+            </View>
           </View>
-          
-          <View style={styles.detailsContainer}>
-            <View style={styles.reactionContainer}>
-              <View style={styles.icon}>{upvotedIcon}</View>
-              <Text style={styles.reactionText}>{likesText}</Text>
-            </View>
-  
-            <View style={styles.reactionContainer}>
-              <View style={styles.icon}>{downvotedIcon}</View>
-              <Text style={styles.reactionText}>{dislikesText}</Text>
-            </View>
-  
-            <View style={styles.reactionContainer}>
-              <View style={styles.icon}><ProfileCommentReactionIcon /></View>
-              <Text style={styles.reactionText}>{commentsText}</Text>
-            </View>
-  
-            <View style={styles.reactionContainer}>
-              <View style={styles.icon}><ProfileSavedReactionOutlineIcon /></View>
-              <Text style={styles.reactionText}>{savesText}</Text> 
-            </View>
+
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={{ uri: item.postImage }} />
           </View>
         </View>
-  
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={{ uri: item.postImage }} 
-          />
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   };
-  
+
   return (
     <View style={styles.container}>
-
       <View style={styles.headerContainer}>
         <View style={styles.headerUsernameContainer}>
           <Text style={styles.headerUsername}>{profile.handle}</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("EditProfile")}
-        >
-          <View style={styles.headerEditButton}><EditProfileIcon/></View>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+          <View style={styles.headerEditButton}>
+            <EditProfileIcon />
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -218,33 +228,33 @@ export function ProfileScreen({ navigation }) {
             <Image
               style={styles.profilePic}
               source={{
-                uri: encodedUrl ? encodedUrl : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                uri: encodedUrl
+                  ? encodedUrl
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
               }}
             />
           </View>
           <View style={styles.nameBioContainer}>
-            <Text style={styles.userName}>
-              {profile.fullName}
-            </Text>
+            <Text style={styles.userName}>{profile.fullName}</Text>
             <Text style={styles.bio}>{profile.bio}</Text>
           </View>
         </View>
 
-      <View style={styles.statsContainer}>
-        <View style={styles.postContainer}>
-          <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
-          <Text style={styles.postWord}>Posts</Text>
-        </View>
-        <View style={styles.followersContainer}>
-          <Text style={styles.numOfFollowers}>{profile.followerCount}</Text>
-          <Text style={styles.followersWord}>Followers</Text>
-        </View>
-        <View style={styles.followingContainer}>
-          <Text style={styles.numOfFollowing}>{profile.followingCount}</Text>
-          <Text style={styles.followingWord}>Following</Text>
+        <View style={styles.statsContainer}>
+          <View style={styles.postContainer}>
+            <Text style={styles.numberOfPosts}>{profile.postCount}</Text>
+            <Text style={styles.postWord}>Posts</Text>
+          </View>
+          <View style={styles.followersContainer}>
+            <Text style={styles.numOfFollowers}>{profile.followerCount}</Text>
+            <Text style={styles.followersWord}>Followers</Text>
+          </View>
+          <View style={styles.followingContainer}>
+            <Text style={styles.numOfFollowing}>{profile.followingCount}</Text>
+            <Text style={styles.followingWord}>Following</Text>
+          </View>
         </View>
       </View>
-    </View>
 
       <FlatList
         data={postsArray}
@@ -263,16 +273,16 @@ const styles = StyleSheet.create({
   },
   // ====== STATS: CONTAINER ======
   statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around', 
-    width: '100%', 
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
     marginTop: 30,
     marginBottom: 10,
   },
   infoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
-    width: '100%',
+    width: "100%",
     borderBottomWidth: 4,
     borderBottomColor: "#F3F4F6",
     marginBottom: 6,
@@ -282,7 +292,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 20, 
+    marginHorizontal: 20,
   },
   numberOfPosts: {
     fontSize: 18,
@@ -300,7 +310,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 20, 
+    marginHorizontal: 20,
   },
   numOfFollowers: {
     fontSize: 18,
@@ -318,7 +328,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    marginHorizontal: 20, 
+    marginHorizontal: 20,
   },
   numOfFollowing: {
     fontSize: 18,
@@ -333,9 +343,9 @@ const styles = StyleSheet.create({
   },
   // ====== PROFILE PIC & USERNAME ======
   profileAndNameContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around', 
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   profilePicContainer: {
     paddingHorizontal: 20,
@@ -363,29 +373,29 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
   },
-  nameBioContainer : {
+  nameBioContainer: {
     flex: 1,
   },
   // ====== HEADER: USERNAME ======
   headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 10,
-    width: '100%',
+    width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: "#F3F4F6",
   },
   headerUsernameContainer: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 26,
   },
   headerUsername: {
     fontSize: 20,
-    color: '#4B5563',
-    fontFamily: 'SF-Pro-Text-Semibold',
+    color: "#4B5563",
+    fontFamily: "SF-Pro-Text-Semibold",
   },
   headerEditButton: {
     paddingRight: 2,
@@ -419,7 +429,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 5,
   },
-  titleContainer:{
+  titleContainer: {
     marginBottom: 10,
     paddingLeft: 10,
   },
@@ -461,12 +471,11 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     paddingLeft: 3,
   },
-  reactionText:{
+  reactionText: {
     fontSize: 12,
     color: "#718093",
     fontFamily: "SF-Pro-Text-Regular",
   },
-
 });
 
 export default ProfileScreen;
