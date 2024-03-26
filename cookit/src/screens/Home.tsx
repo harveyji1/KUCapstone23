@@ -250,19 +250,7 @@ export function HomeScreen({}) {
       });
   }
   useEffect(() => {
-    axios
-      .get(`http://localhost:${LOCAL_HOST_NUBMER}/api/Feed/getFeed`, {
-        headers: {
-          Authorization: `Bearer ${loginToken}`,
-        },
-      })
-      .then((response) => {
-        console.log("Feed response: ", response.data.$values);
-        setFeed(response.data.$values);
-      })
-      .catch((error) => {
-        console.error("Error Fetching Feed: ", error);
-      });
+    getFeed();
   }, []);
 
   return (
