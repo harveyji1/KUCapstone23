@@ -43,6 +43,7 @@ import {
 } from "./assets/nav-icons";
 import { LoginRegisterToggle } from "./src/screens/LoginRegisterToggle";
 import RecipeFolderScreen from "./src/screens/RecipeFolder";
+import SearchProfile from "./src/screens/SearchProfile";
 
 // Prevents splash screen from hiding automatically
 SplashScreen.preventAutoHideAsync();
@@ -349,6 +350,11 @@ export default function App() {
                 },
                 headerBackTitleVisible: false,
               }}
+            />
+            <Stack.Screen
+              name="SearchProfile"
+              component={SearchProfile}
+              options={{ headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
