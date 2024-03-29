@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
 const RecipeScreen = ({ route }) => {
   const { item } = route.params;
+  console.log(item);
 
   function stringToIngredients(ingredientsString: string) {
     return ingredientsString.split("|").map((ingredient) => {

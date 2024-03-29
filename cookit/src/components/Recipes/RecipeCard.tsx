@@ -58,7 +58,8 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   const handleCardPress = () => {
     // Navigate to the expanded recipe screen passing item as route params
-    navigation.navigate("RecipeExpanded", { post });
+    let item = post;
+    navigation.navigate("RecipeExpanded", { item });
   };
   console.log("Post from Recipie Card: ", post);
   // Set the icons for the upvote, downvote, and save buttons
