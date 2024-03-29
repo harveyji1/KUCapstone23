@@ -26,7 +26,7 @@ import {
   EditProfileIcon,
 } from "../../assets/recipe-icons";
 import { Posts } from "./Home";
-import SavedRecipeFolder from "../components/SavedRecipes/SavedRecipeFolder";
+import SavedRecipeFolder, { RecipeFolderType } from "../components/SavedRecipes/SavedRecipeFolder";
 
 const savedRecipeFolders = [
   {
@@ -59,19 +59,118 @@ const savedRecipeFolders = [
   }
 ]
 
-export function SavedRecipiesScreen({ }) {
+type UserSavedRecipes = {
+  listID: number;
+  userID: number;
+  listName: string;
+  description: string;
+}
+
+const LOCAL_HOST_NUMBER = "5018";
+
+export function SavedRecipiesScreen({ navigation }) {
+  ; // State to store fetched folders
+  const { state } = useContext(LoginContext);
+  let loginToken = state;
+
+  const [savedRecipes, setSavedRecipes] = useState<UserSavedRecipes | null>(null);
+  const [foldersArray, setFoldersArray] = useState<RecipeFolderType[] | null>([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:${LOCAL_HOST_NUMBER}/api/List/getUserLists`, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    })
+    .then((response) => {
+      console.log("Saved Folders Return: ", response.data);
+      console.log("Saved Folders Response:", response); // Log the entire response object
+    
+
+    // Check if response.data.$values exists and is an array
+    if (response.data && Array.isArray(response.data.$values)) {
+      setFoldersArray(response.data.$values);
+    } else {
+      console.error("Invalid response data structure:", response.data);
+    }
+
+      // getting data
+      setSavedRecipes(response.data);
+      setFoldersArray(response.data.$values);
+
+  })
+  .catch((error) => {
+    console.error('Error fetching saved folders:', error);
+  });
+
+  }, []);
+
+  //Function to add a folder
+  // const addFolder = async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${loginToken}`,
+  //     },
+  //   };
+  //   try{
+  //   const formData = new FormData();
+  //   formData.append("listName", "Test 1");
+  //   formData.append("description", "What is this for");
+
+  //   const response = 
+  //   console.log("Response: ", response);
+    
+  //   } catch (error) {
+  //     // Handle error
+  //     if (error.response) {
+  //       // The request was made and the server responded with a status code
+  //       // that falls out of the range of 2xx
+  //       console.error("Error Data:", error.response.data);
+  //       console.error("Error Status:", error.response.status);
+  //       console.error("Error Headers:", error.response.headers);
+  //     } else if (error.request) {
+  //       // The request was made but no response was received
+  //       console.error("Error Request:", error.request);
+  //     } else {
+  //       // Something happened in setting up the request that triggered an Error
+  //       console.error("Error Message:", error.message);
+  //     }
+  //     console.error("Error Config:", error.config);
+  //   }
+  // };
+  //   .then((response) => {
+  //     console.log("Folder added:", response.data);
+  //     // Update savedRecipeFolders state to include the newly added folder
+  //     setSavedRecipeFolders([...savedRecipeFolders, response.data]);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error adding folder:', error);
+  //   });
+  // };
+
+  // Fetch folders from backend when component mounts or token changes
+
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Saved Recipes</Text>
       </View>
+      <View style = {styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() =>console.log("Delete Folder button pressed")}>
+          <Text style={styles.buttonText}>Add Folder</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => console.log("Delete Folder button pressed")}>
+          <Text style={styles.buttonText}>Delete Folder</Text>
+        </TouchableOpacity>
+      </View>
 
-        <FlatList
-          data = {savedRecipeFolders}
+        {/* <FlatList
+          data = {foldersArray}
           renderItem = {({item}) => <SavedRecipeFolder item = {item} />}
           keyExtractor = {item=>item.id}
           showsVerticalScrollIndicator = {false}
-        />
+        /> */}
     </View>
 
   );
@@ -98,6 +197,23 @@ const styles = StyleSheet.create({
     color: '#345C50',
     fontFamily: 'SF-Pro-Text-Semibold',
   },
-
+  buttonContainer:{
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  button: {
+    backgroundColor: '#345C50',
+    borderRadius: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
+    width: "25%"
+  },
+  buttonText: {
+    fontSize: 10,
+    color: '#FFF',
+    fontFamily: 'SF-Pro-Text-Regular',
+    textAlign: "center"
+  }
 
 });

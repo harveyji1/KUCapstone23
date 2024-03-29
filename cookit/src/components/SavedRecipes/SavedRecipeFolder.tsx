@@ -9,12 +9,13 @@ import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
 import { RecipeItemType } from '../Recipes/RecipeCard';
 import { Folder } from '../../styles/FolderStyle';
 
-type RecipeFolderType = {
-    id: string;
-    name: string;
+export type RecipeFolderType = {
+    listID: number;
+    listName: string;
+    description: "string"
     numOfRecipes: number;
     lastUpdated: string;
-    recipes: RecipeItemType[];
+    posts: RecipeItemType[];
 }
 
 const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
@@ -23,12 +24,12 @@ const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
 
     const handleFolderPress = () => {
         //extracts just the recipe from the item
-        const { recipes } = item;
+        const { posts } = item;
         // Navigate to the Recipe folder screen passing recipes as route params
-        navigation.navigate('RecipeFolder', { recipes } );
+        navigation.navigate('RecipeFolder', { posts } );
     };
 
-    const firstRecipe = item.recipes[0];
+    const firstRecipe = item.posts[0];
 
     return(
         <View>
@@ -38,7 +39,7 @@ const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
                     {firstRecipe && <Image source={firstRecipe.postImg} style={styles.recipeImage} />}
                     </View>
                     <View style = {styles.textContainer}> 
-                        <Text style = {styles.folderName}>{item.name} </Text>
+                        <Text style = {styles.folderName}>{item.listName} </Text>
                         <Text style = {styles.numOfRecipes}>Number of Recipes: {item.numOfRecipes} </Text>
                         <Text style = {styles.lastUpdated}>Last Updated: {item.lastUpdated} </Text>
                     </View>

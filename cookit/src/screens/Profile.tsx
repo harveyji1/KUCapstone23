@@ -62,24 +62,7 @@ export function ProfileScreen({ navigation }) {
   // console.log(state.sub);
   // console.log(profileID);
   // profileID = state.decodedToken.sub;
-  const data = [
-    {
-      postimage:
-        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/02/Mediterranean-Cod-en-Papillote-6.jpg",
-    },
-    {
-      postimage:
-        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/05/Chicken-Stir-Fry-9.jpg",
-    },
-    {
-      postimage:
-        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/03/Shrimp-Scampi-5.jpg",
-    },
-    {
-      postimage:
-        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/01/Baked-Chicken-Breasts-11.jpg",
-    },
-  ];
+  
   // 1. Create state variables for profile data
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [encodedUrl, setEncodedUrl] = useState("");
