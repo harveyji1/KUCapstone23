@@ -225,7 +225,7 @@ export const Posts = [
 const LOCAL_HOST_NUBMER = "5018";
 
 //The actual function of the HomeScreen
-export function HomeScreen({}) {
+export function HomeScreen({ navigation }) {
   // Login Conetext
   const { state } = useContext(LoginContext);
   const loginToken = state;
@@ -261,7 +261,7 @@ export function HomeScreen({}) {
         </View>
         <TouchableOpacity
           onPress={() => {
-            setRefreshCount(refreshCount + 1);
+            navigation.navigate("Home");
           }}
         >
           <View style={styles.headerEditButton}>

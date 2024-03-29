@@ -47,6 +47,11 @@ import {
   DownReactionOutlineIcon,
   CommentReactionIcon,
 } from "../../../assets/reaction-icons";
+import axios from "axios";
+import { LoginContext } from "../../../LoginProvider";
+import { useContext } from "react";
+
+const LOCAL_HOST_NUBMER = "5018";
 
 // Need to fix saved
 // need to fix profile image, currently null
@@ -54,6 +59,9 @@ import {
 
 //RecipeCard component
 const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
+  const { state } = useContext(LoginContext);
+  const loginToken = state;
+
   const navigation = useNavigation(); // Initialize navigation
 
   const handleCardPress = () => {
@@ -82,6 +90,77 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   const handleFollowPress = () => {
     // Logic to follow the user
+  };
+
+  const handleUpvote = async () => {
+    console.log("LOGIN: ", loginToken);
+    const action = post.isLikedByUser ? "revertUpvote" : "upvote";
+    console.log("ACTION IS: ", action);
+    let config = {};
+    if (action == "upvote") {
+      config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `http://localhost:5018/api/v1.0/upvote?postID=${post.id}`,
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      };
+    } else {
+      config = {
+        method: "delete",
+        maxBodyLength: Infinity,
+        url: `http://localhost:5018/api/v1.0/revertUpvote?postID=${post.id}`,
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      };
+    }
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDownvote = async () => {
+    const action = post.isDislikedByUser ? "revertDownvote" : "downvote";
+    console.log("LOGIN: ", loginToken);
+
+    console.log("ACTION IS: ", action);
+    let config = {};
+    if (action == "downvote") {
+      config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `http://localhost:5018/api/v1.0/downvote?postID=${post.id}`,
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      };
+    } else {
+      config = {
+        method: "delete",
+        maxBodyLength: Infinity,
+        url: `http://localhost:5018/api/v1.0/revertDownvote?postID=${post.id}`,
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      };
+    }
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Map the ingredients to a list of text components
@@ -166,11 +245,14 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
         <Divider />
         <InteractionWrapper>
           <GroupedInteraction>
-            <Interaction active={post.isLikedByUser}>
+            <Interaction active={post.isLikedByUser} onPress={handleUpvote}>
               {upvotedIcon}
               <InteractionText>{upvoteText}</InteractionText>
             </Interaction>
-            <Interaction active={post.isDislikedByUser}>
+            <Interaction
+              active={post.isDislikedByUser}
+              onPress={handleDownvote}
+            >
               {downvotedIcon}
               <InteractionText>{downvoteText}</InteractionText>
             </Interaction>
