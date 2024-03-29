@@ -74,6 +74,10 @@ export function SearchScreen({ navigation }) {
       <View>
         { profiles ? profiles.map((profile) => {
           return (
+            <TouchableOpacity 
+        key={profile.id}
+        onPress={() => navigation.navigate('SearchProfile', { profile : profile })}
+      >
           <View style={styles.itemContainer}>
             <Image source={{ uri: profile.profilePicture ? profile.profilePicture.replace(/ /g, "%20") : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" }} style={styles.image} />
             <View style={styles.textContainer}>
@@ -81,6 +85,7 @@ export function SearchScreen({ navigation }) {
               <Text style={styles.username}>@{profile.handle}</Text>
             </View>
           </View>
+          </TouchableOpacity>
           )
         }) : <View/>}
       </View>
