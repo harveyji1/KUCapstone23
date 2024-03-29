@@ -64,7 +64,7 @@ export function ProfileScreen({ navigation }) {
   // 1. Create state variables for profile data
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [encodedUrl, setEncodedUrl] = useState("");
-  const [postsArray, setPostsArray] = useState("");
+  const [postsArray, setPostsArray] = useState([]);
 
   // 2. Use the useEffect hook to fetch profile data when the component mounts
   useEffect(() => {
@@ -240,7 +240,7 @@ export function ProfileScreen({ navigation }) {
       </View>
 
       <FlatList
-        data={postsArray}
+        data={postsArray.reverse()}
         renderItem={renderItem}
         keyExtractor={(item) => item.$id}
         contentContainerStyle={styles.listContainer}
