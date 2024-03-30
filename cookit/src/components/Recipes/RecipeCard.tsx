@@ -163,6 +163,23 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
       });
   };
 
+  const formatDate = (dateString) => {
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+  
+    return `${months[monthIndex]} ${day}, ${year}`;
+  };
+  
+  // Usage example:
+  const dateString = "2024-03-30T16:04:42.537";
+  console.log(formatDate(dateString)); // This will log something like "March 30, 2024"
+  
   // Map the ingredients to a list of text components
   function stringToIngredients(ingredientsString: string) {
     return ingredientsString.split("|").map((ingredient) => {
@@ -239,10 +256,10 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
         <UserInfo>
           <UserImg source={post.userImg} />
           <UserName>{post.handle}</UserName>
-          <PostTime>{post.createdAt}</PostTime>
-          <FollowButton onPress={handleFollowPress}>
+          <PostTime>{formatDate(post.createdAt)}</PostTime>
+          {/* <FollowButton onPress={handleFollowPress}>
             <FollowButtonText>+ Follow</FollowButtonText>
-          </FollowButton>
+          </FollowButton> */}
         </UserInfo>
         <DishNameText> {post.title} </DishNameText>
         <DescriptionText>{post.description}</DescriptionText>
