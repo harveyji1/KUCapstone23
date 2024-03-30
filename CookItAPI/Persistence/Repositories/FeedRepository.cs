@@ -52,6 +52,7 @@ namespace Persistence.Repositories
                     ProfileID = p.ProfileID,
                     Profile = p.Profile,
                     Title = p.Title,
+                    Description = p.Description,
                     Ingredients = p.Ingredients,
                     Instructions = p.Instructions,
                     Cost = p.Cost,
