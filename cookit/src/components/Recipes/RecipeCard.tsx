@@ -176,10 +176,6 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     return `${months[monthIndex]} ${day}, ${year}`;
   };
   
-  // Usage example:
-  const dateString = "2024-03-30T16:04:42.537";
-  console.log(formatDate(dateString)); // This will log something like "March 30, 2024"
-  
   // Map the ingredients to a list of text components
   function stringToIngredients(ingredientsString: string) {
     return ingredientsString.split("|").map((ingredient) => {
