@@ -76,6 +76,7 @@ namespace Persistence.Repositories
             if (list == null || post == null) return false;
 
             list.Posts.Add(post);
+            post.SavedCount += 1;
             await _context.SaveChangesAsync();
             return true;
         }

@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
 
 namespace Persistence.Models
 {
@@ -29,10 +32,17 @@ namespace Persistence.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [JsonIgnore]
         public ICollection<ListModel> Lists { get; set; } = new List<ListModel>();
+        public int SavedCount { get; set; }
         [NotMapped]
         public bool IsLikedByUser { get; set; }
         [NotMapped]
         public bool IsDislikedByUser { get; set; }
+        
 
+
+        
     }
+
+  
 }
+

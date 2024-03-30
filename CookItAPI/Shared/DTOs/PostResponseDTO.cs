@@ -27,7 +27,8 @@ namespace Shared.DTOs
         public string? Handle { get; set; }
         public string? ProfileImage { get; set; }
         public List<CommentResponseDTO>? Comments { get; set; }
+        public int SavedCount { get; set; }
 
-        
+
     }
 }

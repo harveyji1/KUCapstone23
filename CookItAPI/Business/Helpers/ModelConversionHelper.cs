@@ -57,7 +57,8 @@ namespace Business.Helpers
                         IsDislikedByUser = post.IsDislikedByUser,
                         Handle = post.Profile.Handle,
                         ProfileImage = post.Profile.ProfilePicture,
-                        Comments = new List<CommentResponseDTO>() 
+                        Comments = new List<CommentResponseDTO>(),
+                        SavedCount = post.SavedCount
                     };
 
                     if (post != null && post.Comments != null && post.Comments.Any())
