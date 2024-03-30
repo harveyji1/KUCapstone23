@@ -5,20 +5,21 @@ Editors:
 */
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, Image, Alert } from 'react-native';
 import { RecipeItemType } from '../Recipes/RecipeCard';
 import { Folder } from '../../styles/FolderStyle';
+import { Ionicons } from '@expo/vector-icons';
 
 export type RecipeFolderType = {
     listID: number;
     listName: string;
-    description: "string"
+    description: string;
     numOfRecipes: number;
     lastUpdated: string;
-    posts: RecipeItemType[];
+    posts: [];
 }
 
-const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
+const SavedRecipeFolder: React.FC<{ item: RecipeFolderType, onDelete: (listID: number) => void }> = ({ item, onDelete }) => {
 
     const navigation = useNavigation(); // Initialize navigation
 
@@ -27,6 +28,10 @@ const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
         const { posts } = item;
         // Navigate to the Recipe folder screen passing recipes as route params
         navigation.navigate('RecipeFolder', { posts } );
+    };
+
+    const handleDelete = () => {
+        onDelete(item.listID);
     };
 
     const firstRecipe = item.posts[0];
@@ -41,8 +46,11 @@ const SavedRecipeFolder: React.FC<{ item: RecipeFolderType }> = ({ item }) => {
                     <View style = {styles.textContainer}> 
                         <Text style = {styles.folderName}>{item.listName} </Text>
                         <Text style = {styles.numOfRecipes}>Number of Recipes: {item.numOfRecipes} </Text>
-                        <Text style = {styles.lastUpdated}>Last Updated: {item.lastUpdated} </Text>
+                        <Text style = {styles.lastUpdated}>Description: {item.description} </Text>
                     </View>
+                    <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+                        <Ionicons name="trash-outline" size={24} color="red" />
+                    </TouchableOpacity>
                 </View>
                 <View style = {styles.folderDivider}/>
             </TouchableOpacity>
@@ -97,6 +105,10 @@ const styles = StyleSheet.create({
     folderDivider: {
         height: 4,
         color: "gray"
+    },
+
+    deleteButton:{
+        color: "red"
     }
   });
 export default SavedRecipeFolder;

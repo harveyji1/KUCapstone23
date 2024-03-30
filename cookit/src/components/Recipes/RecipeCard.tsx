@@ -81,11 +81,11 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   ) : (
     <DownReactionOutlineIcon />
   );
-  // var saveIcon = post.saved ? (
-  //   <SavedReactionIcon />
-  // ) : (
-  //   <SavedReactionOutlineIcon />
-  // );
+  var saveIcon = post.saved ? (
+    <SavedReactionIcon />
+  ) : (
+    <SavedReactionOutlineIcon />
+  );
   var IconColor = "#345C50"; // Set color
 
   const handleFollowPress = () => {
@@ -196,13 +196,18 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     downvoteText = Math.floor(post.numOfDislikes / 1000) + "k";
   }
 
-  // var saveText;
-  // if (post.saves <= 9999) {
-  //   saveText =
-  //     post.saves <= 999 ? post.saves : (post.saves / 1000).toFixed(1) + "k";
-  // } else {
-  //   saveText = Math.floor(post.saves / 1000) + "k";
-  // }
+  var saveText;
+  if(post.save == 0 || post.save == null || post.save == undefined){
+    saveText = 0;
+  }
+  else{
+    if (post.saves <= 9999) {
+      saveText =
+        post.saves <= 999 ? post.saves : (post.saves / 1000).toFixed(1) + "k";
+    } else {
+      saveText = Math.floor(post.saves / 1000) + "k";
+    }
+  }
 
   if (post.numOfComments == 1) {
     var commentText = "1 Comment";
@@ -264,10 +269,10 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
             </Interaction>
           </GroupedInteraction>
           <GroupedInteraction>
-            {/* <Interaction active={post.saved}>
+            <Interaction active={post.saved}>
               {saveIcon}
               <InteractionText>{saveText}</InteractionText>
-            </Interaction> */}
+            </Interaction>
           </GroupedInteraction>
         </InteractionWrapper>
       </TouchableOpacity>
