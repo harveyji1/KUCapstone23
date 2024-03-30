@@ -52,6 +52,7 @@ import { LoginContext } from "../../../LoginProvider";
 import { useContext } from "react";
 
 const LOCAL_HOST_NUBMER = "5018";
+console.warn = () => {};
 
 // Need to fix saved
 // need to fix profile image, currently null
@@ -71,7 +72,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     let item = post;
     navigation.navigate("RecipeExpanded", { item });
   };
-  console.log("Post from Recipie Card: ", post);
+  // console.log("Post from Recipie Card: ", post);
   // Set the icons for the upvote, downvote, and save buttons
   var upvotedIcon = post.isLikedByUser ? (
     <UpReactionIcon />
@@ -228,12 +229,21 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   // encode url so that its in the correct format to pull the image
   const [encodedUrl, setEncodedUrl] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   useEffect(() => {
-    const imageUrl = post.image; // THIS LINE NEEDS TO BE REWORKED SO IT WORKS FOR BOTH THE SAVED SCREEN AND HOME === undefined ? post.postImage : post.Image;
-    console.log("original url: ", imageUrl);
+    const profilePic = post.profileImage;
+    const imageUrl = post.image;
+    // console.log("original url: ", imageUrl);
     if (imageUrl) {
       setEncodedUrl(imageUrl.replace(/ /g, "%20"));
-      console.log("Encoded URL:", encodedUrl);
+      // console.log("Encoded URL:", encodedUrl);
+    } else {
+      console.log("no profile pic");
+    }
+
+    if (profilePic) {
+      setProfilePic(profilePic.replace(/ /g, "%20"));
+      // console.log("Encoded URL:", encodedUrl);
     } else {
       console.log("no profile pic");
     }
@@ -246,7 +256,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
         <PostDivider />
         <PostImg source={{ uri: encodedUrl }} />
         <UserInfo>
-          <UserImg source={post.userImg} />
+          <UserImg source={{ uri: profilePic }} />
           <UserName>{post.handle}</UserName>
           <PostTime>{post.createdAt}</PostTime>
           <FollowButton onPress={handleFollowPress}>

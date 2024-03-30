@@ -286,7 +286,7 @@ export function HomeScreen({ navigation }) {
         <FlatList
           data={feed}
           renderItem={({ item }) => {
-            console.log("Feed for testing:", feed);
+            // console.log("Feed for testing:", feed);
             //console.log("Post from home: ", item);
             //console.log("Item id: ", item.id);
             return <RecipeCard post={item} />;
@@ -381,9 +381,9 @@ const styles = StyleSheet.create({
     // backgroundColor: "#345C50",
   },
   tag: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(227, 243, 238, 0.3)',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(227, 243, 238, 0.3)",
     borderRadius: 16,
     marginHorizontal: 2,
     marginVertical: 2,
