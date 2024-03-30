@@ -1,7 +1,6 @@
 /*
-  Purpose: This is the Profile Screen of the App that contains the each persons profile
-  Author:Harvey Ji
-  Editors:Tony Czajka
+  Purpose: This is the Profile Screen that shows a users profile after searching
+  Author:Aiden Frevert
 */
 
 //all the imports
@@ -13,18 +12,11 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
-  Dimensions,
-  ScrollView,
-  TouchableHighlight,
-  Button,
 } from "react-native";
 import { useState, useEffect, useContext } from "react"; // <-- Import useState and useEffect
-import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
-import { useFocusEffect } from "@react-navigation/native";
 import { EditProfileIcon } from "../../assets/recipe-icons";
 import {
-  ProfileSavedReactionIcon,
   ProfileSavedReactionOutlineIcon,
   ProfileUpReactionIcon,
   ProfileUpReactionOutlineIcon,
@@ -32,55 +24,43 @@ import {
   ProfileDownReactionOutlineIcon,
   ProfileCommentReactionIcon,
 } from "../../assets/reaction-icons";
+import { HeaderBackButton } from '@react-navigation/elements';
 
-type UserProfile = {
-  profilePicture: string;
-  postCount: number;
-  followerCount: number;
-  followingCount: number;
-  handle: string;
-  user: string;
-  fullName: string;
-  bio: string;
-};
 
-const LOCAL_HOST_NUBMER = "5018";
-type ProfileScreenRouteParams = {
-  itemID: string;
-  otherParam: string;
-};
-const screenWidth = Dimensions.get("window").width;
-let profileID = 6;
-
-export function ProfileScreen({ navigation }) {
+export function SearchProfile({ route, navigation }) {
   const { state } = useContext(LoginContext);
+  const { profile } = route.params;
   let loginToken = state;
   // profileID = state.sub;
   // console.log("Profile");
   // console.log(state.sub);
   // console.log(profileID);
   // profileID = state.decodedToken.sub;
-  // 1. Create state variables for profile data
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const data = [
+    {
+      postimage:
+        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/02/Mediterranean-Cod-en-Papillote-6.jpg",
+    },
+    {
+      postimage:
+        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/05/Chicken-Stir-Fry-9.jpg",
+    },
+    {
+      postimage:
+        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/03/Shrimp-Scampi-5.jpg",
+    },
+    {
+      postimage:
+        "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/01/Baked-Chicken-Breasts-11.jpg",
+    },
+  ];
   const [encodedUrl, setEncodedUrl] = useState("");
-  const [postsArray, setPostsArray] = useState([]);
-  // 2. Use the useEffect hook to fetch profile data when the component mounts
-  useEffect(() => {
-    axios
-      .get(`http://localhost:${LOCAL_HOST_NUBMER}/api/v1.0/profile`, {
-        headers: {
-          Authorization: `Bearer ${loginToken}`,
-        },
-      })
-      .then((response) => {
-        console.log("Profile Return: ", response.data);
+  const [postsArray, setPostsArray] = useState("");
 
-        // getting data
-        setProfile(response.data);
-        setPostsArray(response.data.posts.$values);
+  useEffect(() => {
 
         // encode url so that its in the correct format to pull the image
-        const imageUrl = response.data.profilePicture;
+        const imageUrl = profile.profilePicture;
         if (imageUrl) {
           setEncodedUrl(imageUrl.replace(/ /g, "%20"));
           console.log("Encoded URL:", encodedUrl);
@@ -89,11 +69,11 @@ export function ProfileScreen({ navigation }) {
         }
 
         // testing posts response
-        console.log("Posts: ", response.data.posts);
+        console.log("Posts: ", profile.posts);
 
         // Check if posts and $values exist
-        if (response.data.posts && response.data.posts.$values) {
-          const encodedPosts = response.data.posts.$values.map((post) => {
+        if (profile.posts && profile.posts.$values) {
+          const encodedPosts = profile.posts.$values.map((post) => {
             return {
               ...post,
               postImage: post.image
@@ -103,10 +83,6 @@ export function ProfileScreen({ navigation }) {
           });
           setPostsArray(encodedPosts);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching profile:", error);
-      });
   }, []); // Empty dependency array means this useEffect runs once when the component mounts
 
   if (!profile) {
@@ -193,14 +169,14 @@ export function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+          <View style={styles.headerEditButton}>
+            <HeaderBackButton label=" " tintColor="#000000" onPress={() => navigation.navigate("SearchScreen")}/>
+          </View>
+        </TouchableOpacity>
         <View style={styles.headerUsernameContainer}>
           <Text style={styles.headerUsername}>{profile.handle}</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
-          <View style={styles.headerEditButton}>
-            <EditProfileIcon />
-          </View>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.infoContainer}>
@@ -238,7 +214,7 @@ export function ProfileScreen({ navigation }) {
       </View>
 
       <FlatList
-        data={postsArray.reverse()}
+        data={postsArray}
         renderItem={renderItem}
         keyExtractor={(item) => item.$id}
         contentContainerStyle={styles.listContainer}
@@ -251,6 +227,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFF",
     height: "100%",
+    paddingTop: 50
   },
   // ====== STATS: CONTAINER ======
   statsContainer: {
@@ -344,7 +321,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
     fontFamily: "SF-Pro-Text-Medium",
-    marginLeft: 20,
+    marginRight: 20,
   },
   bio: {
     fontSize: 12,
@@ -352,7 +329,7 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Text-Regular",
     marginTop: 0,
     marginBottom: 10,
-    marginLeft: 20,
+    marginLeft: 0,
   },
   nameBioContainer: {
     flex: 1,
@@ -371,7 +348,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 26,
+    marginRight: 35,
   },
   headerUsername: {
     fontSize: 20,
@@ -379,7 +356,7 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Text-Semibold",
   },
   headerEditButton: {
-    paddingRight: 2,
+    paddingLeft:2,
   },
 
   // ====== EDIT PROFILE BUTTON ======
@@ -459,4 +436,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default SearchProfile;
