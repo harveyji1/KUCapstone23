@@ -107,7 +107,7 @@ export function SearchProfile({ route, navigation }) {
     const likesText = formatCount(item.numOfLikes);
     const dislikesText = formatCount(item.numOfDislikes);
     const commentsText = formatCount(item.numOfComments);
-    const savesText = formatCount(item.numOfSaves);
+    const savesText = formatCount(item.savedCount);
 
     // Determine which reaction icon to display based on whether the user has liked or disliked the post
     var upvotedIcon = item.isLikedByUser ? (
@@ -237,11 +237,11 @@ export function SearchProfile({ route, navigation }) {
 
 const styles = StyleSheet.create({
   followButton: {
-    marginTop: 10,
+    marginTop: 7,
     paddingHorizontal: 10,
-    maxWidth: 275,
-    paddingVertical: 8,
-    backgroundColor: "#345C50", // Example button color, adjust as needed
+    maxWidth: 200,
+    paddingVertical: 5,
+    backgroundColor: "#345C50", 
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
@@ -251,13 +251,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     maxWidth: 275,
     paddingVertical: 8,
-    backgroundColor: "#718093", // Example button color, adjust as needed
+    backgroundColor: "#718093", 
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   followButtonText: {
-    color: "#ffffff", // Example text color, adjust as needed
+    color: "#ffffff", 
     fontSize: 16,
     fontFamily: "SF-Pro-Text-Semibold",
   },
