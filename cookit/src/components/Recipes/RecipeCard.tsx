@@ -94,11 +94,11 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     // Logic to follow the user
   };
 
-    // Function to toggle save status of the post
-    const handleSave = async () => {
-        navigation.navigate("SavedRecipies", { postId: post.id }); // Navigate to SavedRecipes screen with postId
-        //console.log("Post ID: ", post.id);
-    };
+  // Function to toggle save status of the post
+  const handleSave = async () => {
+    navigation.navigate("SavedRecipies", { postId: post.id }); // Navigate to SavedRecipes screen with postId
+    //console.log("Post ID: ", post.id);
+  };
 
   const handleUpvote = async () => {
     console.log("LOGIN: ", loginToken);
@@ -179,9 +179,11 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     });
   }
   const extractedIngredients = stringToIngredients(post.ingredients);
-  const filterPills = extractedIngredients.map((ingredient, index) => (
-    <FilterPill key={index}>{ingredient.name}</FilterPill>
-  ));
+  const filterPills = extractedIngredients
+    .slice(0, 5)
+    .map((ingredient, index) => (
+      <FilterPill key={index}>{ingredient.name}</FilterPill>
+    ));
 
   //some minor logic to determine the appearance of each card
   var upvoteText;
@@ -205,10 +207,9 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   }
 
   var saveText;
-  if(post.save == 0 || post.save == null || post.save == undefined){
+  if (post.save == 0 || post.save == null || post.save == undefined) {
     saveText = 0;
-  }
-  else{
+  } else {
     if (post.saves <= 9999) {
       saveText =
         post.saves <= 999 ? post.saves : (post.saves / 1000).toFixed(1) + "k";
