@@ -1,4 +1,5 @@
-﻿using Persistence.Models;
+﻿using Newtonsoft.Json;
+using Persistence.Models;
 using Shared.DTOs;
 using System;
 using System.Collections.Generic;
@@ -59,16 +60,30 @@ namespace Business.Helpers
                         Comments = new List<CommentResponseDTO>() 
                     };
 
-                    if (post.Comments != null && post.Comments.Any())
+                    if (post != null && post.Comments != null && post.Comments.Any())
                     {
-                        postDto.Comments = post.Comments.Select(comment => new CommentResponseDTO
-                        {
-                            UserID = comment.UserID,
-                            Comment = comment.Comment,
-                            Handle = comment.User?.Profile.Handle ?? "Unknown", 
-                            ProfilePicture = comment.User?.Profile.ProfilePicture ?? "DefaultImagePath",
-                            CreatedAt = comment.CreatedAt
-                        }).ToList();
+                        postDto.Comments = post.Comments
+                            .Where(comment => comment != null) // Ensure the comment is not null
+                            .Select(comment =>
+                            {
+                                var handle = "Unknown";
+                                var profilePicture = "DefaultImagePath";
+
+                                if (comment.User != null)
+                                {
+                                    handle = comment.User.Profile?.Handle ?? "Unknown";
+                                    profilePicture = comment.User.Profile?.ProfilePicture ?? "DefaultImagePath";
+                                }
+
+                                return new CommentResponseDTO
+                                {
+                                    UserID = comment.UserID,
+                                    Comment = comment.Comment,
+                                    Handle = handle,
+                                    ProfilePicture = profilePicture,
+                                    CreatedAt = comment.CreatedAt
+                                };
+                            }).ToList();
                     }
 
                     postContainer.Add(postDto);
@@ -95,8 +110,8 @@ namespace Business.Helpers
             {
                 Title = postRequest.Title,
                 Description = postRequest.Description,
-                Ingredients = postRequest.Ingredients,
-                Instructions = postRequest.Instructions,
+                Ingredients = JsonConvert.SerializeObject(postRequest.Ingredients),
+                Instructions = JsonConvert.SerializeObject(postRequest.Instructions),
                 Cost = postRequest.Cost,
                 PrepTime = postRequest.PrepTime            
             };
