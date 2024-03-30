@@ -24,7 +24,7 @@ import {
 import { useState, useEffect, useContext } from "react"; // <-- Import useState and useEffect
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import {
   EditProfileIcon,
 } from "../../assets/recipe-icons";
@@ -34,12 +34,18 @@ import SavedRecipeFolder, { RecipeFolderType } from "../components/SavedRecipes/
 
 const LOCAL_HOST_NUMBER = "5018";
 
-export function SavedRecipiesScreen({ navigation }) {
-  ; // State to store fetched folders
+export function SavedRecipiesScreen({ }) {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { postId } = route.params || { postId: null };
+
+  // State to store fetched folders
   const { state } = useContext(LoginContext);
   let loginToken = state;
 
   const [foldersArray, setFoldersArray] = useState<RecipeFolderType[] | null>([]);
+  const [selectedFolder, setSelectedFolder] = useState<RecipeFolderType | null>(null);
+  const [loading, setLoading] = useState(false);
 
   //folder popup visibility
   const [isAddFolderModalVisible, setAddFolderModalVisible] = useState(false);
@@ -71,8 +77,8 @@ export function SavedRecipiesScreen({ navigation }) {
 
         setFoldersArray(transformedFolders);
 
-      console.log("Saved Folders Return: ", response.data);
-      console.log("Saved Folders Response:", response); // Log the entire response object
+      // console.log("Saved Folders Return: ", response.data);
+      // console.log("Saved Folders Response:", response); // Log the entire response object
 
     } else {
       console.error("Invalid response data structure:", response.data);
@@ -94,8 +100,7 @@ export function SavedRecipiesScreen({ navigation }) {
     // API call to create folder
     axios.post(`http://localhost:${LOCAL_HOST_NUMBER}/api/List/createList`, {
       listName: folderName,
-      description: folderDescription,
-      // You might need to pass additional data here based on your backend API requirements
+      description: folderDescription
     }, {
       headers: {
         Authorization: `Bearer ${loginToken}`,
@@ -132,8 +137,8 @@ export function SavedRecipiesScreen({ navigation }) {
               }
             })
             .then((response) => {
-              console.log(thislistID);
-              console.log("Response", response.data);
+              // console.log(thislistID);
+              // console.log("Response", response.data);
               fetchFolders(); // Fetch updated folder list
             })
             .catch((error) => {
@@ -162,7 +167,7 @@ export function SavedRecipiesScreen({ navigation }) {
 
         <FlatList
           data = {foldersArray}
-          renderItem = {({item}) => <SavedRecipeFolder item = {item} onDelete={handleDeleteFolder} />}
+          renderItem = {({item}) => <SavedRecipeFolder item={item} onDelete={handleDeleteFolder} postId={postId} />}
           keyExtractor = {(item, index) => item.listID.toString()}
           showsVerticalScrollIndicator = {false}
         />

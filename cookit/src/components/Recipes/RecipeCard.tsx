@@ -64,6 +64,8 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   const navigation = useNavigation(); // Initialize navigation
 
+  const [postState, setPostState] = useState<any>(post);
+
   const handleCardPress = () => {
     // Navigate to the expanded recipe screen passing item as route params
     let item = post;
@@ -91,6 +93,12 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   const handleFollowPress = () => {
     // Logic to follow the user
   };
+
+    // Function to toggle save status of the post
+    const handleSave = async () => {
+        navigation.navigate("SavedRecipies", { postId: post.id }); // Navigate to SavedRecipes screen with postId
+        //console.log("Post ID: ", post.id);
+    };
 
   const handleUpvote = async () => {
     console.log("LOGIN: ", loginToken);
@@ -220,7 +228,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   // encode url so that its in the correct format to pull the image
   const [encodedUrl, setEncodedUrl] = useState("");
   useEffect(() => {
-    const imageUrl = post.image;
+    const imageUrl = post.image; // THIS LINE NEEDS TO BE REWORKED SO IT WORKS FOR BOTH THE SAVED SCREEN AND HOME === undefined ? post.postImage : post.Image;
     console.log("original url: ", imageUrl);
     if (imageUrl) {
       setEncodedUrl(imageUrl.replace(/ /g, "%20"));
@@ -269,7 +277,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
             </Interaction>
           </GroupedInteraction>
           <GroupedInteraction>
-            <Interaction active={post.saved}>
+            <Interaction active={post.saved} onPress={handleSave}>
               {saveIcon}
               <InteractionText>{saveText}</InteractionText>
             </Interaction>

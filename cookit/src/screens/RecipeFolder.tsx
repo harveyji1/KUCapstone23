@@ -12,15 +12,20 @@ import RecipeCard from '../components/Recipes/RecipeCard'
 
 export function RecipeFolderScreen({ route }){
 
-    const { recipes } = route.params;
+  console.log(route);
+
+    const { posts } = route.params;
+    console.log(posts.$values);
 
     return (
         <Container>
        
         <StatusBar style="auto" />
         <FlatList
-          data = {recipes}
-          renderItem = {({item}) => <RecipeCard item = {item} />}
+          data = {posts.$values}
+          renderItem = {({item}) => {
+            //console.log("Why isn't the picture showing: ", posts.$values);
+          return<RecipeCard post = {item} />}}
           keyExtractor = {item=>item.id}
           showsVerticalScrollIndicator = {false}
         />

@@ -242,7 +242,7 @@ export function HomeScreen({ navigation }) {
         },
       })
       .then((response) => {
-        console.log("Feed response: ", response.data.$values);
+        //console.log("Feed response: ", response.data.$values);
         setFeed(response.data.$values);
       })
       .catch((error) => {
@@ -286,8 +286,9 @@ export function HomeScreen({ navigation }) {
         <FlatList
           data={feed}
           renderItem={({ item }) => {
-            console.log("Post from home: ", item);
-            console.log("Item id: ", item.id);
+            console.log("Feed for testing:", feed);
+            //console.log("Post from home: ", item);
+            //console.log("Item id: ", item.id);
             return <RecipeCard post={item} />;
           }}
           keyExtractor={(item) => item.id}
