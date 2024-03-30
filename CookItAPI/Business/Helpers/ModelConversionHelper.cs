@@ -48,6 +48,7 @@ namespace Business.Helpers
                         Instructions = post.Instructions,
                         Cost = post.Cost,
                         PrepTime = post.PrepTime,
+                        CookTime = post.CookTime,
                         NumOfLikes = post.NumOfLikes,
                         NumOfDislikes = post.NumOfDislikes,
                         NumOfComments = post.NumOfComments,
@@ -114,7 +115,8 @@ namespace Business.Helpers
                 Ingredients = JsonConvert.SerializeObject(postRequest.Ingredients),
                 Instructions = JsonConvert.SerializeObject(postRequest.Instructions),
                 Cost = postRequest.Cost,
-                PrepTime = postRequest.PrepTime            
+                PrepTime = postRequest.PrepTime,
+                CookTime = postRequest.CookTime
             };
         }
 

@@ -56,6 +56,7 @@ namespace Persistence.Repositories
                     Instructions = p.Instructions,
                     Cost = p.Cost,
                     PrepTime = p.PrepTime,
+                    CookTime = p.CookTime,
                     NumOfLikes = p.NumOfLikes,
                     NumOfComments = p.NumOfComments,
                     NumOfDislikes = p.NumOfDislikes,
