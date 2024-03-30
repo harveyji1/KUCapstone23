@@ -75,6 +75,7 @@ function BottomTabs() {
           title: "CookIt",
           headerStyle: {
             backgroundColor: "#345C50",
+            shadowColor: 'transparent',
           },
           headerTintColor: "#FFF",
           headerTitleStyle: {

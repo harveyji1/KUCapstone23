@@ -21,7 +21,7 @@ import RecipeCard from "../components/Recipes/RecipeCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { LoginContext } from "../../LoginProvider";
-import { EditProfileIcon } from "../../assets/recipe-icons";
+import { EditProfileIcon, FilterIcon } from "../../assets/recipe-icons";
 
 //This will be replaced by actual data from backend
 //For now this is passing in the posts
@@ -256,19 +256,30 @@ export function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.headerContainer}>
-        <View style={styles.headerUsernameContainer}>
-          <Text style={styles.headerUsername}>Refresh -{">"} </Text>
+        <View style={styles.tagsContainer}>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>Vegan</Text>
+          </View>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>Gluten Free</Text>
+          </View>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>Chicken</Text>
+          </View>
         </View>
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Home");
           }}
         >
-          <View style={styles.headerEditButton}>
-            <EditProfileIcon />
+          <View style={styles.filterContainer}>
+            <FilterIcon />
+            <Text style={styles.filterHeader}> Filter</Text>
           </View>
         </TouchableOpacity>
       </View>
+
       <Container>
         {/*Maps out each card to the item passed in*/}
         <StatusBar style="auto" />
@@ -299,8 +310,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     width: "100%",
-    borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#345C50",
+    backgroundColor: "#345C50",
+    borderWidth: 1,
+    borderColor: "#345C50",
   },
   headerUsernameContainer: {
     flex: 1,
@@ -310,13 +324,22 @@ const styles = StyleSheet.create({
   },
   headerUsername: {
     fontSize: 20,
-    color: "#4B5563",
+    color: "#FFF",
     fontFamily: "SF-Pro-Text-Semibold",
   },
-  headerEditButton: {
+  filterContainer: {
     paddingRight: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 2,
   },
-
+  filterHeader: {
+    fontSize: 14,
+    color: "#FFF",
+    fontFamily: "SF-Pro-Text-Medium",
+    marginLeft: 5,
+    marginTop: 3,
+  },
   // ====== EDIT PROFILE BUTTON ======
   editProfileButton: {
     padding: 10,
@@ -348,6 +371,30 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#718093",
     fontFamily: "SF-Pro-Text-Regular",
+  },
+  // ====== TAGS ======
+  tagsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    // padding: 10,
+    // backgroundColor: "#345C50",
+  },
+  tag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(227, 243, 238, 0.3)',
+    borderRadius: 16,
+    marginHorizontal: 2,
+    marginVertical: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 7,
+    margin: 4,
+  },
+  tagText: {
+    color: "#FFF",
+    fontSize: 14,
+    fontFamily: "SF-Pro-Text-Regular",
+    opacity: 0.7,
   },
 });
 
