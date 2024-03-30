@@ -85,10 +85,10 @@ const RecipeScreen = ({ route }) => {
       <View style={styles.infoSection}>
         {/* Yield, Prep, Cook, Estimated Cost */}
         <View style={styles.infoSection}>
-          <View style={styles.infoBlock}>
-            {/* <Text style={styles.infoTitle}>YIELD</Text> */}
+          {/* <View style={styles.infoBlock}>
+            <Text style={styles.infoTitle}>YIELD</Text>
             <Text style={styles.infoContent}>{item.yield} people</Text>
-          </View>
+          </View> */}
 
           <View style={styles.infoBlock}>
             <Text style={styles.infoTitle}>PREP</Text>
