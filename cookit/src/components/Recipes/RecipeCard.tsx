@@ -52,6 +52,7 @@ import { LoginContext } from "../../../LoginProvider";
 import { useContext } from "react";
 
 const LOCAL_HOST_NUBMER = "5018";
+console.warn = () => {};
 
 // Need to fix saved
 // need to fix profile image, currently null
@@ -64,12 +65,14 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   const navigation = useNavigation(); // Initialize navigation
 
+  const [postState, setPostState] = useState<any>(post);
+
   const handleCardPress = () => {
     // Navigate to the expanded recipe screen passing item as route params
     let item = post;
     navigation.navigate("RecipeExpanded", { item });
   };
-  console.log("Post from Recipie Card: ", post);
+  // console.log("Post from Recipie Card: ", post);
   // Set the icons for the upvote, downvote, and save buttons
   var upvotedIcon = post.isLikedByUser ? (
     <UpReactionIcon />
@@ -90,6 +93,12 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   const handleFollowPress = () => {
     // Logic to follow the user
+  };
+
+  // Function to toggle save status of the post
+  const handleSave = async () => {
+    navigation.navigate("SavedRecipies", { postId: post.id }); // Navigate to SavedRecipes screen with postId
+    //console.log("Post ID: ", post.id);
   };
 
   const handleUpvote = async () => {
@@ -163,6 +172,19 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
       });
   };
 
+  const formatDate = (dateString) => {
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+  
+    return `${months[monthIndex]} ${day}, ${year}`;
+  };
+  
   // Map the ingredients to a list of text components
   function stringToIngredients(ingredientsString: string) {
     return ingredientsString.split("|").map((ingredient) => {
@@ -171,9 +193,11 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     });
   }
   const extractedIngredients = stringToIngredients(post.ingredients);
-  const filterPills = extractedIngredients.map((ingredient, index) => (
-    <FilterPill key={index}>{ingredient.name}</FilterPill>
-  ));
+  const filterPills = extractedIngredients
+    .slice(0, 5)
+    .map((ingredient, index) => (
+      <FilterPill key={index}>{ingredient.name}</FilterPill>
+    ));
 
   //some minor logic to determine the appearance of each card
   var upvoteText;
@@ -197,10 +221,9 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   }
 
   var saveText;
-  if(post.save == 0 || post.save == null || post.save == undefined){
+  if (post.save == 0 || post.save == null || post.save == undefined) {
     saveText = 0;
-  }
-  else{
+  } else {
     if (post.saves <= 9999) {
       saveText =
         post.saves <= 999 ? post.saves : (post.saves / 1000).toFixed(1) + "k";
@@ -219,12 +242,21 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
 
   // encode url so that its in the correct format to pull the image
   const [encodedUrl, setEncodedUrl] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   useEffect(() => {
+    const profilePic = post.profileImage;
     const imageUrl = post.image;
-    console.log("original url: ", imageUrl);
+    // console.log("original url: ", imageUrl);
     if (imageUrl) {
       setEncodedUrl(imageUrl.replace(/ /g, "%20"));
-      console.log("Encoded URL:", encodedUrl);
+      // console.log("Encoded URL:", encodedUrl);
+    } else {
+      console.log("no profile pic");
+    }
+
+    if (profilePic) {
+      setProfilePic(profilePic.replace(/ /g, "%20"));
+      // console.log("Encoded URL:", encodedUrl);
     } else {
       console.log("no profile pic");
     }
@@ -237,12 +269,12 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
         <PostDivider />
         <PostImg source={{ uri: encodedUrl }} />
         <UserInfo>
-          <UserImg source={post.userImg} />
+          <UserImg source={{ uri: profilePic }} />
           <UserName>{post.handle}</UserName>
-          <PostTime>{post.createdAt}</PostTime>
-          <FollowButton onPress={handleFollowPress}>
+          <PostTime>{formatDate(post.createdAt)}</PostTime>
+          {/* <FollowButton onPress={handleFollowPress}>
             <FollowButtonText>+ Follow</FollowButtonText>
-          </FollowButton>
+          </FollowButton> */}
         </UserInfo>
         <DishNameText> {post.title} </DishNameText>
         <DescriptionText>{post.description}</DescriptionText>
@@ -269,7 +301,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
             </Interaction>
           </GroupedInteraction>
           <GroupedInteraction>
-            <Interaction active={post.saved}>
+            <Interaction active={post.saved} onPress={handleSave}>
               {saveIcon}
               <InteractionText>{saveText}</InteractionText>
             </Interaction>

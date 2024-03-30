@@ -130,7 +130,7 @@ export function ProfileScreen({ navigation }) {
     const likesText = formatCount(item.numOfLikes);
     const dislikesText = formatCount(item.numOfDislikes);
     const commentsText = formatCount(item.numOfComments);
-    const savesText = formatCount(item.numOfSaves);
+    const savesText = formatCount(item.savedCount);
 
     // Determine which reaction icon to display based on whether the user has liked or disliked the post
     var upvotedIcon = item.isLikedByUser ? (

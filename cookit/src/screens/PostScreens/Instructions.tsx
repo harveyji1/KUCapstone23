@@ -27,7 +27,7 @@ interface instructions {
 }
 const LOCAL_HOST_NUBMER = "5018";
 
-export function InstructionsScreen({ route, navigation }) {
+export function InstructionsScreen({ navigation, route }) {
   const { state } = React.useContext(LoginContext);
   let loginToken = state;
   const {
@@ -203,8 +203,16 @@ export function InstructionsScreen({ route, navigation }) {
       //   }
       // }
 
-      const response = await axios.post(url, formData, config);
-      console.log("Response: ", response.data);
+      axios
+        .post(url, formData, config)
+        .then((response) => {
+          console.log("Response: ", response.data);
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          console.log("ERROR NO POST: ", error);
+          alert("Error, content failed to post");
+        });
 
       // Navigate back to create post
       navigation.navigate("CreatePost");
