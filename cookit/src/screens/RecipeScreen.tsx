@@ -43,7 +43,7 @@ const RecipeScreen = ({ route }) => {
   const [encodedProfilePic, setProfilePic] = useState("");
 
   useEffect(() => {
-    const pic = item.image;
+    const pic = item.image ?? item.postImage;
     const profilePic = item.profileImage;
 
     if (pic) {
