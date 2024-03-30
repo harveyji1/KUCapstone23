@@ -56,6 +56,7 @@ export function SearchProfile({ route, navigation }) {
   ];
   const [encodedUrl, setEncodedUrl] = useState("");
   const [postsArray, setPostsArray] = useState("");
+  const [following, setFollowing] = useState(false);
 
   useEffect(() => {
 
@@ -194,6 +195,17 @@ export function SearchProfile({ route, navigation }) {
           <View style={styles.nameBioContainer}>
             <Text style={styles.userName}>{profile.fullName}</Text>
             <Text style={styles.bio}>{profile.bio}</Text>
+            {/* Follow Button */}
+    <TouchableOpacity
+      style={following ? styles.unfollowButton : styles.followButton}
+      onPress={() => {
+        console.log("Follow Button Pressed");
+        setFollowing(!following);
+        // Implement your follow action here
+      }}
+    >
+      <Text style={styles.followButtonText}>{following ? 'Unfollow' : 'Follow'}</Text>
+    </TouchableOpacity>
           </View>
         </View>
 
@@ -203,7 +215,7 @@ export function SearchProfile({ route, navigation }) {
             <Text style={styles.postWord}>Posts</Text>
           </View>
           <View style={styles.followersContainer}>
-            <Text style={styles.numOfFollowers}>{profile.followerCount}</Text>
+            <Text style={styles.numOfFollowers}>{following ? profile.followerCount + 1 : profile.followerCount}</Text>
             <Text style={styles.followersWord}>Followers</Text>
           </View>
           <View style={styles.followingContainer}>
@@ -224,6 +236,31 @@ export function SearchProfile({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  followButton: {
+    marginTop: 10,
+    paddingHorizontal: 10,
+    maxWidth: 275,
+    paddingVertical: 8,
+    backgroundColor: "#345C50", // Example button color, adjust as needed
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  unfollowButton: {
+    marginTop: 10,
+    paddingHorizontal: 10,
+    maxWidth: 275,
+    paddingVertical: 8,
+    backgroundColor: "#718093", // Example button color, adjust as needed
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  followButtonText: {
+    color: "#ffffff", // Example text color, adjust as needed
+    fontSize: 16,
+    fontFamily: "SF-Pro-Text-Semibold",
+  },
   container: {
     backgroundColor: "#FFF",
     height: "100%",
