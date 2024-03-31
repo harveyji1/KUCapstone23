@@ -17,7 +17,7 @@ namespace Shared.DTOs
         public string? Instructions { get; set; }
         public Decimal Cost { get; set; }
         public string? PrepTime { get; set; }
-        public string? CookTime { get; set; } = "0";
+        public string? CookTime { get; set; } = "0"; 
         public int NumOfLikes { get; set; }
         public int NumOfDislikes { get; set; }
         public int NumOfComments { get; set; }

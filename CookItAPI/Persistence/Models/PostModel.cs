@@ -25,7 +25,7 @@ namespace Persistence.Models
         public string? Instructions { get; set; }
         public decimal Cost { get; set; }
         public string? PrepTime { get; set; }
-        public string? CookTime { get; set; }
+        public string? CookTime { get; set; } 
         public int NumOfLikes { get; set; }
         public int NumOfDislikes { get; set; }
         public int NumOfComments { get; set; }

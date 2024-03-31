@@ -43,7 +43,7 @@ namespace Business.Helpers
                     {
                         ID = post.ID,
                         Title = post.Title,
-                        Description = post.Description,
+                        Description = post.Description, 
                         Ingredients = post.Ingredients,
                         Instructions = post.Instructions,
                         Cost = post.Cost,
