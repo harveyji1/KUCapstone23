@@ -249,9 +249,9 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
     // console.log("original url: ", imageUrl);
     if (imageUrl) {
       setEncodedUrl(imageUrl.replace(/ /g, "%20"));
-      // console.log("Encoded URL:", encodedUrl);
+      console.log("Encoded URL:", encodedUrl);
     } else {
-      console.log("no profile pic");
+      console.log("no post pic");
     }
 
     if (profilePic) {

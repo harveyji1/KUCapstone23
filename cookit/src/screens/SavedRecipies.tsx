@@ -42,6 +42,8 @@ export function SavedRecipiesScreen({}) {
   const route = useRoute();
   let { postId } = route.params || { postId: null };
 
+  console.log("What was postId passed in as?: ", postId);
+
   // State to store fetched folders
   const { state } = useContext(LoginContext);
   let loginToken = state;
@@ -49,9 +51,7 @@ export function SavedRecipiesScreen({}) {
   const [foldersArray, setFoldersArray] = useState<RecipeFolderType[] | null>(
     []
   );
-  const [selectedFolder, setSelectedFolder] = useState<RecipeFolderType | null>(
-    null
-  );
+  //const [postID, setpostID] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   //folder popup visibility
@@ -62,19 +62,19 @@ export function SavedRecipiesScreen({}) {
   const [folderDescription, setFolderDescription] = useState("");
 
   useEffect(() => {
+    console.log("UseEffect was called:", postId)
     fetchFolders(); // Fetch folders on initial load
-    console.log("Post ID: ", postId);
   }, []);
 
-  useFocusEffect(() => {
-    console.log("PostID: ", postId);
-    return () => {
-      postId = null;
-      console.log("PostID: ", postId);
-    };
-  });
+  // useFocusEffect(() => {
+  //   console.log("UseFocusEffect was called! PostID: ", postId);
+  //   return () => {
+  //     console.log("UseFocusEffect was returned!: ", postId);
+  //   };
+  // });
 
   const fetchFolders = () => {
+    console.log("fetch folders was called");
     axios
       .get(`http://localhost:${LOCAL_HOST_NUMBER}/api/List/getUserLists`, {
         headers: {
@@ -93,7 +93,7 @@ export function SavedRecipiesScreen({}) {
           }));
 
           setFoldersArray(transformedFolders);
-          console.log("Folders Array: ", transformedFolders);
+          //console.log("Folders Array: ", transformedFolders);
 
           // console.log("Saved Folders Return: ", response.data);
           // console.log("Saved Folders Response:", response); // Log the entire response object
@@ -184,11 +184,20 @@ export function SavedRecipiesScreen({}) {
     );
   };
 
+  const handleRefresh = () => {
+    console.log("Refresh was called!");
+    fetchFolders();
+    postId = null;
+  };
+
+    console.log("After all rendering, what is postID value?:", postId)
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Saved Recipes</Text>
       </View>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -196,6 +205,9 @@ export function SavedRecipiesScreen({}) {
         >
           <Text style={styles.buttonText}>Add Folder</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleRefresh}>
+                    <Text style={styles.refreshText}>Refresh</Text>
+      </TouchableOpacity>
       </View>
 
       <FlatList
@@ -252,6 +264,7 @@ export function SavedRecipiesScreen({}) {
       </Modal>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -288,6 +301,12 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   buttonText: {
+    fontSize: 10,
+    color: "#FFF",
+    fontFamily: "SF-Pro-Text-Regular",
+    textAlign: "center",
+  },
+  refreshText:{
     fontSize: 10,
     color: "#FFF",
     fontFamily: "SF-Pro-Text-Regular",

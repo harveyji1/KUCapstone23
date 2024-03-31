@@ -4,7 +4,7 @@ Author: Harvey Ji
 Editors:
 */
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
   TouchableOpacity,
   View,
@@ -32,7 +32,7 @@ const LOCAL_HOST_NUMBER = "5018";
 const SavedRecipeFolder: React.FC<{
   item: RecipeFolderType;
   onDelete: (listID: number) => void;
-  postId: number;
+  postId: number | null;
 }> = ({ item, onDelete, postId }) => {
   const { state } = useContext(LoginContext);
   let loginToken = state;
@@ -40,19 +40,40 @@ const SavedRecipeFolder: React.FC<{
   const navigation = useNavigation(); // Initialize navigation\
 
   const [listID, setListID] = useState<number>(item.listID);
-  const [postID, setPostID] = useState<number>(postId);
+  const [postID, setPostID] = useState<number | null>(postId);
+  const [encodedUrl, setEncodedUrl] = useState("");
+
+  const firstRecipe = item.posts.$values[0];
+  
 
   useEffect(() => {
+    console.log("Actual Folder useeffect was called!");
     setPostID(postId);
   }, [postId]);
 
+  useFocusEffect(() => {
+    console.log(postID);
+    // console.log("original url: ", imageUrl);
+    if (firstRecipe) {
+      const imageUrl = firstRecipe.postImage;
+      if (imageUrl) {
+        setEncodedUrl(imageUrl.replace(/ /g, "%20"));
+        // console.log("Encoded URL:", encodedUrl);
+      } 
+    else {
+        console.log("no post pic");
+      }
+    }
+    //console.log("First Recipe:", imageUrl);
+  })
+
   const handleFolderPress = async () => {
     // Check if postId is available
-    if (postId == null || postId == undefined || postId == 0) {
+    if (postID === null || postID === undefined || postID === 0) {
       //extracts just the recipe from the item
-      console.log("Item.posts: ", item.posts);
+      //console.log("Item.posts: ", item.posts);
       const { posts } = item;
-      console.log("posts = item: ", posts);
+      //console.log("posts = item: ", posts);
       // Navigate to the Recipe folder screen passing recipes as route params
       navigation.navigate("RecipeFolder", { posts });
     } else {
@@ -71,13 +92,16 @@ const SavedRecipeFolder: React.FC<{
             },
           }
         );
-        console.log(postID);
-        //setPostID(0);
+        //console.log(postID);
+        setPostID(0);
+        //console.log(postID);
         console.log("Response: ", response);
       } catch (error) {
+        setPostID(0);
         console.error("Error saving post:", error);
         console.log("Error postID: ", postID);
         console.log("Error listID: ", listID);
+        
       }
     }
   };
@@ -86,7 +110,7 @@ const SavedRecipeFolder: React.FC<{
     onDelete(item.listID);
   };
 
-  const firstRecipe = item.posts[0];
+
 
   return (
     <View>
@@ -94,7 +118,7 @@ const SavedRecipeFolder: React.FC<{
         <View style={styles.folder}>
           <View style={styles.folderImageContainer}>
             {firstRecipe && (
-              <Image source={firstRecipe.postImg} style={styles.recipeImage} />
+              <Image source={{ uri: encodedUrl }} style={styles.recipeImage} />
             )}
           </View>
           <View style={styles.textContainer}>
