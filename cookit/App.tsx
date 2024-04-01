@@ -44,8 +44,8 @@ import {
 import { LoginRegisterToggle } from "./src/screens/LoginRegisterToggle";
 import RecipeFolderScreen from "./src/screens/RecipeFolder";
 import SearchProfile from "./src/screens/SearchProfile";
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();//Ignore all log notifications
+// import { LogBox } from 'react-native';
+// LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 // Prevents splash screen from hiding automatically
