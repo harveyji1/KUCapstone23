@@ -14,7 +14,9 @@ import {
   Button,
   FlatList,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
+import Modal from "react-native-modal"; // Importing Modal
 import { StatusBar } from "expo-status-bar";
 import { Container } from "../styles/FeedStyles";
 import RecipeCard from "../components/Recipes/RecipeCard";
@@ -33,8 +35,16 @@ export function HomeScreen({ navigation }) {
   const loginToken = state;
 
   const [feed, setFeed] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [filterIngredients, setFilterIngredients] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
   const [hasMounted, setHasMounted] = useState(false);
+
+  const [masterFeed, setMasterFeed] = useState();
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   function getFeed() {
     axios
@@ -44,8 +54,9 @@ export function HomeScreen({ navigation }) {
         },
       })
       .then((response) => {
-        //console.log("Feed response: ", response.data.$values);
+        //rconsole.log("Feed response: ", response.data.$values);
         setFeed(response.data.$values);
+        setMasterFeed(response.data.$values);
       })
       .catch((error) => {
         console.error("Error Fetching Feed: ", error);
@@ -54,6 +65,15 @@ export function HomeScreen({ navigation }) {
   useEffect(() => {
     getFeed();
   }, []);
+
+  useEffect(()=> {
+    if (masterFeed) {
+      console.log("MASTER FEED TRUE: " + masterFeed)
+      setFeed(masterFeed.filter(post => post.ingredients.includes(filterIngredients)))
+    } else {
+      setFeed(masterFeed);
+    }
+  }, [filterIngredients])
 
   return (
     <View style={{ flex: 1 }}>
@@ -70,17 +90,36 @@ export function HomeScreen({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        >
+        <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={toggleModal}>
           <View style={styles.filterContainer}>
             <FilterIcon />
-            <Text style={styles.filterHeader}> Filter</Text>
+            <Text style={styles.filterHeader}>Filter</Text>
           </View>
         </TouchableOpacity>
       </View>
+      </View>
+
+      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalTitle}>Enter Ingredient:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setFilterIngredients}
+            value={filterIngredients}
+            placeholder="Type here..."
+          />
+          <View style={styles.buttons}>
+          <Button title="Cancel" onPress={() => {
+            setFilterIngredients("")
+            toggleModal();
+          }} />
+          <Button title="Apply" onPress={() => {
+            toggleModal();
+          }} />
+          </View>
+        </View>
+      </Modal>
 
       <Container>
         {/*Maps out each card to the item passed in*/}
@@ -142,6 +181,30 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Text-Medium",
     marginLeft: 5,
     marginTop: 3,
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+  buttons: {
+    flexDirection: "row",
+    flexBasis: "auto"
+  },
+  modalTitle: {
+    fontSize: 16,
+    marginBottom: 12,
+  },
+  input: {
+    width: 200,
+    height: 40,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+    marginBottom: 20
   },
   // ====== EDIT PROFILE BUTTON ======
   editProfileButton: {
