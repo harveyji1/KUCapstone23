@@ -1,6 +1,5 @@
 /*
-Purpose: This file is the recipe folder component
-Author: Harvey Ji
+Purpose: This file is the saved recipe folders that appear in the popup when trying to save a recipe
 Editors:
 */
 import React, { useContext, useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { Folder } from "../../styles/FolderStyle";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { LoginContext } from "../../../LoginProvider";
@@ -29,16 +27,17 @@ export type RecipeFolderType = {
 
 const LOCAL_HOST_NUMBER = "5018";
 
-const SavedRecipeFolder: React.FC<{
+const FolderPopUp: React.FC<{
   item: RecipeFolderType;
-  onDelete: (listID: number) => void;
-}> = ({ item, onDelete }) => {
+  postId: number | null;
+}> = ({ item, postId }) => {
   const { state } = useContext(LoginContext);
   let loginToken = state;
 
   const navigation = useNavigation(); // Initialize navigation\
 
   const [listID, setListID] = useState<number>(item.listID);
+  const [postID, setPostID] = useState<number | null>(postId);
   const [encodedUrl, setEncodedUrl] = useState("");
 
   const firstRecipe = item.posts.$values[0];
@@ -46,10 +45,11 @@ const SavedRecipeFolder: React.FC<{
 
   useEffect(() => {
     console.log("Actual Folder useeffect was called!");
-  });
+    setPostID(postId);
+  }, [postId]);
 
   useFocusEffect(() => {
-    //console.log(postID);
+    console.log(postID);
     // console.log("original url: ", imageUrl);
     if (firstRecipe) {
       const imageUrl = firstRecipe.postImage;
@@ -65,20 +65,57 @@ const SavedRecipeFolder: React.FC<{
   })
 
   const handleFolderPress = async () => {
-      //extracts just the recipe from the item
-      //console.log("Item.posts: ", item.posts);
-      //console.log("This is the list Id", item.listID);
-      //console.log("posts = item: ", posts);
-      // Navigate to the Recipe folder screen passing recipes as route params
-      navigation.navigate("RecipeFolder", { posts: item.posts, listID: item.listID });
+      try {
+        console.log("First post ID:", postID);
+        console.log("First list ID:", listID);
+        const response = await axios.post(
+          `http://localhost:${LOCAL_HOST_NUMBER}/api/List/saveRecipeToList?listID=${listID}&postID=${postID}`,
+          {
+            listID: listID,
+            postID: postID,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${loginToken}`,
+            },
+          }
+        );
+        //console.log(postID);
+        console.log("Response: ", response);
+      } catch (error) {
+        //console.error("Error saving post:", error);
+        console.log("Error postID: ", postID);
+        console.log("Error listID: ", listID);
+        
+        if(error.response.status === 500){
+          Alert.alert(
+            "Error",
+            "You already have the recipe saved to this folder",
+            [
+              {
+                text: "OK",
+                onPress: () => console.log("OK Pressed"),
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+        else{
+          Alert.alert(
+            "Error",
+            "Failed to save, please try again later",
+            [
+              {
+                text: "OK",
+                onPress: () => console.log("OK Pressed"),
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      }
 
   };
-
-  const handleDelete = () => {
-    onDelete(item.listID);
-  };
-
-
 
   return (
     <View>
@@ -91,16 +128,10 @@ const SavedRecipeFolder: React.FC<{
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.folderName}>{item.listName} </Text>
-            <Text style={styles.numOfRecipes}>
-              Number of Recipes: {item.numOfRecipes}{" "}
-            </Text>
             <Text style={styles.lastUpdated}>
               Description: {item.description}{" "}
             </Text>
           </View>
-          <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
-            <Ionicons name="trash-outline" size={24} color="red" />
-          </TouchableOpacity>
         </View>
         <View style={styles.folderDivider} />
       </TouchableOpacity>
@@ -112,8 +143,8 @@ const styles = StyleSheet.create({
   folder: {
     backgroundColor: "#FFF",
     width: "100%",
-    height: 100,
-    marginBottom: 10,
+    height: 50,
+    marginBottom: 1,
     alignItems: "center",
     flexDirection: "row",
   },
@@ -125,25 +156,20 @@ const styles = StyleSheet.create({
   },
 
   recipeImage: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     marginRight: 5,
   },
 
   textContainer: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 2,
   },
 
   folderName: {
-    fontSize: 20,
+    fontSize: 15,
     color: "black",
-  },
-
-  numOfRecipes: {
-    fontSize: 14,
-    color: "#345C50",
   },
 
   lastUpdated: {
@@ -152,7 +178,7 @@ const styles = StyleSheet.create({
   },
 
   folderDivider: {
-    height: 4,
+    height: 2,
     color: "gray",
   },
 
@@ -160,4 +186,4 @@ const styles = StyleSheet.create({
     color: "red",
   },
 });
-export default SavedRecipeFolder;
+export default FolderPopUp;
