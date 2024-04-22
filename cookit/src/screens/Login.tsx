@@ -100,7 +100,7 @@ export function LoginPage({ navigation }) {
         // if response is okay, set global token to response token
         setState(token);
         // await AsyncStorage.setItem('token', response.data.token);
-        Alert.alert("Login Successful, Welcome " + username + "!");
+        // Alert.alert("Login Successful, Welcome " + username + "!");
         navigation.navigate("Home");
       }
     } catch (error) {
