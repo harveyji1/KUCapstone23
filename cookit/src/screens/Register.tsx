@@ -102,7 +102,7 @@ export function RegisterScreen({ navigation }) {
       // Handling successful registration
       if (response.status === 200) {
         // await AsyncStorage.setItem('token', response.data.token);
-        // Alert.alert("Sign Up Successful, Welcome " + username + "!");
+        Alert.alert("Sign Up Successful, Welcome " + username + "!");
         navigation.navigate("Home");
       }
     } catch (error) {
@@ -131,103 +131,99 @@ export function RegisterScreen({ navigation }) {
 
   // Render method for the RegisterScreen
   return (
-    <View style={styles.container}>
-      {/* Register */}
-      <View style={styles.registerHeadingContainer}>
-        <Text style={styles.registerHeading}>Register</Text>
-        <Text style={styles.registerSubHeading}>Let's get started</Text>
-      </View>
+      <View style={styles.container}>
 
-      {/* USERNAME */}
-      <View style={styles.UsernameInputWrapper}>
-        <View style={styles.icon}>
-          <AccountIcon />
+        {/* Register */}
+        <View style={styles.registerHeadingContainer}>
+          <Text style={styles.registerHeading}>Register</Text>
+          <Text style={styles.registerSubHeading}>Let's get started</Text>
         </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor={"#9ca3af"}
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          autoCapitalize="none"
-        />
-      </View>
 
-      {/* EMAIL */}
-      <View style={styles.UsernameInputWrapper}>
-        <View style={styles.icon}>
-          <EmailIcon />
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={"#9ca3af"}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          autoCapitalize="none"
-        />
-      </View>
-
-      {/* PASSWORD */}
-      <View style={styles.passwordContainer}>
-        <Text style={styles.passwordRequirement}>
-          Password must be 8 or more characters and contain at least 1 uppercase
-          letter, 1 number, & 1 special character
-        </Text>
-        <View style={styles.PasswordInputWrapper}>
-          <View style={styles.icon}>
-            <PasswordIcon />
-          </View>
-          {/* PASSWORD */}
+        {/* USERNAME */}
+        <View style={styles.UsernameInputWrapper}>
+          <View style={styles.icon}><AccountIcon/></View>
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Username"
             placeholderTextColor={"#9ca3af"}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
             autoCapitalize="none"
-            secureTextEntry={!showPassword}
-          />
-          {/* Eye Icon */}
-          <MaterialCommunityIcons
-            name={showPassword ? "eye-outline" : "eye-off-outline"}
-            size={17}
-            onPress={toggleShowPassword}
-            style={styles.icon}
           />
         </View>
-      </View>
 
-      {/* Re-Enter Password */}
-      <View style={styles.passwordContainer}>
-        <View style={styles.PasswordInputWrapper}>
-          <View style={styles.icon}>
-            <PasswordIcon />
-          </View>
+        {/* EMAIL */}
+        <View style={styles.UsernameInputWrapper}>
+        <View style={styles.icon}><EmailIcon/></View>
           <TextInput
             style={styles.input}
-            placeholder="Re-Enter Password"
+            placeholder="Email"
             placeholderTextColor={"#9ca3af"}
-            onChangeText={(text) => setCheckPassword(text)}
-            value={checkPassword}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
             autoCapitalize="none"
-            secureTextEntry={!showCheckPassword}
-          />
-          {/* Eye Icon */}
-          <MaterialCommunityIcons
-            name={showCheckPassword ? "eye-outline" : "eye-off-outline"}
-            size={17}
-            onPress={toggleShowCheckPassword}
-            style={styles.icon}
           />
         </View>
-      </View>
 
-      {/* Register Button */}
-      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-    </View>
+        {/* PASSWORD */}
+        <View style={styles.passwordContainer}>
+          <Text style={styles.passwordRequirement}>
+            Password must be 8 or more characters and contain at least 1
+            uppercase letter, 1 number, & 1 special character
+          </Text>
+          <View style={styles.PasswordInputWrapper}>
+            <View style={styles.icon}><PasswordIcon/></View>
+            {/* PASSWORD */}
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+            />
+            {/* Eye Icon */}
+            <MaterialCommunityIcons
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              size={17}
+              onPress={toggleShowPassword}
+              style={styles.icon}
+            />
+          </View>
+        </View>
+
+        {/* Re-Enter Password */}
+        <View style={styles.passwordContainer}>
+          <View style={styles.PasswordInputWrapper}>
+            <View style={styles.icon}><PasswordIcon/></View>
+            <TextInput
+              style={styles.input}
+              placeholder="Re-Enter Password"
+              placeholderTextColor={"#9ca3af"}
+              onChangeText={(text) => setCheckPassword(text)}
+              value={checkPassword}
+              autoCapitalize="none"
+              secureTextEntry={!showCheckPassword}
+            />
+            {/* Eye Icon */}
+            <MaterialCommunityIcons
+              name={showCheckPassword ? "eye-outline" : "eye-off-outline"}
+              size={17}
+              onPress={toggleShowCheckPassword}
+              style={styles.icon}
+            />
+          </View>
+        </View>
+
+        {/* Register Button */}
+        <TouchableOpacity 
+          style={styles.registerButton}
+          onPress={handleRegister}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+      </View>
   );
 }
 // StyleSheet for the component
@@ -392,8 +388,8 @@ const styles = StyleSheet.create({
     color: "#9ca3af",
     fontFamily: "SF-Pro-Text-Medium",
     fontSize: 12,
-    borderWidth: 0,
-    textAlign: "left",
-    height: "100%",
+    borderWidth: 0, 
+    textAlign: "left", 
+    height: "100%", 
   },
 });

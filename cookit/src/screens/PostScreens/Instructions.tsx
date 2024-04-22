@@ -207,7 +207,7 @@ export function InstructionsScreen({ route, navigation }) {
       console.log("Response: ", response.data);
 
       // Navigate back to create post
-      navigation.navigate("HomeScreen");
+      navigation.navigate("CreatePost");
     } catch (error) {
       // Handle error
       if (error.response) {
