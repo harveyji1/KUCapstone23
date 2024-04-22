@@ -36,7 +36,7 @@ namespace API.Controllers
         /// Passes to service layer for processing
         /// </summary>
         /// <param name="post">Post object</param>
-        /// <returns>Http status code</returns>
+        /// <returns>Http status code </returns>
 
         [Authorize]
         [HttpPost("posts")]

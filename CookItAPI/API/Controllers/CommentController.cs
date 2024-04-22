@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using System.Security.Claims;
 
+//Comments controller.
+//Create new comment that will be attached to a post
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]

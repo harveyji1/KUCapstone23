@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Azure
 {   
-    //blob interface. following dependency inversion
+    //blob interface. following dependency inversion 
     public interface IBlobService
     {
         Task<string> UploadBlob(string containerName, int userID, IFormFile image);

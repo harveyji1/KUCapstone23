@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Middle layer for feed
+
 namespace Business.Services.User
 {
     public interface IFeedService

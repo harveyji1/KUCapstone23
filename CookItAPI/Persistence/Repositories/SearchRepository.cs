@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Search repo. 
+//Basic search functionality looking for username. 
+
 namespace Persistence.Repositories
 {
     public interface ISearchRepository

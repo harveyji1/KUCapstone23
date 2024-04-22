@@ -38,7 +38,7 @@ namespace Business.Helpers
             {
                 foreach (PostModel post in posts)
                 {
-                    // Initialize the postDto with basic post information
+                    // Initialize the postDto with basic post information 
                     var postDto = new PostResponseDTO
                     {
                         ID = post.ID,

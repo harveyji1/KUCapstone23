@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 using System.Security.Claims;
 
+//Feed controller. Get user feed for home page.
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]

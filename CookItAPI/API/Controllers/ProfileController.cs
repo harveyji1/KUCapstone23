@@ -35,7 +35,7 @@ namespace API.Controllers
         /// Passes to service layer for processing
         /// </summary>
         /// <param name="profileID">ID of profile for now. will take token later as this will contain the userid</param>
-        /// <returns>Http status code</returns>
+        /// <returns>Http status code </returns>
         [Authorize]
         [HttpGet("profile")]
         public async Task<IActionResult> GetUserProfile()

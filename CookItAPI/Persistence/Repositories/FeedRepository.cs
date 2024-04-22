@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Repo layer for feed. Gets feed for user based on following
+
 namespace Persistence.Repositories
 {
     public interface IFeedRepository

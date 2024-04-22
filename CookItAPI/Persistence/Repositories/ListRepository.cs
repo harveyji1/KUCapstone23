@@ -8,6 +8,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+//Repo layer for Save.
+//CRUD functionality for a user list
+
 namespace Persistence.Repositories
 {
     public interface IListRepository

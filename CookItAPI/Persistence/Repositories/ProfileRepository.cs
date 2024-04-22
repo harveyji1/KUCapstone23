@@ -51,7 +51,11 @@ namespace Persistence.Repositories
                     .SingleOrDefaultAsync();
             return profile;
         }
-
+        /// <summary>
+        /// fetches profile from db by id
+        /// </summary>
+        /// <param name="profileID"></param>
+        /// <returns></returns>
         public async Task<ProfileModel> GetProfileByProfileIdAsync(int profileId, int userID)
         {
             var profile = await _context.Profiles
@@ -75,7 +79,11 @@ namespace Persistence.Repositories
         }
 
 
-
+        /// <summary>
+        /// edit profile from db by id
+        /// </summary>
+        /// <param name="profileID"></param>
+        /// <returns>profile</returns>
         public async Task<ProfileModel> EditProfileAsync(ProfileModel profile, int userID)
         {
             var updatedProfile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(profile => profile.UserId == userID);
@@ -87,7 +95,11 @@ namespace Persistence.Repositories
 
             return updatedProfile;
         }
-
+        /// <summary>
+        /// Upload profile image
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public async Task<ProfileModel> UploadProfileImageAsync(string imageURL, int userID)
         {
             var profile = await _context.Profiles.Include("Posts").SingleOrDefaultAsync(p => p.UserId == userID);
@@ -95,7 +107,11 @@ namespace Persistence.Repositories
             await _context.SaveChangesAsync();
             return profile;
         }
-
+        /// <summary>
+        /// Follow endpoint
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public async Task<bool> FollowAsync(int profileID, int userID)
         {
             using var transaction = _context.Database.BeginTransaction();
@@ -136,7 +152,11 @@ namespace Persistence.Repositories
                 return false;
             }
         }
-
+        /// <summary>
+        /// Unfollow endpoint
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public async Task<bool> UnfollowAsync(int profileID, int userID)
         {
             using var transaction = _context.Database.BeginTransaction();

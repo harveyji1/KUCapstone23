@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Middle layer for search functionality
+
 namespace Business.Services.User
 {
     public interface ISearchService

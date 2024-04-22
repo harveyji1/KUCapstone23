@@ -20,7 +20,7 @@ namespace Persistence.Repositories
         Task<bool> RevertDownvoteAsync(int postID, int userID);
     }
 
-    //post repo class. creates post for now. will handle edit delete etc
+    //post repo class. creates post for now. will handle edit delete etc 
     public class PostRepository : IPostRepository
     {
         private readonly SqlServerContext _context;

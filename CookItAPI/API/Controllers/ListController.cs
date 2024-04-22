@@ -8,6 +8,9 @@ using Shared.DTOs;
 using System.ComponentModel.Design;
 using System.Security.Claims;
 
+//Save endpoint
+//Used when a user wants to save a post to their "Saved" list (bookmarking)
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Repo layer for our comments. 
+//Create new comment and attach it to post. 
+
 namespace Persistence.Repositories
 {
     public interface ICommentRepository

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+//Simple search endpoint. Searching via username
+
 namespace API.Controllers
 {
     [Route("api/v1.0")]
