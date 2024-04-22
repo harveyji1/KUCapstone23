@@ -2,7 +2,7 @@
   Purpose: Screen where users can keep "lists" of their saved recipies. They can create, edit, and view these lists
            or just view any of the other recipies they saved.
   Author: Tony Czajka
-  Editors: 
+  Editors: Harvey Ji
 */
 import * as React from "react";
 import {
@@ -30,7 +30,6 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { EditProfileIcon } from "../../assets/recipe-icons";
-import { Posts } from "./Home";
 import SavedRecipeFolder, {
   RecipeFolderType,
 } from "../components/SavedRecipes/SavedRecipeFolder";
@@ -40,9 +39,8 @@ const LOCAL_HOST_NUMBER = "5018";
 export function SavedRecipiesScreen({}) {
   const navigation = useNavigation();
   const route = useRoute();
-  let { postId } = route.params || { postId: null };
 
-  console.log("What was postId passed in as?: ", postId);
+ // console.log("What was postId passed in as?: ", postId);
 
   // State to store fetched folders
   const { state } = useContext(LoginContext);
@@ -62,7 +60,7 @@ export function SavedRecipiesScreen({}) {
   const [folderDescription, setFolderDescription] = useState("");
 
   useEffect(() => {
-    console.log("UseEffect was called:", postId)
+    //console.log("UseEffect was called:")
     fetchFolders(); // Fetch folders on initial load
   }, []);
 
@@ -74,7 +72,7 @@ export function SavedRecipiesScreen({}) {
   // });
 
   const fetchFolders = () => {
-    console.log("fetch folders was called");
+    //console.log("fetch folders was called");
     axios
       .get(`http://localhost:${LOCAL_HOST_NUMBER}/api/List/getUserLists`, {
         headers: {
@@ -169,12 +167,28 @@ export function SavedRecipiesScreen({}) {
                 fetchFolders(); // Fetch updated folder list
               })
               .catch((error) => {
-                console.error("Error deleting folder:", error);
+                //console.error("Error deleting folder:", error);
                 console.log(thislistID);
-                Alert.alert(
-                  "Error",
-                  "Failed to delete folder. Please try again later."
-                );
+                if(error.response.status === 500){
+                  Alert.alert(
+                    "Error",
+                    "Please remove all recipes in folder before deleting",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () => console.log("OK Pressed"),
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }
+                else{
+                  Alert.alert(
+                    "Error",
+                    "Failed to delete folder. Please try again later."
+                  );
+                }
+                
               });
           },
           style: "destructive",
@@ -187,10 +201,9 @@ export function SavedRecipiesScreen({}) {
   const handleRefresh = () => {
     console.log("Refresh was called!");
     fetchFolders();
-    postId = null;
   };
 
-    console.log("After all rendering, what is postID value?:", postId)
+    //console.log("After all rendering, what is postID value?:")
 
   return (
     <View style={styles.container}>
@@ -216,7 +229,6 @@ export function SavedRecipiesScreen({}) {
           <SavedRecipeFolder
             item={item}
             onDelete={handleDeleteFolder}
-            postId={postId}
           />
         )}
         keyExtractor={(item, index) => item.listID.toString()}

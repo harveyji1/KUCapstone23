@@ -50,6 +50,7 @@ import {
 import axios from "axios";
 import { LoginContext } from "../../../LoginProvider";
 import { useContext } from "react";
+import SavedPopup from "../SavedRecipes/SavedPopup";
 
 const LOCAL_HOST_NUBMER = "5018";
 console.warn = () => {};
@@ -66,6 +67,9 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   const navigation = useNavigation(); // Initialize navigation
 
   const [postState, setPostState] = useState<any>(post);
+
+    // State to manage popup visibility
+    const [showPopup, setShowPopup] = useState(false);
 
   const handleCardPress = () => {
     // Navigate to the expanded recipe screen passing item as route params
@@ -91,13 +95,15 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
   );
   var IconColor = "#345C50"; // Set color
 
-  const handleFollowPress = () => {
-    // Logic to follow the user
+  // Function to close popup
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
   // Function to toggle save status of the post
   const handleSave = async () => {
-    navigation.navigate("SavedRecipies", { postId: post.id }); // Navigate to SavedRecipes screen with postId
+    // Show popup with message
+    setShowPopup(true);
     //console.log("Post ID: ", post.id);
   };
 
@@ -308,6 +314,7 @@ const RecipeCard: React.FC<{ post: any }> = ({ post }) => {
           </GroupedInteraction>
         </InteractionWrapper>
       </TouchableOpacity>
+      <SavedPopup isVisible={showPopup} onClose={closePopup} postId={post.id} />
     </Card>
   );
 };

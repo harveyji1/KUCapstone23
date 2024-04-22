@@ -13,6 +13,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Container } from "../styles/FeedStyles";
@@ -26,11 +27,15 @@ import {
   ProfileDownReactionOutlineIcon,
   ProfileCommentReactionIcon,
 } from "../../assets/reaction-icons";
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import { useContext } from "react";
+import { LoginContext } from "../../LoginProvider";
 
 export function RecipeFolderScreen({ navigation, route }) {
   console.log(route);
-
-  const { posts } = route.params;
+  const { posts, listID } = route.params;
+  console.log("passed in list ID: ", listID);
   console.log(posts.$values);
 
   const formatCount = (count) => {
@@ -42,6 +47,41 @@ export function RecipeFolderScreen({ navigation, route }) {
     } else {
       // If count is 10000 or more, format as an integer with 'k'
       return Math.floor(count / 1000) + "k";
+    }
+  };
+
+  const LOCAL_HOST_NUMBER = "5018"
+
+  const { state } = useContext(LoginContext);
+  let loginToken = state;
+
+  const handleDelete = async (listID, postID) => {
+    try {
+      // Send a request to delete the post from the folder
+      const response = await axios.delete(`http://localhost:${LOCAL_HOST_NUMBER}/api/List/deleteRecipeFromList?listID=${listID}&postID=${postID}`, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      });
+      
+      // Display success message or handle the response accordingly
+      console.log("Post deleted successfully", response);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      console.log(postID);
+      //console.log(listID);
+      // Display error message or handle the error accordingly
+      Alert.alert(
+        "Error",
+        "An error occurred while deleting the post. Please try again later.",
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed"),
+          },
+        ],
+        { cancelable: false }
+      );
     }
   };
 
@@ -106,10 +146,17 @@ export function RecipeFolderScreen({ navigation, route }) {
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: encodedImage }} />
           </View>
+
+          <TouchableOpacity onPress = {()=> handleDelete(listID, item.id)} style={styles.deleteButton}>
+            <Ionicons name="trash-outline" size={24} color="red" />
+          </TouchableOpacity>
+          
         </View>
       </TouchableOpacity>
     );
   };
+
+//
 
   // return (
   //   <Container>
@@ -315,6 +362,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     paddingTop: 0,
     paddingRight: 25,
+    justifyContent: 'center'
   },
   image: {
     height: 80,
@@ -346,6 +394,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#718093",
     fontFamily: "SF-Pro-Text-Regular",
+  },
+  deleteButton: {
+    color: "red",
+    justifyContent:"center"
   },
 });
 
